@@ -1,0 +1,151 @@
+package CS321.Project.Code;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.Random;
+import java.awt.image.BufferedImage;
+import java.awt.Color;
+import java.awt.Graphics2D;
+
+/**
+ * A class to hold all the locations in the world and to get information about the overmap.
+ * @author Jarrod Quinn
+ *
+ */
+public class World {
+	
+	public static Random random = new Random(0);
+	
+	public ArrayList<ArrayList<Location>> locs;
+	public ArrayList<Point2D.Double> locuses;
+	int xSize, ySize;
+	
+	public World(int xS, int yS) {
+		locs = new ArrayList<ArrayList<Location>>();
+		locs.add(new ArrayList<Location>());
+		xSize = xS; ySize = yS;
+		
+		ArrayList<Point2D.Double> loci = new ArrayList<Point2D.Double>();
+		for(int a = 0; a < 16; a++) {
+			double x = random.nextDouble() * xSize;
+			double y = random.nextDouble() * ySize;
+			loci.add(new Point2D.Double(x, y));
+		}
+		
+		//Does initial generation of points
+		for(int a = 0; a < xSize; a += 25)
+			for(int b = 0; b < ySize; b += 25) {
+				//So it isn't too even
+				if(random.nextDouble() < .2)
+					continue;
+				double x = a, y = b;
+				//Give it some wiggle
+				x += random.nextDouble() * 30 - 15;
+				y += random.nextDouble() * 30 - 15;
+				
+				//Moves them towards the closest 3 loci
+				double[] dists = new double[loci.size()];
+				for(int i = 0; i < loci.size(); i++) {
+					Point2D.Double locus = loci.get(i);
+					//Gets the distance
+					dists[i] = Math.sqrt(Math.pow(x-locus.x, 2) + Math.pow(y - locus.y, 2));
+					
+				}
+				
+				for(int i = 0; i < 2; i++) {
+					int index = 0;
+					for(int j = 1; j < dists.length; j++)
+						if(dists[j] < dists[index])
+							index = j;
+					//Gets the distance the point will move
+					double movement = dists[index] * (random.nextDouble() * .2 + .01);
+					//Maxes out the distance to that locus so it won't be reused
+					dists[index] = Double.MAX_VALUE;
+					//Moves the point 
+					Point2D.Double closest = loci.get(index);
+					double angleTo = Math.atan2(closest.y- y, closest.x - x);
+					x += Math.cos(angleTo)*movement;
+					y += Math.sin(angleTo)*movement;
+				}//End of random moving //*/
+		
+				locs.get(0).add(new Location(x, y));
+			}//Done generating locations
+		
+		
+		//Creates links between locations
+		for(int a = 0; a < locs.get(0).size()-1; a++)
+			for(int b = a+1; b < locs.get(0).size(); b++) {
+				Location loc1 = locs.get(0).get(a), loc2 = locs.get(0).get(b);
+				//Checks the position. If they are more than 25 units in either dimension away, doesn't bother to check distance
+				if(Math.abs(loc1.xPos - loc2.xPos) > 50 || Math.abs(loc1.yPos - loc2.yPos) > 50)
+					continue;
+				//Checks distance and decides if there should be a link (randomly)
+				double dist = Math.sqrt(Math.pow(loc1.xPos - loc2.xPos, 2) + Math.pow(loc1.yPos - loc2.yPos, 2));
+				
+				if(dist < 5) // && random.nextDouble() < .9) 					
+					loc1.addLink(loc2);
+				else if(dist < 20 && random.nextDouble() < .9)
+					loc1.addLink(loc2);
+				else if(dist < 40 && random.nextDouble() < .6)
+					loc1.addLink(loc2);
+				else if(dist < 70 && random.nextDouble() < .1)
+					loc1.addLink(loc2);
+				
+			}
+		
+		//Removes small regions
+		ArrayList<Location> master = locs.remove(0);
+		while(master.size() != 0) {
+			ArrayList<Location> curList = new ArrayList<Location>();
+			master.get(0).generateRegion(curList);
+			for(Location l: curList)
+				master.remove(l);
+			
+			if(curList.size() > 30)
+				locs.add(curList);
+		}
+		
+		locuses = loci;
+		
+	}//End of constructor
+	
+	public BufferedImage drawMap() {
+		BufferedImage map = new BufferedImage(xSize*2, ySize*2, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = map.createGraphics();
+		
+		g.setColor(Color.black);
+		g.fillRect(0, 0, xSize*2, ySize*2);
+		
+		//Draws all the links first so they're behind the locations
+		g.setColor(Color.white);
+		for(ArrayList<Location> curList : locs) 
+			for(Location l: curList) {
+				l.drawAllLinks(g);
+			}
+		
+		//Then draws the locations
+		
+		for(ArrayList<Location> curList : locs) {
+			int r = (int)(random.nextDouble()*255), gr = (int)(random.nextDouble()*255), b = (int)(random.nextDouble()*255);
+			g.setColor(new Color(r,gr,b));
+			for(Location l: curList) {
+				l.drawSelf(g);
+			}
+		}
+		
+		g.setColor(Color.yellow);
+		for(Point2D p : locuses) {
+			g.fillOval((int)p.getX()*2-5, (int) p.getY()*2-5, 10, 10);
+		}
+		
+		
+		return map;
+	}
+	
+	public static void main(String[] args) {
+		World temp = new World(1200, 1200);
+		BufferedImage map = temp.drawMap();
+		Util.writeImageToFolder(map, "c:/321/output/");
+		
+	}
+	
+}//End of world (class)
