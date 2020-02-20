@@ -93,9 +93,7 @@ public class Controller extends JPanel {
 			case 2: gameMenu.receiveKey(e, 0); break;
 			}
 			controller.repaint();
-	
 		}
-		
 	}
 	
 	private class MouseInput extends MouseAdapter{
