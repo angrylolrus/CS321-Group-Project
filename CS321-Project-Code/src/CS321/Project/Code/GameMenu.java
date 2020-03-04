@@ -1,23 +1,24 @@
 package CS321.Project.Code;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.KeyEvent;
 
 public class GameMenu {
 	Controller controller;
 	Player player;
-	// World world;
+	World world;
+
+	public GameMenu(Controller c) {
+		controller = c;
+	}
 
 
-	public GameMenu(Controller controller) {
+	public void receiveMouse(MouseEvent e, int type) {
 
 	}
 
-	public void receiveMouse(MouseEvent e, int num) {
-
-	}
-
-	public void receiveKey(KeyEvent e, int num) {
+	public void receiveKey(KeyEvent e, int type) {
 
 	}
 
