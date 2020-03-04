@@ -35,6 +35,7 @@ public class Controller extends JPanel {
 		xSize = 700;
 		ySize = 700;
 		currentState = 1;
+		mainMenu = new MainMenu(this);
 		
 		frame = new JFrame("321 Apocalyptic Game");
 		/* ******************* N.B Change this later ******************* */
@@ -45,7 +46,6 @@ public class Controller extends JPanel {
 		frame.setSize(xSize + insets.left + insets.right, xSize + insets.top + insets.bottom);
 		frame.setContentPane(this);
 		
-		mainMenu = new MainMenu(this);
 		updateSize();
 		
 		//Listeners
