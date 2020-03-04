@@ -8,10 +8,13 @@ abstract class Item {
     double weight;
     int durability;
     int durabilityRevealed;
+
     // lastDamaged; I don't know the type yet!!!
     // int size; implement later?
 
     abstract void takeDamage();
+
+    abstract int getDefense();
 
     abstract void getUses();
 
