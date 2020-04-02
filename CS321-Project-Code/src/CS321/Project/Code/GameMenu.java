@@ -10,21 +10,20 @@ public class GameMenu {
 	Player player;
 	World world;
 	public ArrayList<UIElement> elements;
-	
+
 	public GameMenu(Controller c) {
 		controller = c;
 	}
-	
-	
+
 	public void receiveMouse(MouseEvent e, int type) {
-		
+
 	}
-	
+
 	public void receiveKey(KeyEvent e, int type) {
-		
+
 	}
-	
+
 	public void draw(Graphics g) {
-		
+
 	}
 }
