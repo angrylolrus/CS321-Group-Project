@@ -1,7 +1,7 @@
 package CS321.Project.Code;
 
 public abstract class Item {
-    protected int type; // The type of object (food, tool, etc)
+    protected String type; // The type of object (food, tool, etc)
     protected int ID; // The ID of the type of object
     protected String name; // The simple name of the object
     protected double volume;// How big the item is
@@ -23,7 +23,7 @@ public abstract class Item {
 
     // This is for an object to be damaged, whether by time or
     // age. It will obviously vary depending on the type of object
-    public abstract void takeDamage(int amt, int type);
+    public abstract void takeDamage(int amt, String type);
 
     public abstract int getDefense();
 
