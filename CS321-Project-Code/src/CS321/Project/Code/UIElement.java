@@ -14,6 +14,7 @@ public abstract class UIElement {
 	public int xPos, yPos;
 	public boolean hasFocus;
 	public int xSize, ySize;
+	public Color color;
 	public abstract void update(Graphics g);
 	public abstract void mouseAction(MouseEvent e, int type);
 	public abstract void keyAction(KeyEvent e, int type);
@@ -24,6 +25,7 @@ public abstract class UIElement {
 		xSize = w;
 		ySize = h;
 		hasFocus = false;
+		color = Color.WHITE;
 	}
 	
 	public boolean contains(Point p) {
@@ -32,7 +34,12 @@ public abstract class UIElement {
 		return false;
 	}
 	
+	public void setColor(Color c) {
+		color = c;
+	}
 	
+	/* Taking this out for now, I'm not sure we'll need it
+	  Might just use the default textbox class
 	public static class TextBox extends UIElement{
 		private Label curContents;
 		private boolean hasSize;
@@ -64,7 +71,7 @@ public abstract class UIElement {
 			//Draws the box
 			g.setColor(Color.darkGray);
 			g.fillRect(xPos, yPos, xSize, ySize);
-			g.setColor(Color.white);
+			g.setColor(color);
 			curContents.update(g);
 			
 		}
@@ -87,7 +94,7 @@ public abstract class UIElement {
 			else
 				hasFocus = false;
 		}
-	}//End of TextBox 
+	}//End of TextBox //*/
 	
 	public static class Label extends UIElement{
 		public boolean centered;
@@ -152,7 +159,7 @@ public abstract class UIElement {
 		}
 		
 		public void update(Graphics g) {
-			g.setColor(Color.black);
+			g.setColor(color);
 			g.fillRect(xPos, yPos, 50, 15);
 			g.setColor(Color.white);
 			g.setFont(new Font("Courier New", Font.PLAIN, 12));
@@ -162,6 +169,7 @@ public abstract class UIElement {
 	}
 	
 	public static class Button extends UIElement{
+		// x,y are position, w,h are width and height
 		public Button(int x, int y, int w, int h) {
 			super(x, y, w, h);
 		}
@@ -180,7 +188,7 @@ public abstract class UIElement {
 		}
 		
 		public void update(Graphics g) {
-			g.setColor(Color.white);
+			g.setColor(color);
 			g.fill3DRect(xPos, yPos, xSize, ySize, !hasFocus);
 		}
 		
