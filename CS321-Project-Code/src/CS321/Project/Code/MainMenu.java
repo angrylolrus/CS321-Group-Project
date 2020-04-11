@@ -6,24 +6,48 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import CS321.Project.Code.UIElement.*;
 
 public class MainMenu {
 	public Controller controller;
 	public ArrayList<UIElement> elements;
+	public Button newGame, loadGame, settings, exit;
 	
 	public MainMenu(Controller c) {
 		controller = c;
 		elements = new ArrayList<UIElement>();
 		
-		elements.add(new UIElement.Button(100, 100, 100, 50));
-		elements.add(new UIElement.Button(210, 100, 100, 50));
 		elements.add(new UIElement.MouseCoords());
-		UIElement.Label title = new UIElement.Label("CS 321 Apocalyptic Game", true, controller.xSize/2, controller.ySize/2);
-		title.setFont("Courier New", Font.PLAIN, 28);
-		elements.add(title);
 		
-		UIElement.TextBox temp = new UIElement.TextBox(200, 200, 200, 25);
-		elements.add(temp);
+		//Title
+		UIElement.Label curLabel = new UIElement.Label("CS 321 Apocalyptic Game", false, 50, 100);
+		curLabel.setFont("Courier New", Font.PLAIN, 28);
+		elements.add(curLabel);
+		
+		//New game
+		newGame = new Button(50, 150, 200, 40);
+		elements.add(newGame);
+		curLabel = new UIElement.Label("New Game", false, 50, 200);
+		curLabel.setFont("Courier New", Font.PLAIN, 28);
+		elements.add(curLabel);
+		
+		
+		//Load game
+		curLabel = new UIElement.Label("Load Game", false, 50, 300);
+		curLabel.setFont("Courier New", Font.PLAIN, 28);
+		elements.add(curLabel);
+		
+		//Settings
+		curLabel = new UIElement.Label("Settings", false, 50, 100);
+		curLabel.setFont("Courier New", Font.PLAIN, 28);
+		elements.add(curLabel);
+		
+		//Exit
+		curLabel = new UIElement.Label("Exit", false, 50, 100);
+		curLabel.setFont("Courier New", Font.PLAIN, 28);
+		elements.add(curLabel);
+		
+		
 	}
 	
 	public void draw(Graphics gb) {
@@ -51,10 +75,7 @@ public class MainMenu {
 	}
 	
 	public void receiveKey(KeyEvent e, int type) {
-		for(UIElement element: elements)
-			if(element.hasFocus)
-				if(element.getClass() == UIElement.TextBox.class)
-					((UIElement.TextBox) element).keyAction(e, type);
+		
 	}
 
 	public void receiveMouse(MouseEvent e, int type) {

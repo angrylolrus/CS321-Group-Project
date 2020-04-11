@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -54,6 +53,8 @@ public class Controller extends JPanel {
 		frame.addMouseMotionListener(new MouseInput(this));
 		frame.addComponentListener(new WindowChange(this));
 		frame.addKeyListener(new KeyInput(this));
+		frame.setVisible(true);
+		System.out.println("Finished making window"); 
 	}
 
 	public void paintComponent(Graphics g) {
