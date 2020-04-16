@@ -8,7 +8,7 @@ public class Food extends Item {
 		this.setWetness(wetness);
 	}
 	@Override
-	public void takeDamage(int amt, int type) {
+	public void takeDamage(int amt) {
 		// TODO Auto-generated method stub
 
 	}

@@ -1,8 +1,8 @@
 package CS321.Project.Code;
 
 public abstract class Item {
-	protected String type; // The type of object (food, tool, etc)
-    protected int ID; // The ID of the type of object (food #20)
+    protected String type; // The type of object (food, tool, etc)
+    protected int ID; // The ID of the type of object
     protected String name; // The simple name of the object
     protected double volume;// How big the item is
     protected double weight; // How much it weighs
@@ -29,13 +29,26 @@ public abstract class Item {
     // to use) so that they can read from different files. I do
     // think there should still be unique ID's for
 
+    public Item(String t, int id, String nm, double vol, double w, int day)
+    {
+        type = t;
+        ID = id;
+        name = nm;
+        volume = vol;
+        weight = w;
+        damage = 0;
+        visDamage = 0;
+        age = 0;
+        created = day;
+    }
+
     public void adjustAge(int time) {
         age += time;
     }
 
     // This is for an object to be damaged, whether by time or
     // age. It will obviously vary depending on the type of object
-    public abstract void takeDamage(int amt, int type);
+    public abstract void takeDamage(int amt);
 
     public abstract int getDefense();
 
