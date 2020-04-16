@@ -1,16 +1,28 @@
 package CS321.Project.Code;
 
 public abstract class Item {
-    protected int type; // The type of object (food, tool, etc)
-    protected int ID; // The ID of the type of object
+	protected String type; // The type of object (food, tool, etc)
+    protected int ID; // The ID of the type of object (food #20)
     protected String name; // The simple name of the object
     protected double volume;// How big the item is
     protected double weight; // How much it weighs
     protected double damage; // How damaged it is
     protected double visDamage; // How visible damaged it is
-    protected double wetness; // How wet it is
     protected int age; // How long the object has existed
     protected int created; // When the object was created
+
+    // Subclasses will need to have their own (static) methods to
+    // read the item ID from an XML file (or whatever we decide
+    // to use) so that they can read from different files. I do
+    // think there should still be unique ID's for
+    public Item(String type, int ID, String name, double volume, double weight, double damage,
+    		double visDamage, int age, int created) {
+    	this.type = type; this.ID= ID; this.name = name;
+    	this.volume = volume; this.weight = weight; 
+    	this.damage = damage; this.visDamage = visDamage;
+    	this.age = age; this.created = created;
+    	
+    }
 
     // Subclasses will need to have their own (static) methods to
     // read the item ID from an XML file (or whatever we decide
