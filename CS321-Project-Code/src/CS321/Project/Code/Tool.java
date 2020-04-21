@@ -31,7 +31,7 @@ public class Tool extends Item {
   public String[] getUses(String type) {
     // if(type == "Tool")
     String[] uses = {"Equip", "Drop", "Use"};
-    return uses;a
+    return uses;
   }
 
 }
