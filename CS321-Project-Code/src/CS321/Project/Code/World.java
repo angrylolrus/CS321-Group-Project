@@ -5,6 +5,7 @@ import java.util.Random;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 /**
  * A class to hold all the locations in the world and to get information about the overmap.
@@ -108,7 +109,31 @@ public class World {
 		
 	}//End of constructor
 	
-	public BufferedImage drawMap() {
+	
+	public Location getLocationAt(Point p, double zoom) {
+		for(ArrayList<Location> region : locs) {
+			for(Location l: region) {
+				double xDif = Math.abs(p.x - l.xPos);
+				double yDif = Math.abs(p.y - l.yPos);
+				if(xDif > 10*zoom  || yDif > 10*zoom);
+			}
+	
+		}
+		
+		return null;
+	}
+	
+	public BufferedImage drawSubMap(int x, int y, int width, int height) {
+		BufferedImage map = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = map.createGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, width, height);
+		
+		
+		return map;
+	}
+		
+	public BufferedImage drawFullMap() {
 		BufferedImage map = new BufferedImage(xSize*2, ySize*2, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = map.createGraphics();
 		
@@ -121,31 +146,34 @@ public class World {
 			for(Location l: curList) {
 				l.drawAllLinks(g);
 			}
-		
+		g.drawRect(1, 1, xSize-2, ySize-2);
 		//Then draws the locations
 		
 		for(ArrayList<Location> curList : locs) {
+			g.setColor(Color.BLUE);
+			/*
 			int r = (int)(random.nextDouble()*255), gr = (int)(random.nextDouble()*255), b = (int)(random.nextDouble()*255);
-			g.setColor(new Color(r,gr,b));
+			g.setColor(new Color(r,gr,b));//*/
 			for(Location l: curList) {
 				l.drawSelf(g);
 			}
 		}
 		
+		/*
 		g.setColor(Color.yellow);
 		for(Point2D p : locuses) {
 			g.fillOval((int)p.getX()*2-5, (int) p.getY()*2-5, 10, 10);
-		}
+		}//*/
 		
 		
 		return map;
 	}
-	
+	/*
 	public static void main(String[] args) {
 		World temp = new World(1200, 1200);
 		BufferedImage map = temp.drawMap();
 		Util.writeImageToFolder(map, "c:/321/output/");
 		
-	}
+	}//*/
 	
 }//End of world (class)

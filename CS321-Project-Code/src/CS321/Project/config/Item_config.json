@@ -1,0 +1,48 @@
+{
+    "//Clothing array": "just the array for clothing objects",
+    "Clothing":
+    [
+        {
+            "name": "Pants",
+            "volume": 0.1,
+            "weight": 0.2,
+            "damage": 0.0,
+            "visable damage": 0.0,
+            "age": 0,
+            "created": 0,
+            "wetness": 0.0
+        },
+        {
+            "name": "Shirt",
+            "volume": 0.0,
+            "weight": 0.0,
+            "damage": 0.0,
+            "visable damage": 0.0,
+            "age": 0,
+            "created": 0,
+            "wetness": 0.0
+        }
+    ],
+
+    "//Tool array": "just the array for tool objects",
+    "Tools":
+    [
+        {
+            "name": "Axe"
+        },
+        {
+            "name": "Pitchfork"
+        }
+    ],
+
+    "//Food array": "just the array for tool objects",
+    "Food":
+    [
+        {
+            "name": "Bread"
+        },
+        {
+            "name": "Carrot"
+        }
+    ]
+}

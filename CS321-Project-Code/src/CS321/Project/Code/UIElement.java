@@ -122,6 +122,7 @@ public abstract class UIElement {
 		
 		public void update(Graphics g) {
 			g.setFont(font);
+			g.setColor(color);
 			if(centered) {
 				FontMetrics fm = g.getFontMetrics();
 				Rectangle2D boundingBox = fm.getStringBounds(contents, g);
@@ -132,7 +133,10 @@ public abstract class UIElement {
 				
 			}
 			else {
-				g.drawString(contents, xPos, yPos);
+				FontMetrics fm = g.getFontMetrics();
+				Rectangle2D boundingBox = fm.getStringBounds(contents, g);
+				int y = (yPos - (int)(boundingBox.getHeight()/2));
+				g.drawString(contents, xPos, y);
 			}
 		}
 		
@@ -183,8 +187,6 @@ public abstract class UIElement {
 				hasFocus = true;
 			else
 				hasFocus = false;
-			
-			
 		}
 		
 		public void update(Graphics g) {

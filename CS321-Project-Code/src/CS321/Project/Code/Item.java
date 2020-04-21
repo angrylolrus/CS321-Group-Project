@@ -8,7 +8,6 @@ public abstract class Item {
     protected double weight; // How much it weighs
     protected double damage; // How damaged it is
     protected double visDamage; // How visible damaged it is
-    protected double wetness; // How wet it is
     protected int age; // How long the object has existed
     protected int created; // When the object was created
 
@@ -16,6 +15,32 @@ public abstract class Item {
     // read the item ID from an XML file (or whatever we decide
     // to use) so that they can read from different files. I do
     // think there should still be unique ID's for
+    public Item(String type, int ID, String name, double volume, double weight, double damage,
+    		double visDamage, int age, int created) {
+    	this.type = type; this.ID= ID; this.name = name;
+    	this.volume = volume; this.weight = weight; 
+    	this.damage = damage; this.visDamage = visDamage;
+    	this.age = age; this.created = created;
+    	
+    }
+
+    // Subclasses will need to have their own (static) methods to
+    // read the item ID from an XML file (or whatever we decide
+    // to use) so that they can read from different files. I do
+    // think there should still be unique ID's for
+
+    public Item(String t, int id, String nm, double vol, double w, int day)
+    {
+        type = t;
+        ID = id;
+        name = nm;
+        volume = vol;
+        weight = w;
+        damage = 0;
+        visDamage = 0;
+        age = 0;
+        created = day;
+    }
 
     public void adjustAge(int time) {
         age += time;
@@ -23,7 +48,7 @@ public abstract class Item {
 
     // This is for an object to be damaged, whether by time or
     // age. It will obviously vary depending on the type of object
-    public abstract void takeDamage(int amt, String type);
+    public abstract void takeDamage(int amt);
 
     public abstract int getDefense();
 
