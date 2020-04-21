@@ -12,7 +12,7 @@ public class Tool extends Item {
     Item tool = new Tool();
   }
 
-  public void takeDamage(int amt, int type) {
+  public void takeDamage(int amt, String type) {
 
   }
 
