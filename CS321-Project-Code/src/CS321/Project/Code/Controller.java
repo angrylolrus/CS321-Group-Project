@@ -14,6 +14,7 @@ public class Controller extends JPanel {
 	int xSize, ySize;
 	int currentState;
 	public ArrayList<UIElement> elements;
+	public boolean stateChanged;
 
 	public MainMenu mainMenu;
 	public GameMenu gameMenu;
@@ -32,8 +33,8 @@ public class Controller extends JPanel {
 	}
 
 	private void initialize() {
-		xSize = 700;
-		ySize = 700;
+		xSize = 800;
+		ySize = 800;
 		currentState = 1;
 		mainMenu = new MainMenu(this);
 
@@ -51,13 +52,18 @@ public class Controller extends JPanel {
 		// Listeners
 		frame.addMouseListener(new MouseInput(this));
 		frame.addMouseMotionListener(new MouseInput(this));
-		frame.addComponentListener(new WindowChange(this));
+		frame.addMouseWheelListener(new MouseInput(this));
+		//frame.addComponentListener(new WindowChange(this)); - Not yet implemented
 		frame.addKeyListener(new KeyInput(this));
 		frame.setVisible(true);
-		System.out.println("Finished making window"); 
+		System.out.println("Finished making window");
+		
 	}
 
 	public void paintComponent(Graphics g) {
+		if(stateChanged)
+			clean();
+		
 		switch (currentState) {
 			case 1:
 				mainMenu.draw(g);
@@ -68,13 +74,27 @@ public class Controller extends JPanel {
 		}
 	}
 
+	public void launchMenu() {
+		mainMenu = new MainMenu(this);
+		currentState = 1;
+		stateChanged = true;
+	}
+	
 	public void launchGame() {
-		mainMenu = null;
 		gameMenu = new GameMenu(this);
 		currentState = 2;
+		stateChanged = true;
+	}
+	
+	public void clean() {
+		if(currentState == 1)
+			gameMenu = null;
+		if(currentState == 2)
+			mainMenu = null;
+		stateChanged = false;
 	}
 
-
+	/* Not yet implemented
 	private class WindowChange extends ComponentAdapter {
 		private Controller controller;
 
@@ -85,7 +105,7 @@ public class Controller extends JPanel {
 		public void componentResized(ComponentEvent e) {
 			controller.updateSize();
 		}
-	}
+	}//*/
 
 	private class KeyInput extends KeyAdapter {
 		private Controller controller;
@@ -140,6 +160,14 @@ public class Controller extends JPanel {
 			}
 			controller.repaint();
 		}
+		
+		public void mouseDragged(MouseEvent e) {
+			e.translatePoint(-insets.left, -insets.top);
+			if(currentState == 2) {
+				gameMenu.receiveMouse(e, 4);
+				controller.repaint();
+			}
+		}
 
 		public void mouseReleased(MouseEvent e) {
 			e.translatePoint(-insets.left, -insets.top);
@@ -149,6 +177,24 @@ public class Controller extends JPanel {
 					break;
 				case 2:
 					gameMenu.receiveMouse(e, 3);
+					break;
+			}
+			controller.repaint();
+		}
+		
+		public void mouseWheelMoved(MouseWheelEvent e) {
+			//4 for down, 5 for up
+			int type = 5;
+			if(e.getWheelRotation() < 0)
+				type = 6;
+				
+			e.translatePoint(-insets.left, -insets.top);
+			switch (currentState) {
+				case 1:
+					mainMenu.receiveMouse(e, type);
+					break;
+				case 2:
+					gameMenu.receiveMouse(e, type);
 					break;
 			}
 			controller.repaint();
