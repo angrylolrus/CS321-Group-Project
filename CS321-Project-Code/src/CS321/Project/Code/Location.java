@@ -12,6 +12,7 @@ public class Location {
 	public Location(double x, double y) {
 		xPos = x;
 		yPos = y;
+		links = new ArrayList<Location>();
 	}
 
 	public void addLink(Location l) {
