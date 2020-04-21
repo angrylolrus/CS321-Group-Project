@@ -26,7 +26,7 @@ public class Food extends Item {
 	}
 
 	@Override
-	public String[] getUses() {
+	public String[] getUses(String type) {
 		// TODO Auto-generated method stub
 		return null;
 	}

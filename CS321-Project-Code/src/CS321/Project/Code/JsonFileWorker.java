@@ -8,19 +8,16 @@ import java.nio.file.Path;
 import java.nio.file.FileSystems;
 import java.lang.Math;
 
-//class to read a json file and grab the  base attributes of an Item
-public class JsonFileWorker 
-{
+// class to read a json file and grab the base attributes of an Item
+public class JsonFileWorker {
     static JSONObject readerObj;
     static String config = "CS321\\Project\\config\\Item_config.json";
 
-    //needs to be run before any json reading or writing will happen
-    public static boolean init()
-    {
+    // needs to be run before any json reading or writing will happen
+    public static boolean init() {
         try {
             readerObj = (JSONObject) new JSONParser().parse(new FileReader(config));
-            if(readerObj == null)
-            {
+            if (readerObj == null) {
                 return false;
             }
             return true;
@@ -30,12 +27,11 @@ public class JsonFileWorker
         }
     }
 
-    //returns either a Clothing, Tool or Food object by whatever type is passed in
-    public static <T> T getItem(String type, int id, boolean newItem)
-    {
+    // returns either a Clothing, Tool or Food object by whatever type is passed in
+    public static <T> T getItem(String type, int id, boolean newItem) {
         Clothing c;
         Food f;
-        //Tool t;
+        // Tool t;
         String name;
         double volume, weight, wetness, damage, visDamage;
         int age, created;
@@ -49,13 +45,10 @@ public class JsonFileWorker
             damage = (double) jObject.get("damage");
             visDamage = (double) jObject.get("visable damage");
             age = Math.toIntExact((long) jObject.get("age"));
-            if(!newItem)
-            {
+            if (!newItem) {
                 created = (int) jObject.get("created");
-            }
-            else
-            {
-                created = 0; //need to create a day/hour variable
+            } else {
+                created = 0; // need to create a day/hour variable
             }
             wetness = (double) jObject.get("wetness");
         } catch (Exception e) {
@@ -63,26 +56,28 @@ public class JsonFileWorker
             return null;
         }
 
-        if(type.equals("Clothing"))
-        {
-            c = new Clothing(type, id, name, volume, weight, damage, visDamage, age, created); //need to add day variable
+        if (type.equals("Clothing")) {
+            c = new Clothing(type, id, name, volume, weight, damage, visDamage, age, created); // need
+                                                                                               // to
+                                                                                               // add
+                                                                                               // day
+                                                                                               // variable
             return (T) c;
-        }
-        else if(type.equals("Food"))
-        {
-            f = new Food(type, id, name, volume, weight, damage, visDamage, age, created, wetness); //need to add day variable
+        } else if (type.equals("Food")) {
+            f = new Food(type, id, name, volume, weight, damage, visDamage, age, created, wetness); // need
+                                                                                                    // to
+                                                                                                    // add
+                                                                                                    // day
+                                                                                                    // variable
             return (T) f;
-        }
-        else
-        {
-            //t = new Tool(id, name, volume, weight, 0) //need to add day variable
-            //return (T) t;
+        } else {
+            // t = new Tool(id, name, volume, weight, 0) //need to add day variable
+            // return (T) t;
         }
         return null;
     }
 
-    public static void saveState(Clothing[] c, Player p)
-    {
+    public static void saveState(Clothing[] c, Player p) {
         System.out.println("Saving state");
     }
 }
