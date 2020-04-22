@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.awt.event.KeyEvent;
@@ -16,6 +15,7 @@ public class GameMenu {
 	//Variables for the UI and broad gameplay elements
 	Player player;
 	World world;
+	int worldSize;
 	public ArrayList<UIElement> elements;
 	double time;
 	
@@ -34,17 +34,19 @@ public class GameMenu {
 		controller = c;
 		player = new Player();
 		//World & map initialization 
-		world = new World(1200,1200);
-		mapCenter = new Point(600, 600);
+		worldSize = 1200; //This may be customizable (or just changed) later, but for now its 1200
+		world = new World(worldSize,worldSize);
 		zoomLevel = 2;
+		mapCenter = new Point((int)(worldSize/zoomLevel), (int)(worldSize/zoomLevel));
+		
 	}
 
 	public void receiveMouse(MouseEvent e, int type) {
 		//For focus on map
 		if (e.getX() < 600 && e.getY() < 600) {
 			
-			int mapX = mapCenter.x - 300 + e.getX();
-			int mapY = mapCenter.y - 300 + e.getY();
+			int mapX = (int)(mapCenter.x - (worldSize - worldSize/zoomLevel) + e.getX());
+			int mapY = (int)(mapCenter.y - (worldSize - worldSize/zoomLevel) + e.getY());
 			
 			//Mouse click
 			if (type == 2) {
@@ -52,8 +54,8 @@ public class GameMenu {
 			}
 			else if(type == 4 && dragStart != null) {
 				if(dragPos != null) {
-					int xChange = dragPos.getX() - e.getX();
-					int yChange = dragPos.getY() - e.getY();
+					int xChange = (int)((dragPos.getX() - e.getX())/Math.pow(zoomLevel/2, .5));
+					int yChange = (int)((dragPos.getY() - e.getY())/Math.pow(zoomLevel/2, .5));
 					mapCenter.x += xChange;
 					mapCenter.y += yChange;
 					dragPos = e;
@@ -66,6 +68,7 @@ public class GameMenu {
 				//If the player (presumably) tried to click a single point
 				if(dragPos == null) {
 					hardFocus = world.getLocationAt(new Point(mapX, mapY), zoomLevel);
+					System.out.println(hardFocus);
 				}
 				else {
 					dragPos = null;
@@ -75,29 +78,66 @@ public class GameMenu {
 			}
 
 			// For mouse scroll
-			if (type == 4 || type == 5) {
-
+			if (type == 5 || type == 6) {
+				//Values for calculating distance
+				int xChange = mapX - mapCenter.x;
+				int yChange = mapCenter.y - mapY;
+				double distance = Math.sqrt(xChange*xChange + yChange*yChange);
+				double angleTo = Math.atan2(yChange, xChange);
+				//Reuse values to determine where new map center will be
+				xChange = (int)(Math.cos(angleTo)*distance*.1);
+				yChange = (int)(-Math.sin(angleTo)*distance*.1);
+				
+				// Scroll down (zoom out)
+				if(type == 5) {
+					//Use negative change, so its away from the mouse instead of towards
+					//mapCenter.x -= xChange;
+					//mapCenter.y -= yChange;
+					zoomLevel = Math.max(1, zoomLevel - .1);
+				}
+				if(type == 6) {
+					zoomLevel = Math.min(6, zoomLevel + .1);
+				}
 			}
 			//	Ensures it doesn't go off the edge - this code was repeated a lot so I figured it would be
 			// better to just run it every time
-			mapCenter.x = Math.max(300, Math.min(mapCenter.x, world.xSize - 300));
-			mapCenter.y = Math.max(300, Math.min(mapCenter.y, world.ySize - 300));
+			mapCenter.x = Math.max((int)(worldSize/zoomLevel/2), Math.min(mapCenter.x, world.xSize - (int)(worldSize/zoomLevel/2)));
+			mapCenter.y = Math.max((int)(worldSize/zoomLevel/2), Math.min(mapCenter.y, world.ySize - (int)(worldSize/zoomLevel/2)));
 		}
+		
+		
+		
+		
+		if(type == 3) {
+			dragPos = null;
+			dragStart = null;
+		}
+		
 	}
 
 	public void receiveKey(KeyEvent e, int type) {
-
+		/*
+		if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+			mapCenter.x += 8;
+		else if(e.getKeyCode() == KeyEvent.VK_DOWN)
+			mapCenter.y += 8;
+		else if (e.getKeyCode() == KeyEvent.VK_LEFT)
+			mapCenter.x -= 8;
+		else if (e.getKeyCode() == KeyEvent.VK_UP)
+			mapCenter.y -= 8;
+		
+		mapCenter.x = Math.max((int)(worldSize/zoomLevel/2), Math.min(mapCenter.x, world.xSize - (int)(worldSize/zoomLevel/2)));
+		mapCenter.y = Math.max((int)(worldSize/zoomLevel/2), Math.min(mapCenter.y, world.ySize - (int)(worldSize/zoomLevel/2)));
+		//*/
 	}
 
 	public void draw(Graphics g) {
-		BufferedImage map = world.drawFullMap();
-		BufferedImage localMap = map.getSubimage(mapCenter.x - 300, mapCenter.y - 300, 600, 600);
-		g.drawImage(localMap, 0, 0, 600, 600, null);// controller.xSize/10*8, controller.ySize/10*8, null);
+		//BufferedImage map = world.drawFullMap();
+		BufferedImage localMap = world.getSubMap(mapCenter.x, mapCenter.y, zoomLevel);
+		g.drawImage(localMap, 0, 0, 600, 600, null); 
 		
 		g.setColor(Color.WHITE);
 		g.drawRect(0, 0, 600, 600);
 		
-		if(dragPos != null)
-			g.fillOval(dragPos.getX() - 3, dragPos.getY() - 3, 6, 6);
 	}
 }
