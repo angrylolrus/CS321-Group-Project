@@ -113,8 +113,12 @@ public class Controller extends JPanel {
 		public KeyInput(Controller c) {
 			controller = c;
 		}
-
-		public void keyTyped(KeyEvent e) {
+		
+		//N.B. I have key movement turned off for now because holding down more than one key is wonky
+		// 	and I'm not ready to fix it, but it is an Eventually To Do
+		public void keyPressed(KeyEvent e) {
+			if(e.getKeyCode() == KeyEvent.VK_W && e.isControlDown())
+				System.exit(0);
 			switch (currentState) {
 				case 1:
 					mainMenu.receiveKey(e, 0);
@@ -123,6 +127,7 @@ public class Controller extends JPanel {
 					gameMenu.receiveKey(e, 0);
 					break;
 			}
+			
 			controller.repaint();
 		}
 	}
@@ -183,7 +188,7 @@ public class Controller extends JPanel {
 		}
 		
 		public void mouseWheelMoved(MouseWheelEvent e) {
-			//4 for down, 5 for up
+			//5 for down, 6 for up
 			int type = 5;
 			if(e.getWheelRotation() < 0)
 				type = 6;

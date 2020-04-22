@@ -2,7 +2,7 @@ package CS321.Project.Code;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.util.HashMap;
+//import java.util.HashMap;
 
 public class Location {
 	double xPos, yPos;
@@ -15,6 +15,10 @@ public class Location {
 		links = new ArrayList<Location>();
 	}
 
+	public String toString() {
+		return "[Location: X: " + xPos + " Y: " + yPos+ "]";
+	}
+	
 	public void addLink(Location l) {
 		links.add(l);
 	}
@@ -34,6 +38,19 @@ public class Location {
 	public void drawAllLinks(Graphics g) {
 		for (Location l : links) {
 			g.drawLine((int) xPos, (int) yPos, (int) l.xPos, (int) l.yPos);
+		}
+	}
+	
+	//For drawing a section of map. The x & y are the center coordinates, the margin is how wide the square is
+	public void drawSelfRelative(double x, double y, double margin, Graphics g) {
+		double stretch = 600.0/(margin*2.0);
+		g.fillOval((int) (((xPos - 3) - (x - margin))*stretch), (int) (((yPos - 3) - (y - margin))*stretch), (int)(6*stretch), (int)(6*stretch));
+	}
+	
+	public void drawAllLinksRelative(double x, double y, double margin, Graphics g) {
+		double stretch = 600.0/(margin*2.0);
+		for (Location l : links) {
+			g.drawLine((int) ((xPos - (x - margin))*stretch), (int) ((yPos - (y - margin))*stretch), (int) ((l.xPos - (x - margin))*stretch), (int) ((l.yPos - (y - margin))*stretch));
 		}
 	}
 }

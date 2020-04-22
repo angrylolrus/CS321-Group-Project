@@ -64,7 +64,7 @@ public class MainMenu {
 		int xSize = controller.xSize, ySize = controller.ySize;
 		Graphics2D g = (Graphics2D) gb;
 		g.setColor(Color.black);
-		g.fillRect(0, 0, xSize, xSize);
+		g.fillRect(0, 0, xSize, ySize);
 		/*
 		//Makes a quick grid
 		g.setColor(Color.blue);

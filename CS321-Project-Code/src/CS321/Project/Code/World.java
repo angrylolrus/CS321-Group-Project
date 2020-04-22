@@ -14,7 +14,7 @@ import java.awt.Point;
  */
 public class World {
 	
-	public static Random random = new Random(0);
+	public static Random random = new Random(1);
 	
 	public ArrayList<ArrayList<Location>> locs;
 	public ArrayList<Point2D.Double> locuses;
@@ -26,9 +26,11 @@ public class World {
 		xSize = xS; ySize = yS;
 		
 		ArrayList<Point2D.Double> loci = new ArrayList<Point2D.Double>();
+		
 		for(int a = 0; a < 16; a++) {
 			double x = random.nextDouble() * xSize;
 			double y = random.nextDouble() * ySize;
+			//System.out.println(x + " " + y);
 			loci.add(new Point2D.Double(x, y));
 		}
 		
@@ -115,7 +117,10 @@ public class World {
 			for(Location l: region) {
 				double xDif = Math.abs(p.x - l.xPos);
 				double yDif = Math.abs(p.y - l.yPos);
-				if(xDif > 10*zoom  || yDif > 10*zoom);
+				if(xDif > 10*zoom  || yDif > 10*zoom)
+					continue;
+				if(Math.abs(xDif*xDif + yDif*yDif) < 36)
+					return l;
 			}
 	
 		}
@@ -123,12 +128,32 @@ public class World {
 		return null;
 	}
 	
-	public BufferedImage drawSubMap(int x, int y, int width, int height) {
-		BufferedImage map = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+	public BufferedImage getSubMap(int x, int y, double zoomLevel) {
+		BufferedImage map = new BufferedImage(600, 600, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = map.createGraphics();
 		g.setColor(Color.black);
-		g.fillRect(0, 0, width, height);
+		g.fillRect(0, 0, 600, 600);
 		
+		double margin = (1200 / zoomLevel / 2);
+		//Left and right bounds go off theoretical screen to catch things that may be partially in
+		double xLeft = x - margin - 20, yTop = y - margin - 20, xRight = x + margin + 20, yBot = y + margin + 20;
+		
+		
+		ArrayList<Location> onScreen = new ArrayList<Location>();
+		//Gathers up all the locations that are on screen
+		for(ArrayList<Location> region : locs) 
+			for(Location loc : region)
+				if(loc.xPos > xLeft && loc.xPos < xRight && loc.yPos > yTop && loc.yPos < yBot)
+					onScreen.add(loc);
+		
+		g.setColor(Color.white);
+		//Draw links so they're under
+		for(Location l: onScreen) 
+			l.drawAllLinksRelative(x, y, margin, g);
+		
+		g.setColor(Color.blue);
+		for(Location l: onScreen) 
+			l.drawSelfRelative(x, y, margin, g);
 		
 		return map;
 	}
