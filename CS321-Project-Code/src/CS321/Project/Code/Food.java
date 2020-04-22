@@ -8,8 +8,9 @@ public class Food extends Item {
 		this.setWetness(wetness);
 	}
 	@Override
-	public void takeDamage(int amt) {
+	public void takeDamage(double amt) {
 		// TODO Auto-generated method stub
+		setDamage(getDamage() + amt);
 
 	}
 
@@ -37,4 +38,9 @@ public class Food extends Item {
 		this.wetness = wetness;
 	}
 
+	@Override
+    public String toString()
+    {
+        return super.toString() + "\n\tWetness: " + wetness;
+    }
 }

@@ -29,4 +29,22 @@ public class Player {
     public void change_Defense(int df) {
         defense = defense + df;
     }
+
+    public int getHealth()
+    {
+        return current_Health;
+    }
+
+    public int getDefense()
+    {
+        return defense;
+    }
+
+    public void getEquipped()
+    {
+        for(int x = 0; x < equipped.length; x++)
+        {
+            System.out.println(equipped[x]);
+        }
+    }
 }

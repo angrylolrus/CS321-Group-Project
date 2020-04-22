@@ -42,13 +42,24 @@ public abstract class Item {
         created = day;
     }
 
+    //Setter Methods
+    public void setVisDamage(double amt)
+    {
+        visDamage = amt;
+    }
+
+    public void setDamage(double amt)
+    {
+        damage = amt;
+    }
+
     public void adjustAge(int time) {
         age += time;
     }
 
     // This is for an object to be damaged, whether by time or
     // age. It will obviously vary depending on the type of object
-    public abstract void takeDamage(int amt);
+    public abstract void takeDamage(double amt);
 
     public abstract int getDefense();
 
@@ -62,11 +73,54 @@ public abstract class Item {
     // uses, for food it may be recipes
     public abstract String[] getUses(String type);
 
-    public double getWeight() {
-        return weight;
+    //Getter Methods
+    public String getType()
+    {
+        return type;
+    }
+
+    public int getID()
+    {
+        return ID;
+    }
+
+    public String getName()
+    {
+        return name;
     }
 
     public double getVolume() {
         return volume;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public double getDamage()
+    {
+        return damage;
+    }
+
+    public double getVisDamage()
+    {
+        return visDamage;
+    }
+
+    public int getAge()
+    {
+        return age;
+    }
+
+    public int getCreated()
+    {
+        return created;
+    }
+
+    @Override
+    public String toString()
+    {
+        return type + " " + ID + ": " + name + "\n\tVolume: " + volume + ", Weight: " + weight +
+               "\n\tDamage: " + damage + ", Visable Damage: " +visDamage + "\n\tAge: "+ age + ", Created: " + created;
     }
 }
