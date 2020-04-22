@@ -5,8 +5,8 @@ import java.util.ArrayList;
 //import java.util.HashMap;
 
 public class Location {
+	
 	double xPos, yPos;
-
 	public ArrayList<Location> links;
 
 	public Location(double x, double y) {
@@ -21,6 +21,7 @@ public class Location {
 	
 	public void addLink(Location l) {
 		links.add(l);
+		l.links.add(this);
 	}
 
 	public void generateRegion(ArrayList<Location> curList) {

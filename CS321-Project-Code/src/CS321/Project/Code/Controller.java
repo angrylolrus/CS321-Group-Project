@@ -56,7 +56,6 @@ public class Controller extends JPanel {
 		//frame.addComponentListener(new WindowChange(this)); - Not yet implemented
 		frame.addKeyListener(new KeyInput(this));
 		frame.setVisible(true);
-		System.out.println("Finished making window");
 		
 	}
 

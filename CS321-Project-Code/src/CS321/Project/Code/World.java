@@ -20,7 +20,10 @@ public class World {
 	public ArrayList<Point2D.Double> locuses;
 	int xSize, ySize;
 	
-	public World(int xS, int yS) {
+	GameMenu parent;
+	
+	public World(GameMenu p, int xS, int yS) {
+		parent = p;
 		locs = new ArrayList<ArrayList<Location>>();
 		locs.add(new ArrayList<Location>());
 		xSize = xS; ySize = yS;
@@ -30,7 +33,6 @@ public class World {
 		for(int a = 0; a < 16; a++) {
 			double x = random.nextDouble() * xSize;
 			double y = random.nextDouble() * ySize;
-			//System.out.println(x + " " + y);
 			loci.add(new Point2D.Double(x, y));
 		}
 		
@@ -111,15 +113,25 @@ public class World {
 		
 	}//End of constructor
 	
+	public Location getRandomLocation() {
+		int outer = (int)(random.nextDouble()*locs.size());
+		int inner = (int)(random.nextDouble()*locs.get(outer).size());
+		return locs.get(outer).get(inner);
+		
+	}
 	
-	public Location getLocationAt(Point p, double zoom) {
+	
+	public Location getLocationAt(Point p, double zoomLevel) {
+		//double stretch = 600.0/((xSize/zoomLevel);
 		for(ArrayList<Location> region : locs) {
 			for(Location l: region) {
 				double xDif = Math.abs(p.x - l.xPos);
 				double yDif = Math.abs(p.y - l.yPos);
-				if(xDif > 10*zoom  || yDif > 10*zoom)
+				if(xDif > 6*zoomLevel  || yDif > 6*zoomLevel)
 					continue;
-				if(Math.abs(xDif*xDif + yDif*yDif) < 36)
+				//Just used the square of teh desired distance
+				// theoretically, sqrt function is really slow
+				if(xDif*xDif + yDif*yDif < 100)
 					return l;
 			}
 	
@@ -152,8 +164,12 @@ public class World {
 			l.drawAllLinksRelative(x, y, margin, g);
 		
 		g.setColor(Color.blue);
-		for(Location l: onScreen) 
+		for(Location l: onScreen) {
 			l.drawSelfRelative(x, y, margin, g);
+		}
+		
+		g.setColor(Color.red);
+		parent.playerLocation.drawSelfRelative(x, y, margin, g);
 		
 		return map;
 	}
@@ -175,10 +191,8 @@ public class World {
 		//Then draws the locations
 		
 		for(ArrayList<Location> curList : locs) {
-			g.setColor(Color.BLUE);
-			/*
 			int r = (int)(random.nextDouble()*255), gr = (int)(random.nextDouble()*255), b = (int)(random.nextDouble()*255);
-			g.setColor(new Color(r,gr,b));//*/
+			g.setColor(new Color(r,gr,b));//
 			for(Location l: curList) {
 				l.drawSelf(g);
 			}

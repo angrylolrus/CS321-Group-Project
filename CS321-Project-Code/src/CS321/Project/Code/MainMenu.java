@@ -92,7 +92,7 @@ public class MainMenu {
 	public void receiveMouse(MouseEvent e, int type) {
 		
 		if(e.getButton() == MouseEvent.BUTTON1 && type == 2) {
-			System.out.println("Mouse clicked");
+			//System.out.println("Mouse clicked");
 		}
 		
 		for(UIElement element : elements) {
@@ -102,7 +102,7 @@ public class MainMenu {
 			if(type == 3 && element == newGame)
 				controller.launchGame();
 			if(type == 3 && element == exit) {
-				System.out.println("Exiting game through main menu");
+				//System.out.println("Exiting game through main menu");
 				System.exit(0);
 			}
 		}

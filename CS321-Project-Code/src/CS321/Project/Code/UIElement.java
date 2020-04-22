@@ -145,6 +145,11 @@ public abstract class UIElement {
 		public boolean contains(Point p) {
 			return false;
 		}
+
+		public void setFont(Font f) {
+			font = f;
+			
+		}
 	}//End of text label
 	
 	public static class MouseCoords extends UIElement{
