@@ -12,8 +12,8 @@ public class Tool extends Item {
   }
 
   @Override
-  public void takeDamage(int amt) {
-
+  public void takeDamage(double amt) {
+	  
   }
 
   @Override
