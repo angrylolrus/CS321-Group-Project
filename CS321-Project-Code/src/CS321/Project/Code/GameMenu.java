@@ -17,6 +17,7 @@ public class GameMenu {
 	World world;
 	int worldSize;
 	public ArrayList<UIElement> elements;
+	InfoPanel infoPanel;
 	double time;
 	
 	//Variables used to control the map view so the player can zoom in/out & pan
@@ -33,20 +34,26 @@ public class GameMenu {
 		//Basic initializaion
 		controller = c;
 		player = new Player();
+		infoPanel = new InfoPanel(this);
 		//World & map initialization 
 		worldSize = 1200; //This may be customizable (or just changed) later, but for now its 1200
-		world = new World(worldSize,worldSize);
+		world = new World(this, worldSize,worldSize);
 		zoomLevel = 2;
 		mapCenter = new Point((int)(worldSize/zoomLevel), (int)(worldSize/zoomLevel));
+		
+		playerLocation = world.getRandomLocation();
 		
 	}
 
 	public void receiveMouse(MouseEvent e, int type) {
 		//For focus on map
 		if (e.getX() < 600 && e.getY() < 600) {
-			
-			int mapX = (int)(mapCenter.x - (worldSize - worldSize/zoomLevel) + e.getX());
-			int mapY = (int)(mapCenter.y - (worldSize - worldSize/zoomLevel) + e.getY());
+			//Margin is how wide the square is
+			int margin = (int)(worldSize/zoomLevel/2);
+			//Stretch is the amount the coordinate needs to be divided by based on margin
+			double stretch = 1/((worldSize/2.0)/(margin*2.0));
+			int mapX = (int)((mapCenter.x - margin) + (e.getX() * stretch));
+			int mapY = (int)((mapCenter.y - margin) + (e.getY() * stretch));
 			
 			//Mouse click
 			if (type == 2) {
@@ -68,7 +75,6 @@ public class GameMenu {
 				//If the player (presumably) tried to click a single point
 				if(dragPos == null) {
 					hardFocus = world.getLocationAt(new Point(mapX, mapY), zoomLevel);
-					System.out.println(hardFocus);
 				}
 				else {
 					dragPos = null;
@@ -136,8 +142,13 @@ public class GameMenu {
 		BufferedImage localMap = world.getSubMap(mapCenter.x, mapCenter.y, zoomLevel);
 		g.drawImage(localMap, 0, 0, 600, 600, null); 
 		
+		BufferedImage infPnl = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+		infoPanel.showInfo(hardFocus, infPnl.getGraphics());
+		g.drawImage(infPnl, 600, 600, 200, 200, null);
+		
+		
 		g.setColor(Color.WHITE);
 		g.drawRect(0, 0, 600, 600);
-		
+		g.drawRect(600, 600, 200, 200);
 	}
 }
