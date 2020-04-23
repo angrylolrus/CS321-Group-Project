@@ -5,6 +5,7 @@ import java.util.Random;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 
 /**
  * A class to hold all the locations in the world and to get information about the overmap.
@@ -13,18 +14,22 @@ import java.awt.Graphics2D;
  */
 public class World {
 	
-	public static Random random = new Random(0);
+	public static Random random = new Random(1);
 	
 	public ArrayList<ArrayList<Location>> locs;
 	public ArrayList<Point2D.Double> locuses;
 	int xSize, ySize;
 	
-	public World(int xS, int yS) {
+	GameMenu parent;
+	
+	public World(GameMenu p, int xS, int yS) {
+		parent = p;
 		locs = new ArrayList<ArrayList<Location>>();
 		locs.add(new ArrayList<Location>());
 		xSize = xS; ySize = yS;
 		
 		ArrayList<Point2D.Double> loci = new ArrayList<Point2D.Double>();
+		
 		for(int a = 0; a < 16; a++) {
 			double x = random.nextDouble() * xSize;
 			double y = random.nextDouble() * ySize;
@@ -108,7 +113,68 @@ public class World {
 		
 	}//End of constructor
 	
-	public BufferedImage drawMap() {
+	public Location getRandomLocation() {
+		int outer = (int)(random.nextDouble()*locs.size());
+		int inner = (int)(random.nextDouble()*locs.get(outer).size());
+		return locs.get(outer).get(inner);
+		
+	}
+	
+	
+	public Location getLocationAt(Point p, double zoomLevel) {
+		//double stretch = 600.0/((xSize/zoomLevel);
+		for(ArrayList<Location> region : locs) {
+			for(Location l: region) {
+				double xDif = Math.abs(p.x - l.xPos);
+				double yDif = Math.abs(p.y - l.yPos);
+				if(xDif > 6*zoomLevel  || yDif > 6*zoomLevel)
+					continue;
+				//Just used the square of teh desired distance
+				// theoretically, sqrt function is really slow
+				if(xDif*xDif + yDif*yDif < 100)
+					return l;
+			}
+	
+		}
+		
+		return null;
+	}
+	
+	public BufferedImage getSubMap(int x, int y, double zoomLevel) {
+		BufferedImage map = new BufferedImage(600, 600, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g = map.createGraphics();
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 600, 600);
+		
+		double margin = (1200 / zoomLevel / 2);
+		//Left and right bounds go off theoretical screen to catch things that may be partially in
+		double xLeft = x - margin - 20, yTop = y - margin - 20, xRight = x + margin + 20, yBot = y + margin + 20;
+		
+		
+		ArrayList<Location> onScreen = new ArrayList<Location>();
+		//Gathers up all the locations that are on screen
+		for(ArrayList<Location> region : locs) 
+			for(Location loc : region)
+				if(loc.xPos > xLeft && loc.xPos < xRight && loc.yPos > yTop && loc.yPos < yBot)
+					onScreen.add(loc);
+		
+		g.setColor(Color.white);
+		//Draw links so they're under
+		for(Location l: onScreen) 
+			l.drawAllLinksRelative(x, y, margin, g);
+		
+		g.setColor(Color.blue);
+		for(Location l: onScreen) {
+			l.drawSelfRelative(x, y, margin, g);
+		}
+		
+		g.setColor(Color.red);
+		parent.playerLocation.drawSelfRelative(x, y, margin, g);
+		
+		return map;
+	}
+		
+	public BufferedImage drawFullMap() {
 		BufferedImage map = new BufferedImage(xSize*2, ySize*2, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g = map.createGraphics();
 		
@@ -121,31 +187,32 @@ public class World {
 			for(Location l: curList) {
 				l.drawAllLinks(g);
 			}
-		
+		g.drawRect(1, 1, xSize-2, ySize-2);
 		//Then draws the locations
 		
 		for(ArrayList<Location> curList : locs) {
 			int r = (int)(random.nextDouble()*255), gr = (int)(random.nextDouble()*255), b = (int)(random.nextDouble()*255);
-			g.setColor(new Color(r,gr,b));
+			g.setColor(new Color(r,gr,b));//
 			for(Location l: curList) {
 				l.drawSelf(g);
 			}
 		}
 		
+		/*
 		g.setColor(Color.yellow);
 		for(Point2D p : locuses) {
 			g.fillOval((int)p.getX()*2-5, (int) p.getY()*2-5, 10, 10);
-		}
+		}//*/
 		
 		
 		return map;
 	}
-	
+	/*
 	public static void main(String[] args) {
 		World temp = new World(1200, 1200);
 		BufferedImage map = temp.drawMap();
 		Util.writeImageToFolder(map, "c:/321/output/");
 		
-	}
+	}//*/
 	
 }//End of world (class)

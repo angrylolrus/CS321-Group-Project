@@ -27,24 +27,34 @@ public class MainMenu {
 		//New game
 		newGame = new Button(50, 150, 200, 40);
 		elements.add(newGame);
-		curLabel = new UIElement.Label("New Game", false, 50, 200);
+		curLabel = new UIElement.Label("New Game", false, 55, 195);
 		curLabel.setFont("Courier New", Font.PLAIN, 28);
+		curLabel.setColor(Color.black);
 		elements.add(curLabel);
 		
 		
 		//Load game
-		curLabel = new UIElement.Label("Load Game", false, 50, 300);
+		loadGame = new Button(50, 200, 200, 40);
+		elements.add(loadGame);
+		curLabel = new UIElement.Label("Load Game", false, 55, 245);
 		curLabel.setFont("Courier New", Font.PLAIN, 28);
+		curLabel.setColor(Color.black);
 		elements.add(curLabel);
 		
 		//Settings
-		curLabel = new UIElement.Label("Settings", false, 50, 100);
+		settings = new Button(50, 250, 200, 40);
+		elements.add(settings);
+		curLabel = new UIElement.Label("Settings", false, 55, 295);
 		curLabel.setFont("Courier New", Font.PLAIN, 28);
+		curLabel.setColor(Color.black);
 		elements.add(curLabel);
 		
 		//Exit
-		curLabel = new UIElement.Label("Exit", false, 50, 100);
+		exit = new Button(50, 300, 200, 40);
+		elements.add(exit);
+		curLabel = new UIElement.Label("Exit", false, 55, 345);
 		curLabel.setFont("Courier New", Font.PLAIN, 28);
+		curLabel.setColor(Color.black);
 		elements.add(curLabel);
 		
 		
@@ -54,13 +64,14 @@ public class MainMenu {
 		int xSize = controller.xSize, ySize = controller.ySize;
 		Graphics2D g = (Graphics2D) gb;
 		g.setColor(Color.black);
-		g.fillRect(0, 0, xSize, xSize);
+		g.fillRect(0, 0, xSize, ySize);
+		/*
 		//Makes a quick grid
 		g.setColor(Color.blue);
 		for(int a = 0; a < xSize; a+= 10) {
 			g.drawLine(a, 0, a, ySize);
 			g.drawLine(0, a, xSize, a);
-		}
+		}//*/
 		
 		g.setColor(Color.white);
 		g.setFont(new Font("Courier New", Font.BOLD, 30));
@@ -79,13 +90,24 @@ public class MainMenu {
 	}
 
 	public void receiveMouse(MouseEvent e, int type) {
-		for(UIElement element : elements) {
-			element.mouseAction(e, type);
+		
+		if(e.getButton() == MouseEvent.BUTTON1 && type == 2) {
+			//System.out.println("Mouse clicked");
 		}
 		
-		if(e.getButton() == MouseEvent.BUTTON1) {
-			System.out.println("Mouse clicked");
+		for(UIElement element : elements) {
+			element.mouseAction(e, type);
+			if(element.contains(e.getPoint()) == false)
+				continue;
+			if(type == 3 && element == newGame)
+				controller.launchGame();
+			if(type == 3 && element == exit) {
+				//System.out.println("Exiting game through main menu");
+				System.exit(0);
+			}
 		}
+		
+		
 		
 	}
 }
