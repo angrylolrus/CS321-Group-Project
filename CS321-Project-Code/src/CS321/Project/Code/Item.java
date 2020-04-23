@@ -50,7 +50,6 @@ public abstract class Item {
     // age. It will obviously vary depending on the type of object
     public abstract void takeDamage(int amt);
 
-    public abstract int getDefense();
 
     // This is for an object to be inspected by the player.
     // Different objects will have different inspection styles
