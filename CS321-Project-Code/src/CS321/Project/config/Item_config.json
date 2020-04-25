@@ -7,7 +7,7 @@
             "volume": 0.1,
             "weight": 0.2,
             "damage": 0.0,
-            "visable damage": 0.0,
+            "visDamage": 0.0,
             "age": 0,
             "created": 0,
             "wetness": 0.0
@@ -17,7 +17,7 @@
             "volume": 0.0,
             "weight": 0.0,
             "damage": 0.0,
-            "visable damage": 0.0,
+            "visDamage": 0.0,
             "age": 0,
             "created": 0,
             "wetness": 0.0
