@@ -197,7 +197,8 @@ public class TestClass {
 		if(jTest)
 		{
 			Clothing c = (Clothing) JsonFileWorker.getItem("Clothing", 0, true);
-			if(c == null && !(c instanceof Clothing))
+			//Shouldn't it be or? Changed from &&
+			if(c == null || !(c instanceof Clothing))
 			{
 				System.out.println("JSON test failed!");
 				return;
