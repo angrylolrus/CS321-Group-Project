@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 public class GameMenu {
 	//To receive and pass commands back up
 	Controller controller;
+	boolean debug = true;
 	
 	//Variables for the UI and broad gameplay elements
 	Player player;
@@ -25,6 +26,7 @@ public class GameMenu {
 	double zoomLevel;
 	MouseEvent dragStart, dragPos;
 	Object softFocus, hardFocus;
+	Inventory openInventory;
 	
 	
 	//Variables about current game events
@@ -43,6 +45,14 @@ public class GameMenu {
 		
 		playerLocation = world.getRandomLocation();
 		
+		if(!JsonFileWorker.init())
+			System.exit(-1);
+		
+		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
+		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
+		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
+		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
+
 	}
 
 	public void receiveMouse(MouseEvent e, int type) {
@@ -75,6 +85,7 @@ public class GameMenu {
 				//If the player (presumably) tried to click a single point
 				if(dragPos == null) {
 					hardFocus = world.getLocationAt(new Point(mapX, mapY), zoomLevel);
+					player.inventory.resetHighlight();
 				}
 				else {
 					dragPos = null;
@@ -112,6 +123,17 @@ public class GameMenu {
 		}
 		
 		
+		if(e.getX() > 600 && e.getY() < 600) {
+			int xRel = e.getX() - 600,  yRel = e.getY();
+			if(type == 2)
+				hardFocus = player.getInventory().selectItemAt(xRel, yRel);
+			if(type == 5)
+				player.getInventory().scroll(-1);
+			else if(type == 6)
+				player.getInventory().scroll(1);
+			
+		}
+		
 		
 		
 		if(type == 3) {
@@ -145,6 +167,10 @@ public class GameMenu {
 		BufferedImage infPnl = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
 		infoPanel.showInfo(hardFocus, infPnl.getGraphics());
 		g.drawImage(infPnl, 600, 600, 200, 200, null);
+		
+		BufferedImage playerInv = new BufferedImage(200, 600, BufferedImage.TYPE_INT_RGB);
+		player.getInventory().drawSelf(playerInv.getGraphics());
+		g.drawImage(playerInv, 600, 0, 200, 600, null);
 		
 		
 		g.setColor(Color.WHITE);

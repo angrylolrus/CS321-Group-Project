@@ -7,7 +7,7 @@ public abstract class Item {
     protected double volume;// How big the item is
     protected double weight; // How much it weighs
     protected double damage; // How damaged it is
-    protected double visDamage; // How visible damaged it is
+    protected double visDamage; // How visibly damaged it is
     protected int age; // How long the object has existed
     protected int created; // When the object was created
 
@@ -77,6 +77,18 @@ public abstract class Item {
     {
         return type;
     }
+    
+    /* I don't think we actually need this yet
+    //Returns an abbreviated (4char long) version of type
+    //For display in InfoPanel & inventory menu
+    public String getTypeAbrv() {
+    	switch(type) {
+    	case "Clothing":return "clth";
+    	case "Tool":	return "tool";
+    	case "Food":	return "food";
+    	default:		return "ERR ";
+    	}
+    }//*/
 
     public int getID()
     {
@@ -120,6 +132,6 @@ public abstract class Item {
     public String toString()
     {
         return type + " " + ID + ": " + name + "\n\tVolume: " + volume + ", Weight: " + weight +
-               "\n\tDamage: " + damage + ", Visable Damage: " +visDamage + "\n\tAge: "+ age + ", Created: " + created;
+               "\n\tDamage: " + damage + ", Visaible Damage: " +visDamage + "\n\tAge: "+ age + ", Created: " + created;
     }
 }

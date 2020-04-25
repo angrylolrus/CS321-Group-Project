@@ -16,6 +16,9 @@ public class InfoPanel {
 	}
 	
 	public void showInfo(Object o, Graphics g) {
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 200);
+		
 		if(o instanceof Location) {
 			displayLocation((Location) o, g);
 		}
@@ -24,21 +27,48 @@ public class InfoPanel {
 			displayItem((Item) o, g);
 		}
 		
-		if(o == null) {
-			g.setColor(Color.BLACK);
-			g.fillRect(0, 0, 200, 200);
+	}
+	
+	public void displayItem(Item item, Graphics g) {
+		g.setColor(Color.white);
+		Font font = new Font("Courier New", Font.BOLD, 20);
+		Label curLabel = new Label(item.getName(), true, 100, 14);
+		curLabel.setFont(font);
+		curLabel.update(g);
+		
+		font = new Font("Courier New", Font.PLAIN, 15);
+		
+		//type
+		curLabel = new Label("Type: " + item.getType(), true, 100, 30);
+		curLabel.setFont(font);
+		curLabel.update(g);
+		
+		//Weight
+		curLabel = new Label(" Wt: " + (item.getWeight()+"000").substring(0, 4), true, 55, 45);
+		curLabel.setFont(font);
+		curLabel.update(g);
+		
+		//Volume
+		curLabel = new Label("Vol: " + (item.getVolume()+"000").substring(0, 4), true, 145, 45);
+		curLabel.setFont(font);
+		curLabel.update(g);
+		
+		//Visible damage
+		curLabel = new Label("Dmg: " + (item.getVisDamage()+"000").substring(0, 4), true, 55, 60);
+		curLabel.setFont(font);
+		curLabel.update(g);
+		
+		//Full damage (if in debug mode)
+		if(parent.debug) {
+			curLabel = new Label("F_D: " + (item.getDamage()+"000").substring(0, 4), true, 145, 60);
+			curLabel.setFont(font);
+			curLabel.setColor(Color.red);
+			curLabel.update(g);
 		}
 		
 	}
 	
-	public void displayItem(Item item, Graphics g) {
-		
-	}
-	
 	public void displayLocation(Location loc, Graphics g) {
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 200);
-		
 		g.setColor(Color.white);
 		Font font = new Font("Courier New", Font.PLAIN, 20);
 		//X coordinate

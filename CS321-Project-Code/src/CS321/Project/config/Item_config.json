@@ -10,7 +10,8 @@
             "visDamage": 0.0,
             "age": 0,
             "created": 0,
-            "wetness": 0.0
+            "wetness": 0.0,
+			"id" : 0
         },
         {
             "name": "Shirt",
@@ -20,12 +21,13 @@
             "visDamage": 0.0,
             "age": 0,
             "created": 0,
-            "wetness": 0.0
+            "wetness": 0.0,
+			"id" : 10
         }
     ],
 
     "//Tool array": "just the array for tool objects",
-    "Tools":
+    "Tool":
     [
         {
             "name": "Axe"
@@ -35,7 +37,7 @@
         }
     ],
 
-    "//Food array": "just the array for tool objects",
+    "//Food array": "just the array for food objects",
     "Food":
     [
         {
