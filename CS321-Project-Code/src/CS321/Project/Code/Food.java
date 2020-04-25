@@ -29,13 +29,17 @@ public class Food extends Item {
 			case "oats":
 				return new String[] {"oatmeal"};
 			case "water":
-				return new String[] {"water, oatmeal"};
+				return new String[] {"water, oatmeal, soup"};
 			case "berries":
 				return new String[] {"berries"};
+			case "carrot":
+				return new String[] {"carrot"};
 			case "chicken":
-				return new String[] {"chicken"};
+				return new String[] {"chicken, soup"};
 			case "fish":
 				return new String[] {"fish"};
+			case "bread":
+				return new String[] {"bread"};
 			default:
 				return new String[] {this.name};
 		}

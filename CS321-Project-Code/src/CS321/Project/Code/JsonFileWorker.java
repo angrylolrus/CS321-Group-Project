@@ -34,6 +34,7 @@ public class JsonFileWorker {
         // Tool t;
         String name;
         double volume, weight, wetness, damage, visDamage;
+        wetness = 0;
         int age, created;
 
         JSONArray jArray = (JSONArray) readerObj.get(type);
@@ -43,14 +44,15 @@ public class JsonFileWorker {
             volume = (double) jObject.get("volume");
             weight = (double) jObject.get("weight");
             damage = (double) jObject.get("damage");
-            visDamage = (double) jObject.get("visable damage");
+            visDamage = (double) jObject.get("visDamage");
             age = Math.toIntExact((long) jObject.get("age"));
             if (!newItem) {
                 created = (int) jObject.get("created");
             } else {
                 created = 0; // need to create a day/hour variable
             }
-            wetness = (double) jObject.get("wetness");
+            if(type.equals("Food"))
+				wetness = (double) jObject.get("wetness");
         } catch (Exception e) {
             System.out.println("Something went wrong with reading JSON file!\n" + e);
             return null;
