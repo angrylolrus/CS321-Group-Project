@@ -17,7 +17,7 @@ public class Clothing extends Item
         setDamage(getDamage() + amt);
     }
 
-    @Override
+   
     public int getDefense()
     {
         return defense;
@@ -37,7 +37,7 @@ public class Clothing extends Item
     } 
 
     @Override
-    public String[] getUses(String type) {
+    public String[] getUses() {
         String[] s = new String[5];
         return s;
     }

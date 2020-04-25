@@ -61,7 +61,6 @@ public abstract class Item {
     // age. It will obviously vary depending on the type of object
     public abstract void takeDamage(double amt);
 
-    public abstract int getDefense();
 
     // This is for an object to be inspected by the player.
     // Different objects will have different inspection styles
@@ -71,7 +70,7 @@ public abstract class Item {
     // Returns an array of strings for what this object/tool can be
     // used for. For tools it may be crafting uses or scavenging
     // uses, for food it may be recipes
-    public abstract String[] getUses(String type);
+    public abstract String[] getUses();
 
     //Getter Methods
     public String getType()
