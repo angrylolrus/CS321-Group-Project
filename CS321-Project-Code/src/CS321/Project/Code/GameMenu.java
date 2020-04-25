@@ -99,10 +99,10 @@ public class GameMenu {
 					//Use negative change, so its away from the mouse instead of towards
 					//mapCenter.x -= xChange;
 					//mapCenter.y -= yChange;
-					zoomLevel = Math.max(1, zoomLevel - .1);
+					zoomLevel = Math.max(1, zoomLevel - .25);
 				}
 				if(type == 6) {
-					zoomLevel = Math.min(6, zoomLevel + .1);
+					zoomLevel = Math.min(6, zoomLevel + .25);
 				}
 			}
 			//	Ensures it doesn't go off the edge - this code was repeated a lot so I figured it would be

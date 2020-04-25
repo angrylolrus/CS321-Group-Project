@@ -16,7 +16,6 @@ public class Tool extends Item {
 	  
   }
 
-  @Override
   public int getDefense() {
     return defense;
   }
@@ -28,7 +27,7 @@ public class Tool extends Item {
   }
 
   @Override
-  public String[] getUses(String type) {
+  public String[] getUses() {
     // if(type == "Tool")
     String[] uses = {"Equip", "Drop", "Use"};
     return uses;
