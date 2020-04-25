@@ -1,0 +1,1 @@
+Make inventory sort by certain variables when you click on the heading
