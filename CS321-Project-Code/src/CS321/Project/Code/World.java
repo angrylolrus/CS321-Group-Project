@@ -1,7 +1,6 @@
 package CS321.Project.Code;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Random;
 import java.awt.image.BufferedImage;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -12,10 +11,7 @@ import java.awt.Point;
  * @author Jarrod Quinn
  *
  */
-public class World {
-	
-	public static Random random = new Random(1);
-	
+public class World {	
 	public ArrayList<ArrayList<Location>> locs;
 	public ArrayList<Point2D.Double> locuses;
 	int xSize, ySize;
@@ -31,8 +27,8 @@ public class World {
 		ArrayList<Point2D.Double> loci = new ArrayList<Point2D.Double>();
 		
 		for(int a = 0; a < 16; a++) {
-			double x = random.nextDouble() * xSize;
-			double y = random.nextDouble() * ySize;
+			double x = Controller.random.nextDouble() * xSize;
+			double y = Controller.random.nextDouble() * ySize;
 			loci.add(new Point2D.Double(x, y));
 		}
 		
@@ -40,12 +36,12 @@ public class World {
 		for(int a = 0; a < xSize; a += 25)
 			for(int b = 0; b < ySize; b += 25) {
 				//So it isn't too even
-				if(random.nextDouble() < .2)
+				if(Controller.random.nextDouble() < .2)
 					continue;
 				double x = a, y = b;
 				//Give it some wiggle
-				x += random.nextDouble() * 30 - 15;
-				y += random.nextDouble() * 30 - 15;
+				x += Controller.random.nextDouble() * 30 - 15;
+				y += Controller.random.nextDouble() * 30 - 15;
 				
 				//Moves them towards the closest 3 loci
 				double[] dists = new double[loci.size()];
@@ -62,7 +58,7 @@ public class World {
 						if(dists[j] < dists[index])
 							index = j;
 					//Gets the distance the point will move
-					double movement = dists[index] * (random.nextDouble() * .2 + .01);
+					double movement = dists[index] * (Controller.random.nextDouble() * .2 + .01);
 					//Maxes out the distance to that locus so it won't be reused
 					dists[index] = Double.MAX_VALUE;
 					//Moves the point 
@@ -88,11 +84,11 @@ public class World {
 				
 				if(dist < 5) // && random.nextDouble() < .9) 					
 					loc1.addLink(loc2);
-				else if(dist < 20 && random.nextDouble() < .9)
+				else if(dist < 20 && Controller.random.nextDouble() < .9)
 					loc1.addLink(loc2);
-				else if(dist < 40 && random.nextDouble() < .6)
+				else if(dist < 40 && Controller.random.nextDouble() < .6)
 					loc1.addLink(loc2);
-				else if(dist < 70 && random.nextDouble() < .1)
+				else if(dist < 70 && Controller.random.nextDouble() < .1)
 					loc1.addLink(loc2);
 				
 			}
@@ -114,8 +110,8 @@ public class World {
 	}//End of constructor
 	
 	public Location getRandomLocation() {
-		int outer = (int)(random.nextDouble()*locs.size());
-		int inner = (int)(random.nextDouble()*locs.get(outer).size());
+		int outer = (int)(Controller.random.nextDouble()*locs.size());
+		int inner = (int)(Controller.random.nextDouble()*locs.get(outer).size());
 		return locs.get(outer).get(inner);
 		
 	}
@@ -171,6 +167,11 @@ public class World {
 		g.setColor(Color.red);
 		parent.playerLocation.drawSelfRelative(x, y, margin, g);
 		
+		if(parent.hardFocus instanceof Location) {
+			g.setColor(Color.green);
+			((Location) parent.hardFocus).drawSelfRelative(x, y, margin, g);
+		}
+		
 		return map;
 	}
 		
@@ -191,7 +192,7 @@ public class World {
 		//Then draws the locations
 		
 		for(ArrayList<Location> curList : locs) {
-			int r = (int)(random.nextDouble()*255), gr = (int)(random.nextDouble()*255), b = (int)(random.nextDouble()*255);
+			int r = (int)(Controller.random.nextDouble()*255), gr = (int)(Controller.random.nextDouble()*255), b = (int)(Controller.random.nextDouble()*255);
 			g.setColor(new Color(r,gr,b));//
 			for(Location l: curList) {
 				l.drawSelf(g);

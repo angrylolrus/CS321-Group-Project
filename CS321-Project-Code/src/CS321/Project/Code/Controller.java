@@ -3,11 +3,15 @@ package CS321.Project.Code;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Controller extends JPanel {
+	
+	public static Random random = new Random(1);
+	
 	private static final long serialVersionUID = 1L;
 	public JFrame frame;
 	public Insets insets;
@@ -41,6 +45,7 @@ public class Controller extends JPanel {
 		frame = new JFrame("321 Apocalyptic Game");
 		/* ******************* N.B Change this later ******************* */
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
 		frame.setLocation(25, 25);
 		frame.setVisible(true);
 		insets = frame.getInsets();

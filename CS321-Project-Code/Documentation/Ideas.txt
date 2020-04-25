@@ -1,1 +1,4 @@
 Make inventory sort by certain variables when you click on the heading
+JSON file should only have a handful of variables in it, like Max Health, things like damage will
+	be set to 0 by default (we can change this later though so we don't have to adjust our input
+	code)

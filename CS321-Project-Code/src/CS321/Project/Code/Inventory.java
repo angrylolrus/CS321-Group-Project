@@ -1,15 +1,27 @@
 package CS321.Project.Code;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.util.ArrayList;
+import CS321.Project.Code.UIElement.Label;
 
 public class Inventory {
 	private ArrayList<Item> contents;
 	double maxVolume, maxWeight;
 	
+	
+	//A value for how much the list has been scrolled
+	//Relates to display and selection
+	double scroll;
+	int selectedItem;
+	
 	public Inventory(double v, double w) {
 		maxVolume = (v == -1 ? Integer.MAX_VALUE : v);
 		maxWeight = (w == -1 ? Integer.MAX_VALUE : w);
-		
+		scroll = 0;
+		contents = new ArrayList<Item>();
+		selectedItem = -1;
 	}
 	
 	public void transfer(Inventory other, Item i) {
@@ -65,5 +77,90 @@ public class Inventory {
 		maxWeight += w;
 	}
 	
+	//A positive scroll value indicates upwards motion
+	public void scroll(int dir) {
+		scroll += 0.2 * dir;
+		//Ensures the player doesn't scroll the top below the header
+		scroll = Math.max(scroll, 0);
+		//Ensures the player doesn't scroll the button above the header
+		scroll = Math.min(scroll, contents.size() - 1);
+	}
+	
+	
+	public void resetHighlight() {
+		selectedItem = -1;
+	}
+	
+	public int highlightedIndex() {
+		return selectedItem;
+	}
+	
+	public Item highlightedItem() {
+		return contents.get(selectedItem);
+	}
+	
+	//How tall an inventory entry is. Used for drawing and retrieving
+	private static final int ENTRY_HEIGHT = 20;
+	
+	public Item selectItemAt(int x, int y) {
+		int index = (int)(y - 43 + (scroll*ENTRY_HEIGHT))/ENTRY_HEIGHT;
+		if(selectedItem == index || index >= contents.size() || index < 0) {
+			selectedItem = -1;
+			return null;
+		}
+		selectedItem = index;
+		return contents.get(selectedItem);
+	}
+	
+	public void drawSelf(Graphics g) {
+		Font font = new Font("Courier New", Font.PLAIN, 14);
+		Label name, weight, vol;
+		for(int a = 0; a < contents.size(); a++) {
+			Item curItem = contents.get(a);
+			
+			name = new Label(curItem.getName(), true, 35, 50 + (ENTRY_HEIGHT*a) - (int)(ENTRY_HEIGHT*scroll));
+			name.setFont(font);
+			
+			weight = new Label("" + (curItem.getWeight()+"00000").substring(0, 4), true, 100, 50 + (ENTRY_HEIGHT*a) - (int)(ENTRY_HEIGHT*scroll));
+			weight.setFont(font);
+		
+			vol = new Label("" + (curItem.getVolume()+"00000").substring(0, 4), true, 150, 50 + (ENTRY_HEIGHT*a) - (int)(ENTRY_HEIGHT*scroll));
+			vol.setFont(font);
+			
+			if(a == selectedItem) {
+				name.setColor(Color.black);
+				weight.setColor(Color.black);
+				vol.setColor(Color.black);
+				g.setColor(Color.white);
+				g.fillRect(0, 43 + (ENTRY_HEIGHT*a) - (int)(ENTRY_HEIGHT*scroll), 200, ENTRY_HEIGHT);
+			}
+			
+			name.update(g);
+			weight.update(g);
+			vol.update(g);
+		}
+		
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 200, 43);
+		
+		font = new Font("Courier New", Font.PLAIN, 18);
+		Label headers;
+		//g.setColor(Color.white);
+		headers = new Label("Name", true, 35, 25);
+		headers.setFont(font);
+		headers.update(g);
+		
+		headers = new Label(" Wt.", true, 100, 25);
+		headers.setFont(font);
+		headers.update(g);
+		
+		headers = new Label("Vol", true, 150, 25);
+		headers.setFont(font);
+		headers.update(g);
+		
+		//Bounding box for header
+		g.drawLine(0, 43, 200, 43);
+		
+	}
 	
 }

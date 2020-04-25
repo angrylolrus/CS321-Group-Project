@@ -5,10 +5,12 @@ public class Player {
     int current_Health;
     int defense;
     Item[] equipped = new Item[5];
+    Inventory inventory;
 
     public Player() {
         current_Health = MAX_HEALTH;
         defense = 0;
+        inventory = new Inventory(25, 50);
     }
 
     public void takeDamage(int dmg) {
@@ -38,6 +40,10 @@ public class Player {
     public int getDefense()
     {
         return defense;
+    }
+    
+    public Inventory getInventory() {
+    	return inventory;
     }
 
     public void getEquipped()

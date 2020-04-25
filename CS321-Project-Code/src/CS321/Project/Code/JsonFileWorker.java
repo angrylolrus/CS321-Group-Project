@@ -11,7 +11,7 @@ import java.lang.Math;
 // class to read a json file and grab the base attributes of an Item
 public class JsonFileWorker {
     static JSONObject readerObj;
-    static String config = "CS321\\Project\\config\\Item_config.json";
+    static String config = "src\\CS321\\Project\\config\\Item_config.json";
 
     // needs to be run before any json reading or writing will happen
     public static boolean init() {
@@ -43,7 +43,7 @@ public class JsonFileWorker {
             volume = (double) jObject.get("volume");
             weight = (double) jObject.get("weight");
             damage = (double) jObject.get("damage");
-            visDamage = (double) jObject.get("visable damage");
+            visDamage = (double) jObject.get("visible damage");
             age = Math.toIntExact((long) jObject.get("age"));
             if (!newItem) {
                 created = (int) jObject.get("created");
