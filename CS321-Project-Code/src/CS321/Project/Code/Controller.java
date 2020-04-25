@@ -24,6 +24,8 @@ public class Controller extends JPanel {
 	public GameMenu gameMenu;
 
 	public static void main(String[] args) {
+		if(!JsonFileWorker.init())
+			System.exit(-1);
 		Controller controller = new Controller();
 		controller.initialize();
 	}

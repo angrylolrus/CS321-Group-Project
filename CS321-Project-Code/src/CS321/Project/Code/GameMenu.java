@@ -45,14 +45,46 @@ public class GameMenu {
 		
 		playerLocation = world.getRandomLocation();
 		
-		if(!JsonFileWorker.init())
-			System.exit(-1);
+		
 		
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 
+	}
+	
+	public void openInventory(Inventory i) {
+		openInventory = i;
+	}
+	
+	public void closeInventory() {
+		if(openInventory != null)
+			openInventory.resetHighlight();
+		openInventory = null;
+	}
+	
+	public void changeFocus(Object o) {
+		//If the player focuses on something that isn't there
+		if(o == null) {
+			if(softFocus != null) {
+				hardFocus = softFocus;
+				openInventory.resetHighlight();
+				softFocus = null;
+			}
+			else {
+				hardFocus = null;
+				closeInventory();
+			}
+		}
+		else {
+			if(hardFocus instanceof Location && o instanceof Item) {
+				softFocus = hardFocus;
+			}
+			hardFocus = o;
+			if(hardFocus instanceof Location)
+				openInventory(((Location)o).getInventory());
+		}
 	}
 
 	public void receiveMouse(MouseEvent e, int type) {
@@ -84,7 +116,7 @@ public class GameMenu {
 			else if(type == 3) {
 				//If the player (presumably) tried to click a single point
 				if(dragPos == null) {
-					hardFocus = world.getLocationAt(new Point(mapX, mapY), zoomLevel);
+					changeFocus(world.getLocationAt(new Point(mapX, mapY), zoomLevel));
 					player.inventory.resetHighlight();
 				}
 				else {
@@ -125,12 +157,25 @@ public class GameMenu {
 		
 		if(e.getX() > 600 && e.getY() < 600) {
 			int xRel = e.getX() - 600,  yRel = e.getY();
-			if(type == 2)
-				hardFocus = player.getInventory().selectItemAt(xRel, yRel);
-			if(type == 5)
-				player.getInventory().scroll(-1);
-			else if(type == 6)
-				player.getInventory().scroll(1);
+			if(type == 2){
+				Inventory target = player.getInventory();
+				// If there's an inventory open, reset its highlighting
+				if (openInventory != null) {
+					if (yRel > 300) {
+						target = openInventory;
+						yRel -= 300;
+					}
+				}
+				if (type == 2) {
+					changeFocus(target.selectItemAt(xRel, yRel));
+				}
+				if (type == 5) {
+					target.scroll(-1);
+				}
+
+				else if (type == 6)
+					target.scroll(1);
+			}
 			
 		}
 		
@@ -172,6 +217,11 @@ public class GameMenu {
 		player.getInventory().drawSelf(playerInv.getGraphics());
 		g.drawImage(playerInv, 600, 0, 200, 600, null);
 		
+		if(openInventory != null) {
+			BufferedImage openInv = new BufferedImage(200, 300, BufferedImage.TYPE_INT_RGB);
+			openInventory.drawSelf(openInv.getGraphics());
+			g.drawImage(openInv, 600, 300, 200, 300, null);
+		}
 		
 		g.setColor(Color.WHITE);
 		g.drawRect(0, 0, 600, 600);
