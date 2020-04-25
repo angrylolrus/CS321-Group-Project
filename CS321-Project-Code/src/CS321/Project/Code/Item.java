@@ -70,7 +70,7 @@ public abstract class Item {
     // Returns an array of strings for what this object/tool can be
     // used for. For tools it may be crafting uses or scavenging
     // uses, for food it may be recipes
-    public abstract String[] getUses(String type);
+    public abstract String[] getUses();
 
     //Getter Methods
     public String getType()

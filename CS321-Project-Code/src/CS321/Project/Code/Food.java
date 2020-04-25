@@ -15,21 +15,30 @@ public class Food extends Item {
 	}
 
 	@Override
-	public int getDefense() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
 	public void inspect(int closeness) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public String[] getUses(String type) {
+	public String[] getUses() {
 		// TODO Auto-generated method stub
-		return null;
+		switch(this.name) {
+			case "milk":
+				return new String[] {"milk, oatmeal"};
+			case "oats":
+				return new String[] {"oatmeal"};
+			case "water":
+				return new String[] {"water, oatmeal"};
+			case "berries":
+				return new String[] {"berries"};
+			case "chicken":
+				return new String[] {"chicken"};
+			case "fish":
+				return new String[] {"fish"};
+			default:
+				return new String[] {this.name};
+		}
 	}
 	public double getWetness() {
 		return wetness;
