@@ -82,7 +82,7 @@ public class World {
 				//Checks distance and decides if there should be a link (randomly)
 				double dist = Math.sqrt(Math.pow(loc1.xPos - loc2.xPos, 2) + Math.pow(loc1.yPos - loc2.yPos, 2));
 				
-				if(dist < 10) // && random.nextDouble() < .9) 					
+				if(dist < 8) // && random.nextDouble() < .9) 					
 					loc1.addLink(loc2);
 				else if(dist < 20 && Controller.random.nextDouble() < .9)
 					loc1.addLink(loc2);
