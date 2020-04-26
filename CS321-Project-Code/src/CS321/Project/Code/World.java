@@ -82,7 +82,7 @@ public class World {
 				//Checks distance and decides if there should be a link (randomly)
 				double dist = Math.sqrt(Math.pow(loc1.xPos - loc2.xPos, 2) + Math.pow(loc1.yPos - loc2.yPos, 2));
 				
-				if(dist < 5) // && random.nextDouble() < .9) 					
+				if(dist < 10) // && random.nextDouble() < .9) 					
 					loc1.addLink(loc2);
 				else if(dist < 20 && Controller.random.nextDouble() < .9)
 					loc1.addLink(loc2);
@@ -125,7 +125,7 @@ public class World {
 				double yDif = Math.abs(p.y - l.yPos);
 				if(xDif > 6*zoomLevel  || yDif > 6*zoomLevel)
 					continue;
-				//Just used the square of teh desired distance
+				//Just used the square of the desired distance
 				// theoretically, sqrt function is really slow
 				if(xDif*xDif + yDif*yDif < 100)
 					return l;
