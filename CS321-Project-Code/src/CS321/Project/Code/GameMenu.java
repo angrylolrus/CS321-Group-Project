@@ -202,6 +202,11 @@ public class GameMenu {
 	}
 
 	public void receiveKey(KeyEvent e, int type) {
+		
+		/* Code to advance time, for testing
+		if(e.getKeyCode() == KeyEvent.VK_SPACE)
+			advanceTime((int)(controller.random.nextDouble()*60));//*/
+		
 		/*
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT)
 			mapCenter.x += 8;
