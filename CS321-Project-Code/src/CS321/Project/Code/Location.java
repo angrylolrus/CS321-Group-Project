@@ -36,6 +36,17 @@ public class Location {
 		links.add(l);
 		l.links.add(this);
 	}
+	
+	public boolean adjacentTo(Location l) {
+		return links.contains(l);
+	}
+	
+	public double distanceTo(Location l) {
+		if(!this.adjacentTo(l))
+			return -1;
+		else
+			return Math.sqrt(Math.pow(this.xPos - l.xPos, 2) + Math.pow(this.yPos - l.yPos, 2));
+	}
 
 	public void generateRegion(ArrayList<Location> curList) {
 		curList.add(this);

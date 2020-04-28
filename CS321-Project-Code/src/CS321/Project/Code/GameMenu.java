@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 
 public class GameMenu {
+	
+	//Placeholders for values that may vary but we haven't implemented yet
+	static final double PLAYER_SPEED = 4.7; //player speed in km/h
+	
 	//To receive and pass commands back up
 	Controller controller;
 	boolean debug = true;
@@ -55,6 +59,8 @@ public class GameMenu {
 
 	}
 	
+	//Methods to adjust time
+	
 	public void advanceTime(int t) {
 		time += t;
 	}
@@ -68,36 +74,78 @@ public class GameMenu {
 	}
 	
 	public void openInventory(Inventory i) {
-		openInventory = i;
+		//If the player is opening an invalid inventory (shouldn't happen, but)
+		//	it'll just close the inventory
+		if(i == null) {
+			closeInventory();
+			return;
+		}
+		//If the player doesn't have an inventory open, takes a minute
+		//	to open the new one
+		if(openInventory == null) { 
+			advanceTime(1);
+			openInventory = i;
+		}
+		//If the player isn't opening a new inventory
+		else if(openInventory != i) {
+			advanceTime(2);
+			openInventory = i;
+		}
+		//Final option, but no if else needed, is the player opens an inventory
+		//	they already have open
 	}
 	
 	public void closeInventory() {
-		if(openInventory != null)
+		if(openInventory != null) {
 			openInventory.resetHighlight();
-		openInventory = null;
+			advanceTime(1);
+			openInventory = null;
+		}	
+	}
+	
+	public void travelToFocus() {
+		//If the player doesn't have a location selected
+		if(!(hardFocus instanceof Location))
+			return;
+		Location dest = (Location)hardFocus;
+		//If the selected location isn't adjacent
+		if(!playerLocation.adjacentTo(dest))
+			return;
+		
+		
+		
+		//If the player successfully travels
+		double timeTaken = playerLocation.distanceTo(dest); // initial distance
+		timeTaken /= PLAYER_SPEED; // Number of hours
+		timeTaken *= 60; // Number of minutes
+		advanceTime((int)Math.round(timeTaken)); //Finally, advance time
+		playerLocation = dest; //And update the location
 	}
 	
 	public void changeFocus(Object o) {
+		hardFocus = o;
+		
+		/* With changes to opening inventories, we don't need to worry about
+		   the soft vs hard focus, there's only a hard focus
 		//If the player focuses on something that isn't there
 		if(o == null) {
 			if(softFocus != null) {
 				hardFocus = softFocus;
 				openInventory.resetHighlight();
+				player.getInventory().resetHighlight();
 				softFocus = null;
 			}
 			else {
 				hardFocus = null;
-				closeInventory();
 			}
 		}
+		//If the player is actually focusing on something
 		else {
 			if(hardFocus instanceof Location && o instanceof Item) {
 				softFocus = hardFocus;
 			}
 			hardFocus = o;
-			if(hardFocus instanceof Location)
-				openInventory(((Location)o).getInventory());
-		}
+		}//*/
 	}
 
 	public void receiveMouse(MouseEvent e, int type) {
@@ -192,8 +240,6 @@ public class GameMenu {
 			
 		}
 		
-		
-		
 		if(type == 3) {
 			dragPos = null;
 			dragStart = null;
@@ -202,10 +248,10 @@ public class GameMenu {
 	}
 
 	public void receiveKey(KeyEvent e, int type) {
-		
-		/* Code to advance time, for testing
+		/*
+		//Testing code
 		if(e.getKeyCode() == KeyEvent.VK_SPACE)
-			advanceTime((int)(controller.random.nextDouble()*60));//*/
+			travelToFocus(); //*/
 		
 		/*
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT)

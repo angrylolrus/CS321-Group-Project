@@ -106,9 +106,9 @@ public class InfoPanel {
 		String distString = "Distance:";
 		if(loc == parent.playerLocation)
 			distString += "0";
-		else if(loc.links.contains(parent.playerLocation)) {
+		else if(loc.adjacentTo(parent.playerLocation)) {
 			//N.B. later this will be travel time but for now thats the same as distance
-			double dist = Math.sqrt(Math.pow(loc.xPos - parent.playerLocation.xPos, 2) + Math.pow(loc.yPos - parent.playerLocation.yPos, 2));
+			double dist = parent.playerLocation.distanceTo(loc);
 			distString += Math.round(dist*100)/100;
 		}
 		else{
