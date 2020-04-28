@@ -176,9 +176,12 @@ public abstract class UIElement {
 	}
 	
 	public static class Button extends UIElement{
+		boolean clickable;
+
 		// x,y are position, w,h are width and height
 		public Button(int x, int y, int w, int h) {
 			super(x, y, w, h);
+			clickable = false;
 		}
 		
 		public void keyAction(KeyEvent e, int type) {
@@ -195,6 +198,16 @@ public abstract class UIElement {
 		public void update(Graphics g) {
 			g.setColor(color);
 			g.fill3DRect(xPos, yPos, xSize, ySize, !hasFocus);
+		}
+
+		public void setClickable(boolean b)
+		{
+			clickable = b;
+		}
+
+		public boolean isClickable()
+		{
+			return clickable;
 		}
 		
 	}//End Button

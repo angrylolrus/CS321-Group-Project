@@ -19,6 +19,7 @@ public class GameMenu {
 	int worldSize;
 	public ArrayList<UIElement> elements;
 	InfoPanel infoPanel;
+	ActionPanel actionPanel;
 	long time;
 	
 	//Variables used to control the map view so the player can zoom in/out & pan
@@ -37,6 +38,7 @@ public class GameMenu {
 		controller = c;
 		player = new Player();
 		infoPanel = new InfoPanel(this);
+		actionPanel = new ActionPanel(this);
 		//World & map initialization 
 		worldSize = 1200; //This may be customizable (or just changed) later, but for now its 1200
 		world = new World(this, worldSize,worldSize);
@@ -89,10 +91,12 @@ public class GameMenu {
 				hardFocus = null;
 				closeInventory();
 			}
+			actionPanel.itemFocus(false, null);
 		}
 		else {
 			if(hardFocus instanceof Location && o instanceof Item) {
 				softFocus = hardFocus;
+				actionPanel.itemFocus(true, o);
 			}
 			hardFocus = o;
 			if(hardFocus instanceof Location)
@@ -191,6 +195,11 @@ public class GameMenu {
 			}
 			
 		}
+
+		if(e.getX() < 600 && e.getY() > 600)
+		{
+			actionPanel.receiveMouse(e, type);
+		}
 		
 		
 		
@@ -229,6 +238,10 @@ public class GameMenu {
 		BufferedImage playerInv = new BufferedImage(200, 600, BufferedImage.TYPE_INT_RGB);
 		player.getInventory().drawSelf(playerInv.getGraphics());
 		g.drawImage(playerInv, 600, 0, 200, 600, null);
+
+		BufferedImage actPnl = new BufferedImage(600, 200, BufferedImage.TYPE_INT_RGB);
+		actionPanel.draw(actPnl.getGraphics());
+		g.drawImage(actPnl, 0, 600, 600, 200, null);
 		
 		if(openInventory != null) {
 			BufferedImage openInv = new BufferedImage(200, 300, BufferedImage.TYPE_INT_RGB);
