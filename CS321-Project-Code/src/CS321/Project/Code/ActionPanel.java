@@ -12,12 +12,27 @@ public class ActionPanel {
     
     public ArrayList<UIElement> elements;
     GameMenu parent;
-    public Button equip, eat;
+    public Button equip, eat, travel;
 	
 	public ActionPanel(GameMenu g) {
         parent = g;
         Label curLabel;
         elements = new ArrayList<UIElement>();
+
+        
+        Button[][] blankButtons = new Button[12][6];
+        
+        for(int a = 0; a < blankButtons.length; a++)
+        	for(int b = 0; b < blankButtons[a].length; b++) {
+        		blankButtons[a][b] = new Button(5 + (a*60), 5 + (b*40), 50, 30);
+        		//elements.add(blankButtons[a][b]);
+        	}
+        
+        equip = blankButtons[0][0];
+        equip.updateLabel("Equip");
+        elements.add(equip);
+        
+        /*
 
         //Equip
         equip = new Button(20, 80, 50, 40);
@@ -33,6 +48,9 @@ public class ActionPanel {
 		curLabel = new UIElement.Label("Eat", true, 115, 95);
 		curLabel.setFont("Courier New", Font.PLAIN, 16);
 		curLabel.setColor(Color.black);
+
+		elements.add(curLabel);		
+		*/
 		elements.add(curLabel);
     }
 
@@ -73,6 +91,28 @@ public class ActionPanel {
             f = false;
         }
 
+        /*
+        Button equip = (UIElement.Button) elements.get(0);
+        equip.setClickable(c);
+
+        Button eat = (UIElement.Button) elements.get(2);//*/
+        //eat.setClickable(f);
+    }
+    
+    //Sends the button they pressed
+    public void buttonPressed(Button b) {
+    	if(b == equip) {
+    		
+    	}
+    	else if(b == eat) {
+    		
+    	}
+    	else if(b == travel) {
+    		
+    	}
+    }
+
+
         Button equip = (UIElement.Button) elements.get(0);
         equip.setClickable(c);
 
@@ -86,6 +126,17 @@ public class ActionPanel {
 		for(UIElement element : elements) {
             element.mouseAction(e, type);
 
+
+            //Not the desired button (or not a button)
+			if(element.contains(e.getPoint()) == false || !(element instanceof Button))
+				continue;
+			//Player clicked and button clicked on is valid
+			if(type == 3 && ((Button)element).isClickable()) {
+				buttonPressed((Button)element);
+				break;
+			}
+        }
+
 			if(element.contains(e.getPoint()) == false)
 				continue;
 			if(type == 3 && element == equip)
@@ -95,5 +146,6 @@ public class ActionPanel {
 			}
         }
         e.translatePoint(0, 600);
+
 	}
 }
