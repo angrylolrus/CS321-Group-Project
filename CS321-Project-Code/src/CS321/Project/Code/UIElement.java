@@ -9,6 +9,9 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
 public abstract class UIElement {
+	
+	
+	
 	public int xPos, yPos;
 	public boolean hasFocus;
 	public int xSize, ySize;
@@ -177,11 +180,25 @@ public abstract class UIElement {
 	
 	public static class Button extends UIElement{
 		boolean clickable;
+		Label label;
 
 		// x,y are position, w,h are width and height
 		public Button(int x, int y, int w, int h) {
 			super(x, y, w, h);
-			clickable = false;
+			clickable = true;
+		}
+		
+		public Button(int x, int y, int w, int h, String s) {
+			super(x, y, w, h);
+			clickable = true;
+			label = new Label(s, true, x + (w/2), y + (h/2));
+			label.setFont(Controller.DEFAULT_FONT);
+		}
+		
+		public void updateLabel(String s) {
+			label = new Label(s, true, xPos + (xSize/2), yPos + (ySize/2));
+			label.setColor(Color.black);
+			label.setFont(Controller.DEFAULT_FONT);
 		}
 		
 		public void keyAction(KeyEvent e, int type) {
@@ -189,7 +206,7 @@ public abstract class UIElement {
 		}
 		
 		public void mouseAction(MouseEvent e, int type) {
-			if(type == 1) {
+			if(type == 1 && clickable) {
 				if (this.contains(e.getPoint()))
 					hasFocus = true;
 				else
@@ -199,16 +216,21 @@ public abstract class UIElement {
 		
 		public void update(Graphics g) {
 			g.setColor(color);
-			g.fill3DRect(xPos, yPos, xSize, ySize, !hasFocus);
+			g.fill3DRect(xPos, yPos, xSize, ySize, !hasFocus && clickable);
+			if(label != null)
+				label.update(g);
 		}
 
-		public void setClickable(boolean b)
-		{
+		public void setClickable(boolean b)	{
 			clickable = b;
+			
+			if(clickable)
+				color = Color.white;
+			else
+				color = Color.lightGray;
 		}
 
-		public boolean isClickable()
-		{
+		public boolean isClickable(){
 			return clickable;
 		}
 		
