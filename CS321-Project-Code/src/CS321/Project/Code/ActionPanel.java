@@ -18,6 +18,7 @@ public class ActionPanel {
         parent = g;
         Label curLabel;
         elements = new ArrayList<UIElement>();
+
         
         Button[][] blankButtons = new Button[12][6];
         
@@ -32,6 +33,7 @@ public class ActionPanel {
         elements.add(equip);
         
         /*
+
         //Equip
         equip = new Button(20, 80, 50, 40);
 		elements.add(equip);
@@ -46,8 +48,10 @@ public class ActionPanel {
 		curLabel = new UIElement.Label("Eat", true, 115, 95);
 		curLabel.setFont("Courier New", Font.PLAIN, 16);
 		curLabel.setColor(Color.black);
+
 		elements.add(curLabel);		
 		*/
+		elements.add(curLabel);
     }
 
     public void draw(Graphics gb) {
@@ -86,6 +90,7 @@ public class ActionPanel {
             t = false;
             f = false;
         }
+
         /*
         Button equip = (UIElement.Button) elements.get(0);
         equip.setClickable(c);
@@ -106,13 +111,21 @@ public class ActionPanel {
     		
     	}
     }
-    
+
+
+        Button equip = (UIElement.Button) elements.get(0);
+        equip.setClickable(c);
+
+        Button eat = (UIElement.Button) elements.get(2);
+        eat.setClickable(f);
+    }
 
     public void receiveMouse(MouseEvent e, int type) {
         e.translatePoint(0, -600);
 
 		for(UIElement element : elements) {
             element.mouseAction(e, type);
+
 
             //Not the desired button (or not a button)
 			if(element.contains(e.getPoint()) == false || !(element instanceof Button))
@@ -123,5 +136,16 @@ public class ActionPanel {
 				break;
 			}
         }
+
+			if(element.contains(e.getPoint()) == false)
+				continue;
+			if(type == 3 && element == equip)
+                System.out.println("Equiping");
+			if(type == 3 && element == eat) {
+				System.out.println("Eating");
+			}
+        }
+        e.translatePoint(0, 600);
+
 	}
 }

@@ -185,6 +185,7 @@ public abstract class UIElement {
 		// x,y are position, w,h are width and height
 		public Button(int x, int y, int w, int h) {
 			super(x, y, w, h);
+
 			clickable = true;
 		}
 		
@@ -199,6 +200,7 @@ public abstract class UIElement {
 			label = new Label(s, true, xPos + (xSize/2), yPos + (ySize/2));
 			label.setColor(Color.black);
 			label.setFont(Controller.DEFAULT_FONT);
+			clickable = false;
 		}
 		
 		public void keyAction(KeyEvent e, int type) {
@@ -231,6 +233,16 @@ public abstract class UIElement {
 		}
 
 		public boolean isClickable(){
+			return clickable;
+		}
+
+		public void setClickable(boolean b)
+		{
+			clickable = b;
+		}
+
+		public boolean isClickable()
+		{
 			return clickable;
 		}
 		

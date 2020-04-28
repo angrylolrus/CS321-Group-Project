@@ -44,6 +44,7 @@ public class GameMenu {
 		infoPanel = new InfoPanel(this);
 		actionPanel = new ActionPanel(this);
 		actionPanel.itemFocus(false, null);
+    
 		//World & map initialization 
 		worldSize = 1200; //This may be customizable (or just changed) later, but for now its 1200
 		world = new World(this, worldSize,worldSize);
