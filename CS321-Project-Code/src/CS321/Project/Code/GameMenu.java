@@ -19,7 +19,7 @@ public class GameMenu {
 	int worldSize;
 	public ArrayList<UIElement> elements;
 	InfoPanel infoPanel;
-	double time;
+	long time;
 	
 	//Variables used to control the map view so the player can zoom in/out & pan
 	Point mapCenter;
@@ -45,13 +45,26 @@ public class GameMenu {
 		
 		playerLocation = world.getRandomLocation();
 		
-		
+		//Time is expressed in minutes, this is 8am
+		time = 480;
 		
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 
+	}
+	
+	public void advanceTime(int t) {
+		time += t;
+	}
+	
+	public long getTime() {
+		return time;
+	}
+	
+	public long timeSince(int t) {
+		return time - t;
 	}
 	
 	public void openInventory(Inventory i) {

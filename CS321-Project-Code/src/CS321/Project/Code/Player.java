@@ -25,7 +25,7 @@ public class Player {
     public void equip_Item(Item i, int type) {
         Item temp = equipped[type];
         equipped[type] = i;
-        change_Defense(i.getDefense() - temp.getDefense());
+        //change_Defense(i.getDefense() - temp.getDefense());
     }
 
     public void change_Defense(int df) {
