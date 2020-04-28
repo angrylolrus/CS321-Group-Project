@@ -186,10 +186,12 @@ public abstract class UIElement {
 		}
 		
 		public void mouseAction(MouseEvent e, int type) {
-			if(this.contains(e.getPoint()))
-				hasFocus = true;
-			else
-				hasFocus = false;
+			if(type == 1) {
+				if (this.contains(e.getPoint()))
+					hasFocus = true;
+				else
+					hasFocus = false;
+			}
 		}
 		
 		public void update(Graphics g) {
