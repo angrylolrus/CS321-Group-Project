@@ -127,7 +127,7 @@ public class World {
 					continue;
 				//Just used the square of the desired distance
 				// theoretically, sqrt function is really slow
-				if(xDif*xDif + yDif*yDif < 100)
+				if(xDif*xDif + yDif*yDif < (50 / zoomLevel))
 					return l;
 			}
 	
@@ -170,6 +170,11 @@ public class World {
 		if(parent.hardFocus instanceof Location) {
 			g.setColor(Color.green);
 			((Location) parent.hardFocus).drawSelfRelative(x, y, margin, g);
+		}
+		
+		if(parent.softFocus instanceof Location) {
+			g.setColor(Color.green);
+			((Location) parent.softFocus).drawSelfRelative(x, y, margin, g);
 		}
 		
 		return map;

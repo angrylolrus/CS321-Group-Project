@@ -8,11 +8,21 @@ public class Location {
 	
 	double xPos, yPos;
 	public ArrayList<Location> links;
+	Inventory contents;
 
 	public Location(double x, double y) {
 		xPos = x;
 		yPos = y;
 		links = new ArrayList<Location>();
+		contents = new Inventory(15, 15);
+		contents.addItem(JsonFileWorker.getItem("Clothing", 0, true) );
+		contents.addItem(JsonFileWorker.getItem("Clothing", 0, true) );
+		contents.addItem(JsonFileWorker.getItem("Clothing", 0, true) );
+		contents.addItem(JsonFileWorker.getItem("Clothing", 0, true) );
+	}
+	
+	public Inventory getInventory() {
+		return contents;
 	}
 
 	public String toString() {
