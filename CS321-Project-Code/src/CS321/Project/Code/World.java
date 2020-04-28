@@ -123,11 +123,11 @@ public class World {
 			for(Location l: region) {
 				double xDif = Math.abs(p.x - l.xPos);
 				double yDif = Math.abs(p.y - l.yPos);
-				if(xDif > 6*zoomLevel  || yDif > 6*zoomLevel)
+				if(xDif > Location.VIS_SIZE*zoomLevel  || yDif > Location.VIS_SIZE*zoomLevel)
 					continue;
 				//Just used the square of the desired distance
 				// theoretically, sqrt function is really slow
-				if(xDif*xDif + yDif*yDif < (50 / zoomLevel))
+				if(xDif*xDif + yDif*yDif < (Location.VIS_SIZE*Location.VIS_SIZE * .25) + 2) //VIS_SIZE is diameter, not radius
 					return l;
 			}
 	

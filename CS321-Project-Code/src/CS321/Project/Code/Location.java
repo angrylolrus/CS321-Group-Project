@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 public class Location {
 	
+	//Size of dots on map
+	static final int VIS_SIZE = 8;
+	
 	double xPos, yPos;
 	public ArrayList<Location> links;
 	Inventory contents;
@@ -55,7 +58,7 @@ public class Location {
 	//For drawing a section of map. The x & y are the center coordinates, the margin is how wide the square is
 	public void drawSelfRelative(double x, double y, double margin, Graphics g) {
 		double stretch = 600.0/(margin*2.0);
-		g.fillOval((int) (((xPos - 3) - (x - margin))*stretch), (int) (((yPos - 3) - (y - margin))*stretch), (int)(6*stretch), (int)(6*stretch));
+		g.fillOval((int) (((xPos - VIS_SIZE/2) - (x - margin))*stretch), (int) (((yPos - VIS_SIZE/2) - (y - margin))*stretch), (int)(VIS_SIZE*stretch), (int)(VIS_SIZE*stretch));
 	}
 	
 	public void drawAllLinksRelative(double x, double y, double margin, Graphics g) {
