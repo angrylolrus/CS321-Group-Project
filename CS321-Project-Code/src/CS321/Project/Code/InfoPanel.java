@@ -27,6 +27,25 @@ public class InfoPanel {
 			displayItem((Item) o, g);
 		}
 		
+		displayTime(g);
+	}
+	
+	public void displayTime(Graphics g) {
+		String t = "TIME:";
+		long rawHr = parent.getTime() % (24*60)/60, rawMin = parent.getTime() % 60;
+		String hr = (rawHr % 12 < 10 ? " " : "") + (rawHr % 12);
+		if(rawHr % 12 == 0)
+			hr = "12";
+		String min = (rawMin < 10 ? "0" : "") + rawMin;
+		t += hr + ":" + min + " " + (rawHr < 12 ? "am" : "pm");
+		
+		
+		g.setColor(Color.white);
+		g.drawLine(0, 160, 200, 160);
+		Font font = new Font("Courier New", Font.PLAIN, 18);
+		Label curLabel = new Label(t, true, 100, 180);
+		curLabel.setFont(font);
+		curLabel.update(g);
 	}
 	
 	public void displayItem(Item item, Graphics g) {
