@@ -11,7 +11,8 @@ import java.lang.Math;
 // class to read a json file and grab the base attributes of an Item
 public class JsonFileWorker {
     static JSONObject readerObj;
-    static String config = "src\\CS321\\Project\\config\\Item_config.json";
+    //static String config = "\\CS321\\Project\\config\\Item_config.json";
+    static String config = "C:/Users/casey/AppData/Local/Packages/CanonicalGroupLimited.UbuntuonWindows_79rhkp1fndgsc/LocalState/rootfs/home/chaley2/CS321/CS321-Group-Project/CS321-Project-Code/src/CS321/Project/config/Item_config.json";
 
     // needs to be run before any json reading or writing will happen
     public static boolean init() {

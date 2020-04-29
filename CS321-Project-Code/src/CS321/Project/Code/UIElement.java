@@ -232,15 +232,6 @@ public abstract class UIElement {
 				color = Color.lightGray;
 		}
 
-		public boolean isClickable(){
-			return clickable;
-		}
-
-		public void setClickable(boolean b)
-		{
-			clickable = b;
-		}
-
 		public boolean isClickable()
 		{
 			return clickable;

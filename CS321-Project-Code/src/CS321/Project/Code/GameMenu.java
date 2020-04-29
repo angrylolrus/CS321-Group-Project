@@ -43,7 +43,7 @@ public class GameMenu {
 		player = new Player();
 		infoPanel = new InfoPanel(this);
 		actionPanel = new ActionPanel(this);
-		actionPanel.itemFocus(false, null);
+		actionPanel.itemFocus(null);
     
 		//World & map initialization 
 		worldSize = 1200; //This may be customizable (or just changed) later, but for now its 1200
@@ -128,7 +128,8 @@ public class GameMenu {
 	
 	public void changeFocus(Object o) {
 		hardFocus = o;
-		actionPanel.itemFocus(false, hardFocus);
+		
+		actionPanel.itemFocus(o);
 		
 		/* With changes to opening inventories, we don't need to worry about
 		   the soft vs hard focus, there's only a hard focus

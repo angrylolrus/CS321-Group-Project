@@ -12,12 +12,13 @@ public class ActionPanel {
     
     public ArrayList<UIElement> elements;
     GameMenu parent;
-    public Button equip, eat, travel;
+    public Button equip, use, inspect, travel, transfer, wait, loot;
 	
 	public ActionPanel(GameMenu g) {
         parent = g;
         Label curLabel;
         elements = new ArrayList<UIElement>();
+        int buttonNumber = -1;
 
         
         Button[][] blankButtons = new Button[12][6];
@@ -28,30 +29,40 @@ public class ActionPanel {
         		//elements.add(blankButtons[a][b]);
         	}
         
+        //Equip
         equip = blankButtons[0][0];
         equip.updateLabel("Equip");
         elements.add(equip);
         
-        /*
+        //Use
+        use = blankButtons[1][0];
+        use.updateLabel("Use");
+        elements.add(use);
 
-        //Equip
-        equip = new Button(20, 80, 50, 40);
-		elements.add(equip);
-		curLabel = new UIElement.Label("Equip", true, 45, 95);
-		curLabel.setFont("Courier New", Font.PLAIN, 16);
-		curLabel.setColor(Color.black);
-        elements.add(curLabel);
+        //Inspect
+        inspect = blankButtons[2][0];
+        inspect.updateLabel("Inspect");
+        elements.add(inspect);
+
+        //Travel
+        travel = blankButtons[3][0];
+        travel.updateLabel("Travel");
+        elements.add(travel);
+
+        //Transfer
+        transfer = blankButtons[4][0];
+        transfer.updateLabel("Transfer");
+        elements.add(transfer);
+
+        //Wait
+        wait = blankButtons[5][0];
+        wait.updateLabel("Wait");
+        elements.add(wait);
         
-        //Eat
-		eat = new Button(90, 80, 50, 40);
-		elements.add(eat);
-		curLabel = new UIElement.Label("Eat", true, 115, 95);
-		curLabel.setFont("Courier New", Font.PLAIN, 16);
-		curLabel.setColor(Color.black);
-
-		elements.add(curLabel);		
-		*/
-		elements.add(curLabel);
+        //Loot
+        loot = blankButtons[6][0];
+        loot.updateLabel("Loot");
+        elements.add(loot);
     }
 
     public void draw(Graphics gb) {
@@ -66,45 +77,64 @@ public class ActionPanel {
         }
     }
 
-    public void itemFocus(boolean b, Object o)
+    public void itemFocus(Object o)
     {
-        boolean c = false, t = false, f = false;
+        //ct = clothing/tools, f = food, t = travel, ctf = any kind of item
+        boolean ct = false, f = false, t = false, ctf = false;
         if(o != null)
         {
             if(o instanceof Clothing || o instanceof Tool)
             {
-                c = true;
-                t = true;
+                ct = true;
                 f = false;
             }
             else if(o instanceof Food)
             {
-                c = false;
-                t = false;
+                ct = false;
                 f = true;
             }
-        }
-        else
+            else if(o instanceof Location)
+            {
+                ct = false;
+                f = false;
+                i = false;
+                t = true;
+            }
+            
+            if(ct || f)
         {
-            c = false;
-            t = false;
-            f = false;
+            ctf = true;
+        }
         }
 
-        /*
-        Button equip = (UIElement.Button) elements.get(0);
-        equip.setClickable(c);
+        Button equiping = (UIElement.Button) elements.get(0);
+        equiping.setClickable(ct);
 
-        Button eat = (UIElement.Button) elements.get(2);//*/
-        //eat.setClickable(f);
+        Button eating = (UIElement.Button) elements.get(1);
+        eating.setClickable(f);
+
+        Button inspecting = (UIElement.Button) elements.get(2);
+        inspecting.setClickable(ctf);
+
+        Button travelling = (UIElement.Button) elements.get(3);
+        travelling.setClickable(t);
+
+        Button transferring = (UIElement.Button) elements.get(4);
+        transferring.setClickable(ctf);
+
+        Button waiting = (UIElement.Button) elements.get(5);
+        waiting.setClickable(true);
+
+        Button looting = (UIElement.Button) elements.get(6);
+        looting.setClickable(t);
     }
-    
+
     //Sends the button they pressed
     public void buttonPressed(Button b) {
     	if(b == equip) {
     		
     	}
-    	else if(b == eat) {
+    	else if(b == use) {
     		
     	}
     	else if(b == travel) {
@@ -112,20 +142,11 @@ public class ActionPanel {
     	}
     }
 
-
-        Button equip = (UIElement.Button) elements.get(0);
-        equip.setClickable(c);
-
-        Button eat = (UIElement.Button) elements.get(2);
-        eat.setClickable(f);
-    }
-
     public void receiveMouse(MouseEvent e, int type) {
         e.translatePoint(0, -600);
 
 		for(UIElement element : elements) {
             element.mouseAction(e, type);
-
 
             //Not the desired button (or not a button)
 			if(element.contains(e.getPoint()) == false || !(element instanceof Button))
@@ -136,16 +157,6 @@ public class ActionPanel {
 				break;
 			}
         }
-
-			if(element.contains(e.getPoint()) == false)
-				continue;
-			if(type == 3 && element == equip)
-                System.out.println("Equiping");
-			if(type == 3 && element == eat) {
-				System.out.println("Eating");
-			}
-        }
         e.translatePoint(0, 600);
-
 	}
 }
