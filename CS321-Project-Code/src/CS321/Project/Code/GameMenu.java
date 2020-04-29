@@ -128,10 +128,21 @@ public class GameMenu {
 	}
 	
 	public void transferItem() {
-		if(openInventory != null && player.getInventory().highlightedIndex() == -1)
-		{
-			player.getInventory().transfer(openInventory, (Item)hardFocus);
+		if(openInventory == null)
+			return;
+		
+		if(player.getInventory().highlightedIndex() == -1) {
+			if(openInventory.highlightedIndex() == -1)
+				return;
+			player.getInventory().transfer(openInventory, openInventory.highlightedItem());
+			player.getInventory().resetHighlight();
 		}
+		else {
+			openInventory.transfer(player.getInventory(), player.getInventory().highlightedItem());
+			openInventory.resetHighlight();
+		}
+		
+		
 	}
 	
 	public void inspectItem() {
@@ -164,7 +175,6 @@ public class GameMenu {
 	
 	public void changeFocus(Object o) {
 		hardFocus = o;
-		
 		actionPanel.itemFocus(o);
 		
 		/* With changes to opening inventories, we don't need to worry about
@@ -259,29 +269,29 @@ public class GameMenu {
 			mapCenter.y = Math.max((int)(worldSize/zoomLevel/2), Math.min(mapCenter.y, world.ySize - (int)(worldSize/zoomLevel/2)));
 		}
 		
-		
+		//For the inventory panels
 		if(e.getX() > 600 && e.getY() < 600) {
 			int xRel = e.getX() - 600,  yRel = e.getY();
-			if(type == 2){
-				Inventory target = player.getInventory();
-				// If there's an inventory open, reset its highlighting
-				if (openInventory != null) {
-					if (yRel > 300) {
-						target = openInventory;
-						yRel -= 300;
-					}
+			Inventory target = player.getInventory();
+			Inventory other = openInventory; //Often null
+			if (openInventory != null) {
+				if (yRel > 300) {
+					target = openInventory;
+					other = player.getInventory();
+					yRel -= 300;
 				}
-				if (type == 2) {
-					changeFocus(target.selectItemAt(xRel, yRel));
-				}
-				if (type == 5) {
-					target.scroll(-1);
-				}
-
-				else if (type == 6)
-					target.scroll(1);
 			}
-			
+			if (type == 2) {
+				changeFocus(target.selectItemAt(xRel, yRel));
+				if(other != null)
+					other.resetHighlight();
+			}
+			if (type == 5)
+				target.scroll(-1);
+
+			else if (type == 6)
+				target.scroll(1);
+
 		}
 
 		if(e.getX() < 600 && e.getY() > 600)
