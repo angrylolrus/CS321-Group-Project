@@ -1,14 +1,13 @@
 package CS321.Project.Code;
 
 public class Player {
-    final int MAX_HEALTH = 25;
-    int current_Health;
-    int defense;
-    Item[] equipped = new Item[5];
-    Inventory inventory;
-    GameMenu parent;
-    
-    double satiety;
+    private final int MAX_HEALTH = 25;
+    private int current_Health;
+    private int defense;
+    private Item[] equipped = new Item[5];
+    private Inventory inventory;
+    private GameMenu parent;
+    private double satiety;
 
     public Player(GameMenu p) {
         current_Health = MAX_HEALTH;

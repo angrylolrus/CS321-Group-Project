@@ -128,7 +128,10 @@ public class GameMenu {
 	}
 	
 	public void transferItem() {
-		
+		if(openInventory != null && player.getInventory().highlightedIndex() == -1)
+		{
+			player.getInventory().transfer(openInventory, (Item)hardFocus);
+		}
 	}
 	
 	public void inspectItem() {
@@ -219,7 +222,7 @@ public class GameMenu {
 				//If the player (presumably) tried to click a single point
 				if(dragPos == null) {
 					changeFocus(world.getLocationAt(new Point(mapX, mapY), zoomLevel));
-					player.inventory.resetHighlight();
+					player.getInventory().resetHighlight();
 				}
 				else {
 					dragPos = null;

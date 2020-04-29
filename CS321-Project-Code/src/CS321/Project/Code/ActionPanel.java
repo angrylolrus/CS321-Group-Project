@@ -122,7 +122,7 @@ public class ActionPanel {
         Button waiting = (UIElement.Button) elements.get(5);
         waiting.setClickable(true);
         
-        loot.setClickable(true);
+        loot.setClickable(t);
     }
 
     //Sends the button they pressed
