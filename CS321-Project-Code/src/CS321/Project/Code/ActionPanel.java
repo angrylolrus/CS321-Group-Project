@@ -97,7 +97,6 @@ public class ActionPanel {
             {
                 ct = false;
                 f = false;
-                i = false;
                 t = true;
             }
             
