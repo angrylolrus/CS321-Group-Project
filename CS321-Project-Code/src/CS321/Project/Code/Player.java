@@ -6,11 +6,16 @@ public class Player {
     int defense;
     Item[] equipped = new Item[5];
     Inventory inventory;
+    GameMenu parent;
+    
+    double satiety;
 
-    public Player() {
+    public Player(GameMenu p) {
         current_Health = MAX_HEALTH;
         defense = 0;
         inventory = new Inventory(25, 50);
+        parent = p;
+        satiety = 50;
     }
 
     public void takeDamage(int dmg) {
@@ -28,8 +33,13 @@ public class Player {
         //change_Defense(i.getDefense() - temp.getDefense());
     }
     
-    public void useItem(Item i) {
+    public boolean useItem(Item i) {
+    	if(i instanceof Food) {
+    		satiety += ((Food)i).getFoodValue();
+    		return true;
+    	}
     	
+    	return false;
     }
 
     public void change_Defense(int df) {
