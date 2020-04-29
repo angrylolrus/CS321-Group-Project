@@ -15,7 +15,7 @@ public class Food extends Item {
 	}
 
 	@Override
-	public void inspect(int closeness) {
+	public void inspect(double closeness) {
 		// TODO Auto-generated method stub
 		
 	}

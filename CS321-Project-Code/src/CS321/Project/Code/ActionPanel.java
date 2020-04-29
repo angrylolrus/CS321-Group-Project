@@ -16,9 +16,7 @@ public class ActionPanel {
 	
 	public ActionPanel(GameMenu g) {
         parent = g;
-        Label curLabel;
         elements = new ArrayList<UIElement>();
-        int buttonNumber = -1;
 
         
         Button[][] blankButtons = new Button[12][6];
@@ -123,9 +121,8 @@ public class ActionPanel {
 
         Button waiting = (UIElement.Button) elements.get(5);
         waiting.setClickable(true);
-
-        Button looting = (UIElement.Button) elements.get(6);
-        looting.setClickable(t);
+        
+        loot.setClickable(true);
     }
 
     //Sends the button they pressed
@@ -137,7 +134,27 @@ public class ActionPanel {
     		
     	}
     	else if(b == travel) {
-    		
+    		parent.travelToFocus();
+    	}
+    	else if(b == use) {
+    		parent.useItem();
+    	}
+    	else if(b == inspect) {
+    		parent.inspectItem();
+    	}
+    	else if(b == transfer) {
+    		parent.transferItem();
+    	}
+    	else if(b == wait) {
+    		//Waits 4 hours
+    		parent.advanceTime(60*4);
+    	}
+    	else if(b == loot) {
+    		if(parent.openInventory != null )
+    			parent.closeInventory();
+    		//Opens the inventory at the current location
+    		else
+    			parent.openInventory(parent.playerLocation.getInventory());
     	}
     }
 
@@ -154,8 +171,8 @@ public class ActionPanel {
 			if(type == 3 && ((Button)element).isClickable()) {
 				buttonPressed((Button)element);
 				break;
-			}
-        }
-        e.translatePoint(0, 600);
+			}//End of clicked
+        }//end of for each element loop
+		e.translatePoint(0, 600);
 	}
 }

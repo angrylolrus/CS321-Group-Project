@@ -21,7 +21,7 @@ public class Tool extends Item {
   }
 
   @Override
-  public void inspect(int closeness) {
+  public void inspect(double closeness) {
     Random inspectProbability = new Random();
     inspectProbability.nextInt(100);
   }
