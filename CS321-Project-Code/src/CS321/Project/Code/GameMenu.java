@@ -68,6 +68,8 @@ public class GameMenu {
 	
 	public void advanceTime(int t) {
 		time += t;
+		playerLocation.age(time);
+		player.age(time);
 	}
 	
 	public long getTime() {
@@ -123,8 +125,10 @@ public class GameMenu {
 		double timeTaken = playerLocation.distanceTo(dest); // initial distance
 		timeTaken /= PLAYER_SPEED; // Number of hours
 		timeTaken *= 60; // Number of minutes
-		advanceTime((int)Math.round(timeTaken)); //Finally, advance time
 		playerLocation = dest; //And update the location
+		advanceTime((int)Math.round(timeTaken)); //Finally, advance time
+		
+		
 	}
 	
 	public void transferItem() {
@@ -155,7 +159,6 @@ public class GameMenu {
 	}
 	
 	public void useItem() {
-		System.out.println("Using item");
 		if(!(hardFocus instanceof Item))
 			return;
 		
@@ -169,6 +172,8 @@ public class GameMenu {
 		boolean used = player.useItem(i);
 		if(used) {
 			target.removeItem(i);
+			target.resetHighlight();
+			hardFocus = null;
 			advanceTime(15);
 		}
 	}

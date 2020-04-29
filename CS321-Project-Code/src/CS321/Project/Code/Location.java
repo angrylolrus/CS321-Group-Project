@@ -24,6 +24,10 @@ public class Location {
 		contents.addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 	}
 	
+	public void age(long time) {
+		contents.age(time);
+	}
+	
 	public Inventory getInventory() {
 		return contents;
 	}

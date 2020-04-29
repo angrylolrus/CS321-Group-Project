@@ -30,7 +30,7 @@ public abstract class Item {
     // to use) so that they can read from different files. I do
     // think there should still be unique ID's for
 
-    public Item(String t, int id, String nm, double vol, double w, int day)
+    public Item(String t, int id, String nm, double vol, double w, int time)
     {
         type = t;
         ID = id;
@@ -40,12 +40,12 @@ public abstract class Item {
         damage = 0;
         visDamage = 0;
         age = 0;
-        created = day;
+        created = time;
+        lastUpdated = created;
     }
 
     //Setter Methods
-    public void setVisDamage(double amt)
-    {
+    public void setVisDamage(double amt){
         visDamage = amt;
     }
 
@@ -54,11 +54,15 @@ public abstract class Item {
     }
 
     public void age(long curTime) {
-    	
+    	if(lastUpdated < curTime) {
+    		damage += Controller.random.nextDouble()*(curTime-lastUpdated)/10000; 
+    		adjustAge(curTime - lastUpdated	);
+    	}
     }
     
-    public void adjustAge(int time) {
+    public void adjustAge(long time) {
         age += time;
+        lastUpdated = created + age;
     }
 
     // This is for an object to be damaged, whether by time or
