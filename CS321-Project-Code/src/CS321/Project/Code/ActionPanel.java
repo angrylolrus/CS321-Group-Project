@@ -121,9 +121,8 @@ public class ActionPanel {
 
         Button waiting = (UIElement.Button) elements.get(5);
         waiting.setClickable(true);
-
-        Button looting = (UIElement.Button) elements.get(6);
-        looting.setClickable(t);
+        
+        loot.setClickable(true);
     }
 
     //Sends the button they pressed
@@ -149,6 +148,13 @@ public class ActionPanel {
     	else if(b == wait) {
     		//Waits 4 hours
     		parent.advanceTime(60*4);
+    	}
+    	else if(b == loot) {
+    		if(parent.openInventory != null )
+    			parent.closeInventory();
+    		//Opens the inventory at the current location
+    		else
+    			parent.openInventory(parent.playerLocation.getInventory());
     	}
     }
 

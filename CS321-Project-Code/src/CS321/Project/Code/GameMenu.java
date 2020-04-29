@@ -116,6 +116,8 @@ public class GameMenu {
 		if(!playerLocation.adjacentTo(dest))
 			return;
 		
+		//Closes inventory at current location if its open
+		closeInventory();
 		//If the player successfully travels
 		double timeTaken = playerLocation.distanceTo(dest); // initial distance
 		timeTaken /= PLAYER_SPEED; // Number of hours
@@ -129,11 +131,13 @@ public class GameMenu {
 	}
 	
 	public void inspectItem() {
-		
+		if(hardFocus instanceof Item)
+			((Item)hardFocus).inspect(.5);
 	}
 	
 	public void useItem() {
-		
+		if(hardFocus instanceof Item)
+			player.useItem((Item)hardFocus);
 	}
 	
 	public void changeFocus(Object o) {
