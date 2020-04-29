@@ -40,7 +40,7 @@ public class GameMenu {
 	public GameMenu(Controller c) {
 		//Basic initializaion
 		controller = c;
-		player = new Player();
+		player = new Player(this);
 		infoPanel = new InfoPanel(this);
 		actionPanel = new ActionPanel(this);
 		actionPanel.itemFocus(null);
@@ -60,6 +60,7 @@ public class GameMenu {
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
+		player.getInventory().addItem(JsonFileWorker.getItem("Food", 0, true));
 
 	}
 	
@@ -131,13 +132,31 @@ public class GameMenu {
 	}
 	
 	public void inspectItem() {
-		if(hardFocus instanceof Item)
-			((Item)hardFocus).inspect(.5);
+		if(hardFocus instanceof Item) {
+			double closeness = .5;
+			((Item)hardFocus).inspect(closeness);
+			//One hour is 100% focus
+			advanceTime((int)Math.round(closeness*60));
+		}
 	}
 	
 	public void useItem() {
-		if(hardFocus instanceof Item)
-			player.useItem((Item)hardFocus);
+		System.out.println("Using item");
+		if(!(hardFocus instanceof Item))
+			return;
+		
+		Item i = (Item)hardFocus;
+		Inventory target = player.getInventory();
+		if(!player.getInventory().contains(i))
+			if(openInventory == null || !openInventory.contains(i))
+				return;
+			else
+				target = openInventory;
+		boolean used = player.useItem(i);
+		if(used) {
+			target.removeItem(i);
+			advanceTime(15);
+		}
 	}
 	
 	public void changeFocus(Object o) {

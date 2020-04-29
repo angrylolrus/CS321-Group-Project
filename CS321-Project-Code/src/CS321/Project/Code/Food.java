@@ -2,16 +2,21 @@ package CS321.Project.Code;
 
 public class Food extends Item {
 	private double wetness;
+	private double foodValue;
 	public Food(String type, int ID, String name, double volume, double weight, double damage,
     		double visDamage, int age, int created, double wetness) {
 		super(type,ID,name,volume,weight,damage,visDamage,age,created);
 		this.setWetness(wetness);
+		foodValue = 10;
 	}
 	@Override
 	public void takeDamage(double amt) {
 		// TODO Auto-generated method stub
 		setDamage(getDamage() + amt);
-
+	}
+	
+	public double getFoodValue() {
+		return foodValue;
 	}
 
 	@Override

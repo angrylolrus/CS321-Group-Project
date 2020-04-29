@@ -131,7 +131,7 @@ public class ActionPanel {
     		
     	}
     	else if(b == use) {
-    		
+    		parent.useItem();
     	}
     	else if(b == travel) {
     		parent.travelToFocus();
