@@ -10,6 +10,7 @@ public abstract class Item {
     protected double visDamage; // How visibly damaged it is
     protected int age; // How long the object has existed
     protected int created; // When the object was created
+    protected long lastUpdated;
 
     // Subclasses will need to have their own (static) methods to
     // read the item ID from an XML file (or whatever we decide
@@ -48,11 +49,14 @@ public abstract class Item {
         visDamage = amt;
     }
 
-    public void setDamage(double amt)
-    {
+    public void setDamage(double amt){
         damage = amt;
     }
 
+    public void age(long curTime) {
+    	
+    }
+    
     public void adjustAge(int time) {
         age += time;
     }
