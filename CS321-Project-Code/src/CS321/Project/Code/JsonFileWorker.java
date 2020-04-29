@@ -51,8 +51,8 @@ public class JsonFileWorker {
             } else {
                 created = 0; // need to create a day/hour variable
             }
-            if(type.equals("Food"))
-				wetness = (double) jObject.get("wetness");
+            if (type.equals("Food"))
+                wetness = (double) jObject.get("wetness");
         } catch (Exception e) {
             System.out.println("Something went wrong with reading JSON file!\n" + e);
             return null;

@@ -3,6 +3,7 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src/CS321/Project/config"/>
 	<classpathentry kind="src" path="src/CS321/Project/inc"/>
-	<classpathentry exported="true" kind="lib" path="CS321-Project-Code/src/CS321/Project/inc/json-simple-1.1.1.jar"/>
+	<classpathentry excluding="CS321/Project/config/|CS321/Project/inc/" kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="src/CS321/Project/inc/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
