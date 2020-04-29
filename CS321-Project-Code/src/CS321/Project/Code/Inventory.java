@@ -24,6 +24,12 @@ public class Inventory {
 		selectedItem = -1;
 	}
 	
+	public void age(long time) {
+		for(Item i: contents) {
+			i.age(time);
+		}
+	}
+	
 	public void transfer(Inventory other, Item i) {
 		if(getCurrentVolume() + i.getVolume() < maxVolume)
 			if(getCurrentWeight() + i.getWeight() < maxWeight) {
