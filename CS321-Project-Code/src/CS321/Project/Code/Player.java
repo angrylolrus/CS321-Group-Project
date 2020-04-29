@@ -1,16 +1,20 @@
 package CS321.Project.Code;
 
 public class Player {
-    final int MAX_HEALTH = 25;
-    int current_Health;
-    int defense;
-    Item[] equipped = new Item[5];
-    Inventory inventory;
+    private final int MAX_HEALTH = 25;
+    private int current_Health;
+    private int defense;
+    private Item[] equipped = new Item[5];
+    private Inventory inventory;
+    private GameMenu parent;
+    private double satiety;
 
-    public Player() {
+    public Player(GameMenu p) {
         current_Health = MAX_HEALTH;
         defense = 0;
         inventory = new Inventory(25, 50);
+        parent = p;
+        satiety = 50;
     }
 
     public void takeDamage(int dmg) {
@@ -26,6 +30,15 @@ public class Player {
         Item temp = equipped[type];
         equipped[type] = i;
         // change_Defense(i.getDefense() - temp.getDefense());
+    }
+
+    public boolean useItem(Item i) {
+        if (i instanceof Food) {
+            satiety += ((Food) i).getFoodValue();
+            return true;
+        }
+
+        return false;
     }
 
     public void change_Defense(int df) {

@@ -27,6 +27,25 @@ public class InfoPanel {
 			displayItem((Item) o, g);
 		}
 		
+		displayTime(g);
+	}
+	
+	public void displayTime(Graphics g) {
+		String t = "TIME:";
+		long rawHr = parent.getTime() % (24*60)/60, rawMin = parent.getTime() % 60;
+		String hr = (rawHr % 12 < 10 ? " " : "") + (rawHr % 12);
+		if(rawHr % 12 == 0)
+			hr = "12";
+		String min = (rawMin < 10 ? "0" : "") + rawMin;
+		t += hr + ":" + min + " " + (rawHr < 12 ? "am" : "pm");
+		
+		
+		g.setColor(Color.white);
+		g.drawLine(0, 160, 200, 160);
+		Font font = new Font("Courier New", Font.PLAIN, 18);
+		Label curLabel = new Label(t, true, 100, 180);
+		curLabel.setFont(font);
+		curLabel.update(g);
 	}
 	
 	public void displayItem(Item item, Graphics g) {
@@ -87,9 +106,9 @@ public class InfoPanel {
 		String distString = "Distance:";
 		if(loc == parent.playerLocation)
 			distString += "0";
-		else if(loc.links.contains(parent.playerLocation)) {
+		else if(loc.adjacentTo(parent.playerLocation)) {
 			//N.B. later this will be travel time but for now thats the same as distance
-			double dist = Math.sqrt(Math.pow(loc.xPos - parent.playerLocation.xPos, 2) + Math.pow(loc.yPos - parent.playerLocation.yPos, 2));
+			double dist = parent.playerLocation.distanceTo(loc);
 			distString += Math.round(dist*100)/100;
 		}
 		else{

@@ -82,7 +82,7 @@ public class World {
 				//Checks distance and decides if there should be a link (randomly)
 				double dist = Math.sqrt(Math.pow(loc1.xPos - loc2.xPos, 2) + Math.pow(loc1.yPos - loc2.yPos, 2));
 				
-				if(dist < 5) // && random.nextDouble() < .9) 					
+				if(dist < 8) // && random.nextDouble() < .9) 					
 					loc1.addLink(loc2);
 				else if(dist < 20 && Controller.random.nextDouble() < .9)
 					loc1.addLink(loc2);
@@ -123,11 +123,11 @@ public class World {
 			for(Location l: region) {
 				double xDif = Math.abs(p.x - l.xPos);
 				double yDif = Math.abs(p.y - l.yPos);
-				if(xDif > 6*zoomLevel  || yDif > 6*zoomLevel)
+				if(xDif > Location.VIS_SIZE*zoomLevel  || yDif > Location.VIS_SIZE*zoomLevel)
 					continue;
-				//Just used the square of teh desired distance
+				//Just used the square of the desired distance
 				// theoretically, sqrt function is really slow
-				if(xDif*xDif + yDif*yDif < 100)
+				if(xDif*xDif + yDif*yDif < (Location.VIS_SIZE*Location.VIS_SIZE * .25) + 2) //VIS_SIZE is diameter, not radius
 					return l;
 			}
 	
@@ -170,6 +170,11 @@ public class World {
 		if(parent.hardFocus instanceof Location) {
 			g.setColor(Color.green);
 			((Location) parent.hardFocus).drawSelfRelative(x, y, margin, g);
+		}
+		
+		if(parent.softFocus instanceof Location) {
+			g.setColor(Color.green);
+			((Location) parent.softFocus).drawSelfRelative(x, y, margin, g);
 		}
 		
 		return map;

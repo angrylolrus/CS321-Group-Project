@@ -12,6 +12,8 @@ public class Controller extends JPanel {
 	
 	public static Random random = new Random(1);
 	
+	public static final Font DEFAULT_FONT = new Font("Courier New", Font.PLAIN, 14);
+	
 	private static final long serialVersionUID = 1L;
 	public JFrame frame;
 	public Insets insets;
@@ -24,6 +26,8 @@ public class Controller extends JPanel {
 	public GameMenu gameMenu;
 
 	public static void main(String[] args) {
+		if(!JsonFileWorker.init())
+			System.exit(-1);
 		Controller controller = new Controller();
 		controller.initialize();
 	}

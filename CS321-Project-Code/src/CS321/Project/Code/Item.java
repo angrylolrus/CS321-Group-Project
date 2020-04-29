@@ -65,7 +65,7 @@ public abstract class Item {
     // This is for an object to be inspected by the player.
     // Different objects will have different inspection styles
     // and results, so it is abstract
-    public abstract void inspect(int closeness);
+    public abstract void inspect(double d);
 
     // Returns an array of strings for what this object/tool can be
     // used for. For tools it may be crafting uses or scavenging

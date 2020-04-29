@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 
 public class GameMenu {
+	
+	//Placeholders for values that may vary but we haven't implemented yet
+	static final double PLAYER_SPEED = 4.7; //player speed in km/h
+	
 	//To receive and pass commands back up
 	Controller controller;
 	boolean debug = true;
@@ -19,7 +23,8 @@ public class GameMenu {
 	int worldSize;
 	public ArrayList<UIElement> elements;
 	InfoPanel infoPanel;
-	double time;
+	ActionPanel actionPanel;
+	long time;
 	
 	//Variables used to control the map view so the player can zoom in/out & pan
 	Point mapCenter;
@@ -35,8 +40,11 @@ public class GameMenu {
 	public GameMenu(Controller c) {
 		//Basic initializaion
 		controller = c;
-		player = new Player();
+		player = new Player(this);
 		infoPanel = new InfoPanel(this);
+		actionPanel = new ActionPanel(this);
+		actionPanel.itemFocus(null);
+    
 		//World & map initialization 
 		worldSize = 1200; //This may be customizable (or just changed) later, but for now its 1200
 		world = new World(this, worldSize,worldSize);
@@ -45,14 +53,143 @@ public class GameMenu {
 		
 		playerLocation = world.getRandomLocation();
 		
-		if(!JsonFileWorker.init())
-			System.exit(-1);
+		//Time is expressed in minutes, this is 8am
+		time = 480;
 		
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
+		player.getInventory().addItem(JsonFileWorker.getItem("Food", 0, true));
 
+	}
+	
+	//Methods to adjust time
+	
+	public void advanceTime(int t) {
+		time += t;
+	}
+	
+	public long getTime() {
+		return time;
+	}
+	
+	public long timeSince(int t) {
+		return time - t;
+	}
+	
+	public void openInventory(Inventory i) {
+		//If the player is opening an invalid inventory (shouldn't happen, but)
+		//	it'll just close the inventory
+		if(i == null) {
+			closeInventory();
+			return;
+		}
+		//If the player doesn't have an inventory open, takes a minute
+		//	to open the new one
+		if(openInventory == null) { 
+			advanceTime(1);
+			openInventory = i;
+		}
+		//If the player isn't opening a new inventory
+		else if(openInventory != i) {
+			advanceTime(2);
+			openInventory = i;
+		}
+		//Final option, but no if else needed, is the player opens an inventory
+		//	they already have open
+	}
+	
+	public void closeInventory() {
+		if(openInventory != null) {
+			openInventory.resetHighlight();
+			advanceTime(1);
+			openInventory = null;
+		}	
+	}
+	
+	public void travelToFocus() {
+		//If the player doesn't have a location selected
+		if(!(hardFocus instanceof Location))
+			return;
+		Location dest = (Location)hardFocus;
+		//If the selected location isn't adjacent
+		if(!playerLocation.adjacentTo(dest))
+			return;
+		
+		//Closes inventory at current location if its open
+		closeInventory();
+		//If the player successfully travels
+		double timeTaken = playerLocation.distanceTo(dest); // initial distance
+		timeTaken /= PLAYER_SPEED; // Number of hours
+		timeTaken *= 60; // Number of minutes
+		advanceTime((int)Math.round(timeTaken)); //Finally, advance time
+		playerLocation = dest; //And update the location
+	}
+	
+	public void transferItem() {
+		if(openInventory != null && player.getInventory().highlightedIndex() == -1)
+		{
+			player.getInventory().transfer(openInventory, (Item)hardFocus);
+		}
+	}
+	
+	public void inspectItem() {
+		if(hardFocus instanceof Item) {
+			double closeness = .5;
+			((Item)hardFocus).inspect(closeness);
+			//One hour is 100% focus
+			advanceTime((int)Math.round(closeness*60));
+		}
+	}
+	
+	public void useItem() {
+		System.out.println("Using item");
+		if(!(hardFocus instanceof Item))
+			return;
+		
+		Item i = (Item)hardFocus;
+		Inventory target = player.getInventory();
+		if(!player.getInventory().contains(i))
+			if(openInventory == null || !openInventory.contains(i))
+				return;
+			else
+				target = openInventory;
+		boolean used = player.useItem(i);
+		if(used) {
+			target.removeItem(i);
+			advanceTime(15);
+		}
+	}
+	
+	public void changeFocus(Object o) {
+		hardFocus = o;
+		
+		actionPanel.itemFocus(o);
+		
+		/* With changes to opening inventories, we don't need to worry about
+		   the soft vs hard focus, there's only a hard focus
+		//If the player focuses on something that isn't there
+		if(o == null) {
+			if(softFocus != null) {
+				hardFocus = softFocus;
+				openInventory.resetHighlight();
+				player.getInventory().resetHighlight();
+				softFocus = null;
+			}
+			else {
+				hardFocus = null;
+			}
+			actionPanel.itemFocus(false, null);
+		}
+		//If the player is actually focusing on something
+		else {
+			if(hardFocus instanceof Location && o instanceof Item) {
+				softFocus = hardFocus;
+				actionPanel.itemFocus(true, o);
+			}
+			hardFocus = o;
+		}//*/
 	}
 
 	public void receiveMouse(MouseEvent e, int type) {
@@ -84,8 +221,8 @@ public class GameMenu {
 			else if(type == 3) {
 				//If the player (presumably) tried to click a single point
 				if(dragPos == null) {
-					hardFocus = world.getLocationAt(new Point(mapX, mapY), zoomLevel);
-					player.inventory.resetHighlight();
+					changeFocus(world.getLocationAt(new Point(mapX, mapY), zoomLevel));
+					player.getInventory().resetHighlight();
 				}
 				else {
 					dragPos = null;
@@ -125,16 +262,32 @@ public class GameMenu {
 		
 		if(e.getX() > 600 && e.getY() < 600) {
 			int xRel = e.getX() - 600,  yRel = e.getY();
-			if(type == 2)
-				hardFocus = player.getInventory().selectItemAt(xRel, yRel);
-			if(type == 5)
-				player.getInventory().scroll(-1);
-			else if(type == 6)
-				player.getInventory().scroll(1);
+			if(type == 2){
+				Inventory target = player.getInventory();
+				// If there's an inventory open, reset its highlighting
+				if (openInventory != null) {
+					if (yRel > 300) {
+						target = openInventory;
+						yRel -= 300;
+					}
+				}
+				if (type == 2) {
+					changeFocus(target.selectItemAt(xRel, yRel));
+				}
+				if (type == 5) {
+					target.scroll(-1);
+				}
+
+				else if (type == 6)
+					target.scroll(1);
+			}
 			
 		}
-		
-		
+
+		if(e.getX() < 600 && e.getY() > 600)
+		{
+			actionPanel.receiveMouse(e, type);
+		}
 		
 		if(type == 3) {
 			dragPos = null;
@@ -144,6 +297,11 @@ public class GameMenu {
 	}
 
 	public void receiveKey(KeyEvent e, int type) {
+		/*
+		//Testing code
+		if(e.getKeyCode() == KeyEvent.VK_SPACE)
+			travelToFocus(); //*/
+		
 		/*
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT)
 			mapCenter.x += 8;
@@ -171,7 +329,16 @@ public class GameMenu {
 		BufferedImage playerInv = new BufferedImage(200, 600, BufferedImage.TYPE_INT_RGB);
 		player.getInventory().drawSelf(playerInv.getGraphics());
 		g.drawImage(playerInv, 600, 0, 200, 600, null);
+
+		BufferedImage actPnl = new BufferedImage(600, 200, BufferedImage.TYPE_INT_RGB);
+		actionPanel.draw(actPnl.getGraphics());
+		g.drawImage(actPnl, 0, 600, 600, 200, null);
 		
+		if(openInventory != null) {
+			BufferedImage openInv = new BufferedImage(200, 300, BufferedImage.TYPE_INT_RGB);
+			openInventory.drawSelf(openInv.getGraphics());
+			g.drawImage(openInv, 600, 300, 200, 300, null);
+		}
 		
 		g.setColor(Color.WHITE);
 		g.drawRect(0, 0, 600, 600);
