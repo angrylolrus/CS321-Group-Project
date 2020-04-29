@@ -21,7 +21,7 @@ public class Location {
 		contents.addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		contents.addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		contents.addItem(JsonFileWorker.getItem("Clothing", 0, true) );
-		contents.addItem(JsonFileWorker.getItem("Clothing", 0, true) );
+		contents.addItem(JsonFileWorker.getItem("Food", 0, true) );
 	}
 	
 	public Inventory getInventory() {
