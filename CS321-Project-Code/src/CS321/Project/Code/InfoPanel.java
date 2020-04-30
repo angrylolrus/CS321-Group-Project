@@ -28,6 +28,7 @@ public class InfoPanel {
 		}
 		
 		displayTime(g);
+		displayHunger(parent.player, g);
 	}
 	
 	public void displayTime(Graphics g) {
@@ -41,10 +42,18 @@ public class InfoPanel {
 		
 		
 		g.setColor(Color.white);
-		g.drawLine(0, 160, 200, 160);
+		g.drawLine(0, 140, 200, 140);
+		
 		Font font = new Font("Courier New", Font.PLAIN, 18);
 		Label curLabel = new Label(t, true, 100, 180);
 		curLabel.setFont(font);
+		curLabel.update(g);
+	}
+	
+	public void displayHunger(Player p, Graphics g) {
+		Label curLabel = new Label("Energy: " + p.getEnergy(), true, 100, 155);
+		g.setColor(Color.white);
+		curLabel.setFont(new Font("Courier New", Font.PLAIN, 18));
 		curLabel.update(g);
 	}
 	

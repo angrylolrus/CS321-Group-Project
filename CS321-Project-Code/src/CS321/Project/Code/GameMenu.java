@@ -1,12 +1,14 @@
 package CS321.Project.Code;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.awt.event.KeyEvent;
+import CS321.Project.Code.UIElement.Label;
 
 public class GameMenu {
 	
@@ -16,6 +18,7 @@ public class GameMenu {
 	//To receive and pass commands back up
 	Controller controller;
 	boolean debug = true;
+	boolean playing = true;
 	
 	//Variables for the UI and broad gameplay elements
 	Player player;
@@ -38,6 +41,9 @@ public class GameMenu {
 	Location playerLocation;
 
 	public GameMenu(Controller c) {
+		//Time is expressed in minutes, this is 8am
+		time = 480;
+		
 		//Basic initializaion
 		controller = c;
 		player = new Player(this);
@@ -53,15 +59,24 @@ public class GameMenu {
 		
 		playerLocation = world.getRandomLocation();
 		
-		//Time is expressed in minutes, this is 8am
-		time = 480;
+		
 		
 		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
-		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
-		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
-		player.getInventory().addItem(JsonFileWorker.getItem("Clothing", 0, true) );
 		player.getInventory().addItem(JsonFileWorker.getItem("Food", 0, true));
+		
+		elements = new ArrayList<UIElement>();
 
+	}
+	
+	//Methods for ending game
+	public void lose() {
+		playing = false;
+		Label youLost = new Label("YOU LOST", true, 400, 400);
+		youLost.setFont(new Font("Courier New", Font.BOLD, 128));
+		youLost.setColor(Color.red);
+		elements.add(youLost);
+		
+		
 	}
 	
 	//Methods to adjust time
@@ -207,6 +222,11 @@ public class GameMenu {
 	}
 
 	public void receiveMouse(MouseEvent e, int type) {
+		if(!playing) {
+			if(type == 2)
+				controller.launchMenu();
+			return;
+		}
 		//For focus on map
 		if (e.getX() < 600 && e.getY() < 600) {
 			//Margin is how wide the square is
@@ -314,7 +334,7 @@ public class GameMenu {
 		/*
 		//Testing code
 		if(e.getKeyCode() == KeyEvent.VK_SPACE)
-			travelToFocus(); //*/
+			lose();//*/
 		
 		/*
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT)
@@ -357,5 +377,8 @@ public class GameMenu {
 		g.setColor(Color.WHITE);
 		g.drawRect(0, 0, 600, 600);
 		g.drawRect(600, 600, 200, 200);
+		
+		for(UIElement e: elements)
+			e.update(g);
 	}
 }
