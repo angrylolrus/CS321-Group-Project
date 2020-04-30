@@ -8,13 +8,7 @@ import CS321.Project.Code.UIElement.Label;
 
 public class Inventory {
 	private ArrayList<Item> contents;
-	public ArrayList<Item> getContents() {
-		return contents;
-	}
-
-	public void setContents(ArrayList<Item> contents) {
-		this.contents = contents;
-	}
+	
 
 	double maxVolume, maxWeight;
 	
