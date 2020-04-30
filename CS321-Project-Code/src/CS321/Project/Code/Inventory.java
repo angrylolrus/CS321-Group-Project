@@ -8,6 +8,8 @@ import CS321.Project.Code.UIElement.Label;
 
 public class Inventory {
 	private ArrayList<Item> contents;
+	
+
 	double maxVolume, maxWeight;
 	
 	
