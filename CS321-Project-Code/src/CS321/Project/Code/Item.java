@@ -82,7 +82,7 @@ public abstract class Item {
     	// Always reveals at least (closeness)% of the damage and a random amount of the
     	// remaining damage
     	double unknownDamage = damage - visDamage;
-    	visDamage = (unknownDamage*closeness) + (Controller.random.nextDouble()*unknownDamage*(1-closeness));
+    	visDamage += (unknownDamage*closeness) + (Controller.random.nextDouble()*unknownDamage*(1-closeness));
 
     }
 

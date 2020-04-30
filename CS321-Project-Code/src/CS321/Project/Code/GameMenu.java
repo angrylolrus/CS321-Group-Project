@@ -172,7 +172,7 @@ public class GameMenu {
 		if(used) {
 			target.removeItem(i);
 			target.resetHighlight();
-			hardFocus = null;
+			changeFocus(null);
 			advanceTime(15);
 		}
 	}

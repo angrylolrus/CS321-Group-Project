@@ -15,7 +15,7 @@ public class ActionPanel {
     
     public ArrayList<UIElement> elements;
     GameMenu parent;
-    public Button equip, use, inspectShort, inspectMed, inspectLong, travel, transfer, wait, search;
+    public Button equip, use, inspectShort, inspectMed, inspectLong, travel, transfer, wait1, wait4, wait8, search;
 	
 	public ActionPanel(GameMenu g) {
         parent = g;
@@ -41,7 +41,7 @@ public class ActionPanel {
         elements.add(use);
 
         //Simple label for inspection column
-        Label insp = new Label("Inspect", true, blankButtons[2][0].xPos+30, blankButtons[2][0].yPos+20);
+        Label insp = new Label("Inspect", true, blankButtons[2][0].xPos+25, blankButtons[2][0].yPos+15);
         insp.setFont(Controller.DEFAULT_FONT);
         elements.add(insp);
         
@@ -69,12 +69,26 @@ public class ActionPanel {
         transfer = blankButtons[4][0];
         transfer.updateLabel("Transfer");
         elements.add(transfer);
+        
+        Label waitLabel = new Label("Wait", true, blankButtons[5][0].xPos+25, blankButtons[5][0].yPos+15);
+        waitLabel.setFont(Controller.DEFAULT_FONT);
+        elements.add(waitLabel);
 
         //Wait
-        wait = blankButtons[5][0];
-        wait.updateLabel("Wait");
-        wait.setClickable(true);
-        elements.add(wait);
+        wait1 = blankButtons[5][1];
+        wait1.updateLabel("1 hr");
+        wait1.setClickable(true);
+        elements.add(wait1);
+
+        wait4 = blankButtons[5][2];
+        wait4.updateLabel("4 hrs");
+        wait4.setClickable(true);
+        elements.add(wait4);
+        
+        wait8 = blankButtons[5][3];
+        wait8.updateLabel("8 hrs");
+        wait8.setClickable(true);
+        elements.add(wait8);
         
         //Loot
         search = blankButtons[6][0];
@@ -98,7 +112,7 @@ public class ActionPanel {
     public void itemFocus(Object o)
     {
         //ct = clothing/tools, f = food, t = travel, ctf = any kind of item
-        boolean clthTool = o instanceof Clothing;
+        boolean clthTool = o instanceof Clothing || o instanceof Tool;
         boolean food  = o instanceof Food;
         boolean trvl = o instanceof Location && ((Location)o).adjacentTo(parent.playerLocation);
 
@@ -143,9 +157,16 @@ public class ActionPanel {
     	else if(b == transfer) {
     		parent.transferItem();
     	}
-    	else if(b == wait) {
+    	else if(b == wait1 || b == wait4 || b == wait8) {
+    		int hrs = 0;
+    		if(b == wait1)
+    			hrs = 1;
+    		else if(b == wait4)
+    			hrs = 4;
+    		else if(b == wait8)
+    			hrs = 8;
     		//Waits 4 hours
-    		parent.advanceTime(60*4);
+    		parent.advanceTime(60*hrs);
     	}
     	else if(b == search) {
     		if(parent.openInventory != null)
