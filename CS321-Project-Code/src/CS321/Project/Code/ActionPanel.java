@@ -121,7 +121,7 @@ public class ActionPanel {
     		parent.advanceTime(60*4);
     	}
     	else if(b == loot) {
-    		if(parent.openInventory != null )
+    		if(parent.openInventory != null)
     			parent.closeInventory();
     		//Opens the inventory at the current location
     		else
