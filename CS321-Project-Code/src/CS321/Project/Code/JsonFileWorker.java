@@ -78,15 +78,15 @@ public class JsonFileWorker {
     	int type = (int) (Math.random() * (2));
     	int index = 0;
     	if(type == 0) {
-    		index = (int)(Math.random() * (foodList.size()-1));
+    		index = (int)(Math.random() * (foodList.size()));
     		return (T) foodList.get(index);
     	}
     	else if(type == 1) {
-    		index = (int)(Math.random() * (clothingList.size()-1));
+    		index = (int)(Math.random() * (clothingList.size()));
     		return (T) clothingList.get(index);
     	}
     	else {
-    		index = (int)(Math.random() * (toolList.size()-1));
+    		index = (int)(Math.random() * (toolList.size()));
     		return (T) toolList.get(index);
     	}
     }
