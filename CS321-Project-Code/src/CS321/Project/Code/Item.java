@@ -73,7 +73,18 @@ public abstract class Item {
     // This is for an object to be inspected by the player.
     // Different objects will have different inspection styles
     // and results, so it is abstract
-    public abstract void inspect(double d);
+    
+    /*
+     * THIS NEEDS TO BE CHANGED LATER, BUT FOR NOW ALL ITEMS
+     * ARE INSPECTED THE SAME AND RESULT IN THE SAME VALUES
+     */
+    public void inspect(double closeness) {
+    	// Always reveals at least (closeness)% of the damage and a random amount of the
+    	// remaining damage
+    	double unknownDamage = damage - visDamage;
+    	visDamage += (unknownDamage*closeness) + (Controller.random.nextDouble()*unknownDamage*(1-closeness));
+
+    }
 
     // Returns an array of strings for what this object/tool can be
     // used for. For tools it may be crafting uses or scavenging

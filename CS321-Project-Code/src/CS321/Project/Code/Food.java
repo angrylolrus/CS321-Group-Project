@@ -7,7 +7,7 @@ public class Food extends Item {
     		double visDamage, int age, int created, double wetness) {
 		super(type,ID,name,volume,weight,damage,visDamage,age,created);
 		this.setWetness(wetness);
-		foodValue = 10;
+		foodValue = 30;
 	}
 	@Override
 	public void takeDamage(double amt) {
@@ -18,12 +18,12 @@ public class Food extends Item {
 	public double getFoodValue() {
 		return foodValue;
 	}
-
+	
+	/*
 	@Override
 	public void inspect(double closeness) {
-		// TODO Auto-generated method stub
 		
-	}
+	}//*/
 
 	@Override
 	public String[] getUses() {
