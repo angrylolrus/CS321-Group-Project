@@ -18,14 +18,12 @@ public class Food extends Item {
 	public double getFoodValue() {
 		return foodValue;
 	}
-
+	
+	/*
 	@Override
 	public void inspect(double closeness) {
-		// Always reveals at least (closeness)% of the damage and a random amount of the
-		// remaining damage
-		visDamage = (damage*closeness) + (Controller.random.nextDouble()*damage*(1-closeness));
 		
-	}
+	}//*/
 
 	@Override
 	public String[] getUses() {

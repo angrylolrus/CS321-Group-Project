@@ -15,7 +15,7 @@ public class ActionPanel {
     
     public ArrayList<UIElement> elements;
     GameMenu parent;
-    public Button equip, use, inspectShort, inspectMed, inspectLong, travel, transfer, wait, loot;
+    public Button equip, use, inspectShort, inspectMed, inspectLong, travel, transfer, wait, search;
 	
 	public ActionPanel(GameMenu g) {
         parent = g;
@@ -77,10 +77,10 @@ public class ActionPanel {
         elements.add(wait);
         
         //Loot
-        loot = blankButtons[6][0];
-        loot.updateLabel("Loot");
-        loot.setClickable(true);
-        elements.add(loot);
+        search = blankButtons[6][0];
+        search.updateLabel("Loot");
+        search.setClickable(true);
+        elements.add(search);
     }
 
     public void draw(Graphics gb) {
@@ -130,7 +130,7 @@ public class ActionPanel {
     	else if(b == use) {
     		parent.useItem();
     	}
-    	else if(b == inspectShort || b == inspectMed || b == inspectMed) {
+    	else if(b == inspectShort || b == inspectMed || b == inspectLong) {
     		double closeness = 0;
     		if(b == inspectShort)
     			closeness = .3;
@@ -147,7 +147,7 @@ public class ActionPanel {
     		//Waits 4 hours
     		parent.advanceTime(60*4);
     	}
-    	else if(b == loot) {
+    	else if(b == search) {
     		if(parent.openInventory != null)
     			parent.closeInventory();
     		//Opens the inventory at the current location

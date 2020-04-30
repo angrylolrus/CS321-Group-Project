@@ -27,11 +27,11 @@ public class Clothing extends Item {
 	public void setDefense(int defense) {
 		this.defense = defense;
 	}
-
+	/*
 	@Override
 	public void inspect(double closeness) {
 		
-	}
+	}//*/
 
 	@Override
 	public String[] getUses() {
