@@ -74,20 +74,20 @@ public class JsonFileWorker {
 
     }
     
-    public static <T> T getRandomNewItem() {
-    	int type = (int) (Math.random() * (2));
+    public static Item getRandomNewItem() {
+    	int type = (int) (Controller.random.nextDouble() * 3);
     	int index = 0;
     	if(type == 0) {
-    		index = (int)(Math.random() * (foodList.size()));
-    		return (T) foodList.get(index);
+    		index = (int)(Controller.random.nextDouble() * (foodList.size()));
+    		return foodList.get(index);
     	}
     	else if(type == 1) {
-    		index = (int)(Math.random() * (clothingList.size()));
-    		return (T) clothingList.get(index);
+    		index = (int)(Controller.random.nextDouble() * (clothingList.size()));
+    		return clothingList.get(index);
     	}
     	else {
-    		index = (int)(Math.random() * (toolList.size()));
-    		return (T) toolList.get(index);
+    		index = (int)(Controller.random.nextDouble() * (toolList.size()));
+    		return toolList.get(index);
     	}
     }
     // returns either a Clothing, Tool or Food object by whatever type is passed in

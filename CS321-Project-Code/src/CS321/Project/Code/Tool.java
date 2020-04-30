@@ -19,12 +19,13 @@ public class Tool extends Item {
   public int getDefense() {
     return defense;
   }
-
+  
+  /*
   @Override
   public void inspect(double closeness) {
     Random inspectProbability = new Random();
     inspectProbability.nextInt(100);
-  }
+  }//*/
 
   @Override
   public String[] getUses() {

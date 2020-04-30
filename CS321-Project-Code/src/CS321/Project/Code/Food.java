@@ -18,12 +18,12 @@ public class Food extends Item {
 	public double getFoodValue() {
 		return foodValue;
 	}
-
+	
+	/*
 	@Override
 	public void inspect(double closeness) {
-		// TODO Auto-generated method stub
 		
-	}
+	}//*/
 
 	@Override
 	public String[] getUses() {
