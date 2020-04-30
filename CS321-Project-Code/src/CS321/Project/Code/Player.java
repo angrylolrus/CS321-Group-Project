@@ -16,6 +16,13 @@ public class Player {
         parent = p;
         satiety = 50;
     }
+    
+    public void age(long time) {
+    	for(Item i : equipped)
+    		if(i != null)	
+    			i.age(time);
+    	inventory.age(time);
+    }
 
     public void takeDamage(int dmg) {
         current_Health = current_Health - (dmg - defense);

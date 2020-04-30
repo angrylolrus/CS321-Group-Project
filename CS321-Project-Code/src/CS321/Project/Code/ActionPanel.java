@@ -55,11 +55,13 @@ public class ActionPanel {
         //Wait
         wait = blankButtons[5][0];
         wait.updateLabel("Wait");
+        wait.setClickable(true);
         elements.add(wait);
         
         //Loot
         loot = blankButtons[6][0];
         loot.updateLabel("Loot");
+        loot.setClickable(true);
         elements.add(loot);
     }
 
@@ -78,51 +80,20 @@ public class ActionPanel {
     public void itemFocus(Object o)
     {
         //ct = clothing/tools, f = food, t = travel, ctf = any kind of item
-        boolean ct = false, f = false, t = false, ctf = false;
-        if(o != null)
-        {
-            if(o instanceof Clothing || o instanceof Tool)
-            {
-                ct = true;
-                f = false;
-            }
-            else if(o instanceof Food)
-            {
-                ct = false;
-                f = true;
-            }
-            else if(o instanceof Location)
-            {
-                ct = false;
-                f = false;
-                t = true;
-            }
-            
-            if(ct || f)
-        {
-            ctf = true;
-        }
-        }
+        boolean clthTool = o instanceof Clothing;
+        boolean food  = o instanceof Food;
+        boolean trvl = o instanceof Location && ((Location)o).adjacentTo(parent.playerLocation);
 
-        Button equiping = (UIElement.Button) elements.get(0);
-        equiping.setClickable(ct);
+        equip.setClickable(clthTool);
 
-        Button eating = (UIElement.Button) elements.get(1);
-        eating.setClickable(f);
+        use.setClickable(food);
 
-        Button inspecting = (UIElement.Button) elements.get(2);
-        inspecting.setClickable(ctf);
+        inspect.setClickable(clthTool || food);
 
-        Button travelling = (UIElement.Button) elements.get(3);
-        travelling.setClickable(t);
+        travel.setClickable(trvl);
 
-        Button transferring = (UIElement.Button) elements.get(4);
-        transferring.setClickable(ctf);
-
-        Button waiting = (UIElement.Button) elements.get(5);
-        waiting.setClickable(true);
+        transfer.setClickable((clthTool || food) && parent.openInventory != null); 
         
-        loot.setClickable(t);
     }
 
     //Sends the button they pressed

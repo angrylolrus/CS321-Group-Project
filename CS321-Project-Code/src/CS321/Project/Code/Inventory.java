@@ -24,11 +24,18 @@ public class Inventory {
 		selectedItem = -1;
 	}
 	
+	public void age(long time) {
+		for(Item i: contents) {
+			i.age(time);
+		}
+	}
+	
 	public void transfer(Inventory other, Item i) {
 		if(getCurrentVolume() + i.getVolume() < maxVolume)
 			if(getCurrentWeight() + i.getWeight() < maxWeight) {
 				other.removeItem(i);
 				contents.add(i);
+				other.resetHighlight();
 			}//End nested if
 	}
 	
@@ -82,7 +89,7 @@ public class Inventory {
 		scroll += 0.2 * dir;
 		//Ensures the player doesn't scroll the top below the header
 		scroll = Math.max(scroll, 0);
-		//Ensures the player doesn't scroll the button above the header
+		//Ensures the player doesn't scroll the last entry above the header
 		scroll = Math.min(scroll, contents.size() - 1);
 	}
 	
@@ -101,9 +108,10 @@ public class Inventory {
 	
 	//How tall an inventory entry is. Used for drawing and retrieving
 	private static final int ENTRY_HEIGHT = 20;
+	private static final int START_HEIGHT = 60;
 	
 	public Item selectItemAt(int x, int y) {
-		int index = (int)(y - 43 + (scroll*ENTRY_HEIGHT))/ENTRY_HEIGHT;
+		int index = (int)Math.floor((y + (scroll*ENTRY_HEIGHT) - START_HEIGHT)/ENTRY_HEIGHT);
 		if(selectedItem == index || index >= contents.size() || index < 0) {
 			selectedItem = -1;
 			return null;
@@ -118,13 +126,13 @@ public class Inventory {
 		for(int a = 0; a < contents.size(); a++) {
 			Item curItem = contents.get(a);
 			
-			name = new Label(curItem.getName(), true, 35, 50 + (ENTRY_HEIGHT*a) - (int)(ENTRY_HEIGHT*scroll));
+			name = new Label(curItem.getName(), true, 35, (int)(START_HEIGHT + (ENTRY_HEIGHT*a) - (ENTRY_HEIGHT*scroll) + ENTRY_HEIGHT/3));
 			name.setFont(font);
 			
-			weight = new Label("" + (curItem.getWeight()+"00000").substring(0, 4), true, 100, 50 + (ENTRY_HEIGHT*a) - (int)(ENTRY_HEIGHT*scroll));
+			weight = new Label((curItem.getWeight()+"00000").substring(0, 4), true, 100, (int)(START_HEIGHT + (ENTRY_HEIGHT*a) - (ENTRY_HEIGHT*scroll) + ENTRY_HEIGHT/3));
 			weight.setFont(font);
 		
-			vol = new Label("" + (curItem.getVolume()+"00000").substring(0, 4), true, 150, 50 + (ENTRY_HEIGHT*a) - (int)(ENTRY_HEIGHT*scroll));
+			vol = new Label((curItem.getVolume()+"00000").substring(0, 4), true, 150, (int)(START_HEIGHT + (ENTRY_HEIGHT*a) - (ENTRY_HEIGHT*scroll)+ ENTRY_HEIGHT/3));
 			vol.setFont(font);
 			
 			if(a == selectedItem) {
@@ -132,7 +140,7 @@ public class Inventory {
 				weight.setColor(Color.black);
 				vol.setColor(Color.black);
 				g.setColor(Color.white);
-				g.fillRect(0, 43 + (ENTRY_HEIGHT*a) - (int)(ENTRY_HEIGHT*scroll), 200, ENTRY_HEIGHT);
+				g.fillRect(0, START_HEIGHT + (ENTRY_HEIGHT*a) - (int)(ENTRY_HEIGHT*scroll), 200, ENTRY_HEIGHT);
 			}
 			
 			name.update(g);
@@ -141,11 +149,26 @@ public class Inventory {
 		}
 		
 		g.setColor(Color.black);
-		g.fillRect(0, 0, 200, 43);
+		g.fillRect(0, 0, 200, START_HEIGHT);
+		g.setColor(Color.white);
+		Label headers;
+		
+		//Headers for total weight and volume
+		headers = new Label("Totals", true, 35, 25+ENTRY_HEIGHT);
+		headers.setFont(font);
+		headers.update(g);
+		
+		headers = new Label((getCurrentWeight()+"00000").substring(0, 4), true, 100, 25+ENTRY_HEIGHT);
+		headers.setFont(font);
+		headers.update(g);
+		
+		headers = new Label((getCurrentVolume()+"00000").substring(0, 4), true, 150, 25+ENTRY_HEIGHT);
+		headers.setFont(font);
+		headers.update(g);
+		
 		
 		font = new Font("Courier New", Font.PLAIN, 18);
-		Label headers;
-		//g.setColor(Color.white);
+		//Headers for titles (done second because we change the font)
 		headers = new Label("Name", true, 35, 25);
 		headers.setFont(font);
 		headers.update(g);
@@ -159,7 +182,7 @@ public class Inventory {
 		headers.update(g);
 		
 		//Bounding box for header
-		g.drawLine(0, 43, 200, 43);
+		g.drawLine(0, START_HEIGHT, 200, START_HEIGHT);
 		
 	}
 	

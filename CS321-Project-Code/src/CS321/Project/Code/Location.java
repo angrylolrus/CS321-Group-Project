@@ -18,10 +18,12 @@ public class Location {
 		yPos = y;
 		links = new ArrayList<Location>();
 		contents = new Inventory(15, 15);
-		contents.addItem(JsonFileWorker.getItem("Clothing", 0, true) );
-		contents.addItem(JsonFileWorker.getItem("Clothing", 0, true) );
-		contents.addItem(JsonFileWorker.getItem("Clothing", 0, true) );
-		contents.addItem(JsonFileWorker.getItem("Clothing", 0, true) );
+		for(int i = 0; i < 3; i++)
+			contents.addItem(JsonFileWorker.getRandomNewItem());
+	}
+	
+	public void age(long time) {
+		contents.age(time);
 	}
 	
 	public Inventory getInventory() {
