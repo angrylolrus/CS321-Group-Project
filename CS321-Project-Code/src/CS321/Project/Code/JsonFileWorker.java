@@ -5,14 +5,21 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.nio.file.FileSystems;
 import java.lang.Math;
 
 // class to read a json file and grab the base attributes of an Item
 public class JsonFileWorker {
     static JSONObject readerObj;
+    static JSONObject readerObj2;
     //static String config = "\\CS321\\Project\\config\\Item_config.json";
     static String config = "src/CS321/Project/config/Item_config.json";
+    static String lootItemsPath = "src/CS321/Project/config/Loot_items.json";
+    static ArrayList<Food> foodList = new ArrayList<Food>();
+    static ArrayList<Tool> toolList = new ArrayList<Tool>();
+    static ArrayList<Clothing> clothingList = new ArrayList<Clothing>();
+    
 
     // needs to be run before any json reading or writing will happen
     public static boolean init() {
@@ -21,13 +28,68 @@ public class JsonFileWorker {
             if (readerObj == null) {
                 return false;
             }
+            readerObj2 = (JSONObject) new JSONParser().parse(new FileReader(lootItemsPath));
+            if (readerObj2 == null) {
+                return false;
+            }
+            initItemsArray("Food");
+            initItemsArray("Clothing");
+            initItemsArray("Tool");
             return true;
+            
         } catch (Exception e) {
             System.out.println(e);
             return false;
         }
     }
+    public static void initItemsArray(String type) {
+       
+        int index = 0;
+        JSONArray jArray = (JSONArray) readerObj2.get(type);
+        JSONObject jObj;
+        while(index < jArray.size()) {
+            try {
+            	jObj = (JSONObject) jArray.get(index);
+                String name = (String) jObj.get("name");
+                double volume = (double) jObj.get("volume");
+                double weight = (double) jObj.get("weight");
+                           
+                
+                if(type == "Clothing")
+                	clothingList.add(new Clothing(type,  0,  name,  volume,  weight,  0,  0.0, 0, 0));
+                else if(type == "Food") {
+                	foodList.add( new Food(type, 0, name, volume, weight, 0, 0.0, 0, 0, 0.0));
+                }
+            	else {
+            		toolList.add(new Tool ( type,  0,  name, volume, weight, 0.0, 0.0, 0, 0));
+            	}
+                
+            } catch (Exception e) {
+                System.out.println("Something went wrong with reading JSON file!\n" + e);
+                return;
+            }
+            index++;
+            
+        }
 
+    }
+    
+    public static <T> T getRandomNewItem() {
+    	int type = (int) (Math.random() * (2));
+    	int index = 0;
+    	if(type == 0) {
+    		index = (int)(Math.random() * (foodList.size()-1));
+    		return (T) foodList.get(index);
+    	}
+    	else if(type == 1) {
+    		index = (int)(Math.random() * (clothingList.size()-1));
+    		return (T) clothingList.get(index);
+    	}
+    	else {
+    		index = (int)(Math.random() * (toolList.size()-1));
+    		return (T) toolList.get(index);
+    	}
+    }
     // returns either a Clothing, Tool or Food object by whatever type is passed in
     public static <T> T getItem(String type, int id, boolean newItem) {
         Clothing c;

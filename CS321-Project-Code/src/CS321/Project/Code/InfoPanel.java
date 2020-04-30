@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import CS321.Project.Code.UIElement.Label;
 
-//This is just a static class to seperate out the code for displaying information
+//This is just a static class to separate out the code for displaying information
 // 	about an item that is being focused on
 public class InfoPanel {
 	

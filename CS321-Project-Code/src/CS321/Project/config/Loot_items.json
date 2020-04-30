@@ -1,0 +1,88 @@
+{
+   
+    "Clothing":
+    [
+        {
+            "name": "Pants",
+            "volume": 0.1,
+            "weight": 0.2,
+			"id" : 0
+        },
+        {
+            "name": "Shirt",
+            "volume": 0.1,
+            "weight": 0.1,
+			"id" : 10
+        },
+        {
+            "name": "Jacket",
+            "volume": 0.5,
+            "weight": 0.5,
+			"id" : 20
+        }
+    ],
+
+    
+    "Tool":
+    [
+        {
+            "name": "Axe",
+            "volume": 2.0,
+            "weight": 3.0,
+			"id" : 0
+        },
+        {
+            "name": "Pitchfork",
+            "volume": 1.5,
+            "weight": 2.0,
+			"id" : 10
+        },
+        {
+            "name": "Firewood",
+            "volume": 1.5,
+            "weight": 1.5,
+			"id" : 20
+        }
+    ],
+
+   
+    "Food":
+    [
+        {
+            "name": "Bread",
+			"volume": 1.0,
+            "weight": 0.75,
+			"id" : 0
+        },
+        {
+            "name": "Carrot",
+			"volume": 0.25,
+            "weight": 0.5,
+ 			"id" : 10
+        },
+        {
+            "name": "Fish",
+			"volume": 0.5,
+            "weight": 0.3,
+ 			"id" : 20
+        },
+        {
+            "name": "Chicken",
+			"volume": 2.0,
+            "weight": 3.0,
+ 			"id" : 30
+        },
+        {
+            "name": "Chicken",
+			"volume": 2.0,
+            "weight": 3.0,
+ 			"id" : 40
+        },
+        {
+            "name": "Water",
+			"volume": 0.5,
+            "weight": 0.5,
+ 			"id" : 50
+        },
+    ]
+}
