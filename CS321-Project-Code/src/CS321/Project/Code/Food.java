@@ -21,7 +21,9 @@ public class Food extends Item {
 
 	@Override
 	public void inspect(double closeness) {
-		// TODO Auto-generated method stub
+		// Always reveals at least (closeness)% of the damage and a random amount of the
+		// remaining damage
+		visDamage = (damage*closeness) + (Controller.random.nextDouble()*damage*(1-closeness));
 		
 	}
 

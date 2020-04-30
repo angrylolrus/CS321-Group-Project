@@ -149,9 +149,8 @@ public class GameMenu {
 		
 	}
 	
-	public void inspectItem() {
+	public void inspectItem(double closeness) {
 		if(hardFocus instanceof Item) {
-			double closeness = .5;
 			((Item)hardFocus).inspect(closeness);
 			//One hour is 100% focus
 			advanceTime((int)Math.round(closeness*60));

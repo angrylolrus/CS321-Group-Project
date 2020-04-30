@@ -1,7 +1,10 @@
 package CS321.Project.Code;
 
 import java.util.ArrayList;
-import CS321.Project.Code.UIElement.*;
+
+import CS321.Project.Code.UIElement.Button;
+import CS321.Project.Code.UIElement.Label;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
@@ -12,7 +15,7 @@ public class ActionPanel {
     
     public ArrayList<UIElement> elements;
     GameMenu parent;
-    public Button equip, use, inspect, travel, transfer, wait, loot;
+    public Button equip, use, inspectShort, inspectMed, inspectLong, travel, transfer, wait, loot;
 	
 	public ActionPanel(GameMenu g) {
         parent = g;
@@ -37,10 +40,25 @@ public class ActionPanel {
         use.updateLabel("Use");
         elements.add(use);
 
+        //Simple label for inspection column
+        Label insp = new Label("Inspect", true, blankButtons[2][0].xPos+30, blankButtons[2][0].yPos+20);
+        insp.setFont(Controller.DEFAULT_FONT);
+        elements.add(insp);
+        
         //Inspect
-        inspect = blankButtons[2][0];
-        inspect.updateLabel("Inspect");
-        elements.add(inspect);
+        inspectShort = blankButtons[2][1];
+        inspectShort.updateLabel("Short");
+        elements.add(inspectShort);
+        
+        //Inspect
+        inspectMed = blankButtons[2][2];
+        inspectMed.updateLabel("Medium");
+        elements.add(inspectMed);
+        
+        //Inspect
+        inspectLong = blankButtons[2][3];
+        inspectLong.updateLabel("Long");
+        elements.add(inspectLong);
 
         //Travel
         travel = blankButtons[3][0];
@@ -88,7 +106,9 @@ public class ActionPanel {
 
         use.setClickable(food);
 
-        inspect.setClickable(clthTool || food);
+        inspectShort.setClickable(clthTool || food);
+        inspectMed.setClickable(clthTool || food);
+        inspectLong.setClickable(clthTool || food);
 
         travel.setClickable(trvl);
 
@@ -110,8 +130,15 @@ public class ActionPanel {
     	else if(b == use) {
     		parent.useItem();
     	}
-    	else if(b == inspect) {
-    		parent.inspectItem();
+    	else if(b == inspectShort || b == inspectMed || b == inspectMed) {
+    		double closeness = 0;
+    		if(b == inspectShort)
+    			closeness = .3;
+    		else if(b == inspectMed)
+    			closeness = .5;
+    		else
+    			closeness = .9;
+    		parent.inspectItem(closeness);
     	}
     	else if(b == transfer) {
     		parent.transferItem();
