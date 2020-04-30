@@ -167,6 +167,11 @@ public class World {
 		g.setColor(Color.red);
 		parent.playerLocation.drawSelfRelative(x, y, margin, g);
 		
+		g.setColor(Color.yellow);
+		for(Location l: parent.playerLocation.links) {
+			l.drawSelfRelative(x, y, margin, g);
+		}
+		
 		if(parent.hardFocus instanceof Location) {
 			g.setColor(Color.green);
 			((Location) parent.hardFocus).drawSelfRelative(x, y, margin, g);
