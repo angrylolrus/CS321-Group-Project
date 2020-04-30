@@ -1,5 +1,5 @@
 {
-    "//Clothing array": "just the array for clothing objects",
+   
     "Clothing":
     [
         {
@@ -22,55 +22,64 @@
         }
     ],
 
-    "//Tool array": "just the array for tool objects",
+    
     "Tool":
     [
         {
-            "name": "Axe"
+            "name": "Axe",
+            "volume": 2.0,
+            "weight": 3.0,
+			"id" : 0
         },
         {
-            "name": "Pitchfork"
+            "name": "Pitchfork",
+            "volume": 1.5,
+            "weight": 2.0,
+			"id" : 10
         },
         {
-            "name": "Firewood"
+            "name": "Firewood",
+            "volume": 1.5,
+            "weight": 1.5,
+			"id" : 20
         }
     ],
 
-    "//Food array": "just the array for food objects",
+   
     "Food":
     [
         {
-            "name": "Bread"
+            "name": "Bread",
 			"volume": 1.0,
             "weight": 0.75,
 			"id" : 0
         },
         {
-            "name": "Carrot"
+            "name": "Carrot",
 			"volume": 0.25,
             "weight": 0.5,
  			"id" : 10
         },
         {
-            "name": "Fish"
+            "name": "Fish",
 			"volume": 0.5,
             "weight": 0.3,
  			"id" : 20
         },
         {
-            "name": "Chicken"
+            "name": "Chicken",
 			"volume": 2.0,
             "weight": 3.0,
  			"id" : 30
         },
         {
-            "name": "Chicken"
+            "name": "Chicken",
 			"volume": 2.0,
             "weight": 3.0,
  			"id" : 40
         },
         {
-            "name": "Water"
+            "name": "Water",
 			"volume": 0.5,
             "weight": 0.5,
  			"id" : 50
