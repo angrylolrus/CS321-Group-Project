@@ -63,40 +63,36 @@ public class Player {
     public void equip_Item(Item i, int type) {
         Item temp = equipped[type];
         equipped[type] = i;
-        //change_Defense(i.getDefense() - temp.getDefense());
+        // change_Defense(i.getDefense() - temp.getDefense());
     }
-    
+
     public boolean useItem(Item i) {
-    	if(i instanceof Food) {
-    		satiety += ((Food)i).getFoodValue();
-    		return true;
-    	}
-    	
-    	return false;
+        if (i instanceof Food) {
+            satiety += ((Food) i).getFoodValue();
+            return true;
+        }
+
+        return false;
     }
 
     public void change_Defense(int df) {
         defense = defense + df;
     }
 
-    public int getHealth()
-    {
+    public int getHealth() {
         return current_Health;
     }
 
-    public int getDefense()
-    {
+    public int getDefense() {
         return defense;
     }
-    
+
     public Inventory getInventory() {
-    	return inventory;
+        return inventory;
     }
 
-    public void getEquipped()
-    {
-        for(int x = 0; x < equipped.length; x++)
-        {
+    public void getEquipped() {
+        for (int x = 0; x < equipped.length; x++) {
             System.out.println(equipped[x]);
         }
     }

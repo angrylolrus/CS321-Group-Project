@@ -14,8 +14,8 @@ public class JsonFileWorker {
     static JSONObject readerObj;
     static JSONObject readerObj2;
     //static String config = "\\CS321\\Project\\config\\Item_config.json";
-    static String config = "src/CS321/Project/config/Item_config.json";
-    static String lootItemsPath = "src/CS321/Project/config/Loot_items.json";
+    static String config = "../src/CS321/Project/config/Item_config.json";
+    static String lootItemsPath = "../src/CS321/Project/config/Loot_items.json";
     static ArrayList<Food> foodList = new ArrayList<Food>();
     static ArrayList<Tool> toolList = new ArrayList<Tool>();
     static ArrayList<Clothing> clothingList = new ArrayList<Clothing>();
@@ -114,8 +114,8 @@ public class JsonFileWorker {
             } else {
                 created = 0; // need to create a day/hour variable
             }
-            if(type.equals("Food"))
-				wetness = (double) jObject.get("wetness");
+            if (type.equals("Food"))
+                wetness = (double) jObject.get("wetness");
         } catch (Exception e) {
             System.out.println("Something went wrong with reading JSON file!\n" + e);
             return null;
