@@ -14,8 +14,8 @@ public class JsonFileWorker {
     static JSONObject readerObj;
     static JSONObject readerObj2;
     //static String config = "\\CS321\\Project\\config\\Item_config.json";
-    static String config = "src/CS321/Project/config/Item_config.json";
-    static String lootItemsPath = "src/CS321/Project/config/Loot_items.json";
+    static String config = "../src/CS321/Project/config/Item_config.json";
+    static String lootItemsPath = "../src/CS321/Project/config/Loot_items.json";
     static ArrayList<Food> foodList = new ArrayList<Food>();
     static ArrayList<Tool> toolList = new ArrayList<Tool>();
     static ArrayList<Clothing> clothingList = new ArrayList<Clothing>();
