@@ -252,6 +252,14 @@ public class TestClass {
       else{
          System.out.println("\tAdjusting Max Volume/Weight test for inventory: Failed");
       }
+      
+      
+      /************************************
+      Other methods were tested manually:
+      * age, scroll, resetHighlight, 
+      highlightedIndex, highlightedItem, 
+      selectItemAt and drawSelf
+      *************************************/
    }
 
    public static void jsonTest()
