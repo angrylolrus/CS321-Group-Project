@@ -1,4 +1,5 @@
 package CS321.Project.Code;
+import java.util.Arrays;
 
 public class TestClass {
 	private static int id = 1;
@@ -9,8 +10,8 @@ public class TestClass {
 	private static int age = 6;
 	private static int day = 7;
 	private static double wetness = 8.0;
-	private static String clothingToString = "Clothing 1: Shoes\n\tVolume: 2.0, Weight: 3.0\n\tDamage: 4.0, Visable Damage: 5.0\n\tAge: 6, Created: 7\n\tDefense: 0";
-	private static String foodToString = "Food 1: Bread\n\tVolume: 2.0, Weight: 3.0\n\tDamage: 4.0, Visable Damage: 5.0\n\tAge: 6, Created: 7\n\tWetness: 8.0";
+	private static String clothingToString = "Clothing 1: Shoes\n\tVolume: 2.0, Weight: 3.0\n\tDamage: 4.0, Visible Damage: 5.0\n\tAge: 6, Created: 7\n\tDefense: 0";
+	private static String foodToString = "Food 1: Bread\n\tVolume: 2.0, Weight: 3.0\n\tDamage: 4.0, Visible Damage: 5.0\n\tAge: 6, Created: 7\n\tWetness: 8.0";
 
 	public static void main(String[] args) {
 		System.out.println("Our first test works!");
@@ -108,11 +109,11 @@ public class TestClass {
 	{
 		System.out.println("Tool Test Starting");
 
-		/*//Testing the constructor and getter methods
-		Tool f = new Tool("Tool", id, "Axe", volume, weight, damage, visDamage, age, day, wetness);
-		if(f.getType().equals("Tool") && f.getID() == 1 && f.getName().equals("Axe") && 
-		   f.getVolume() == 2.0 && f.getWeight() == 3.0 && f.getDamage() == 4.0 && f.getVisDamage() == 5.0 && 
-		   f.getAge() == 6 && f.getCreated() == 7 && f.getWetness() == 8.0)
+		//Testing the constructor and getter methods
+		Tool t = new Tool("Tool", id, "Axe", volume, weight, damage, visDamage, age, day);
+		if(t.getType().equals("Tool") && t.getID() == 1 && t.getName().equals("Axe") && 
+		   t.getVolume() == 2.0 && t.getWeight() == 3.0 && t.getDamage() == 4.0 && t.getVisDamage() == 5.0 && 
+		   t.getAge() == 6 && t.getCreated() == 7 && Arrays.toString(t.getUses()).equals("[Equip, Drop, Use]"))
 		{
 			System.out.println("\tConstructor and Getter Methods Test: Successful");
 		}
@@ -122,9 +123,9 @@ public class TestClass {
 		}
 
 		//Testing the setter methods
-		f.takeDamage(4.0);
-		f.setVisDamage(10.0);
-		if(f.getDamage() == 8.0 && f.getVisDamage() == 10.0)
+		t.takeDamage(4.0);
+		t.setVisDamage(10.0);
+		if(t.getDamage() == 8.0 && t.getVisDamage() == 10.0)
 		{
 			System.out.println("\tSetter Methods Test: Successful");
 		}
@@ -132,7 +133,7 @@ public class TestClass {
 		{
 			System.out.println("\tSetter Methods Test: Failed");
 		}
-		System.out.println("\tTool Test Complete");*/
+		System.out.println("\tTool Test Complete");
 	}
 
 	public static void foodTest()
@@ -154,6 +155,7 @@ public class TestClass {
 
 		//Testing toString method
 		String s = f.toString();
+		System.out.println("the food string:" + s);
 		if(s.equals(foodToString))
 		{
 			System.out.println("\ttoString Method Test: Successful");
