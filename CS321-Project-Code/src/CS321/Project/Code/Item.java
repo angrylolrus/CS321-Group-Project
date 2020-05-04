@@ -151,6 +151,6 @@ public abstract class Item {
     public String toString()
     {
         return type + " " + ID + ": " + name + "\n\tVolume: " + volume + ", Weight: " + weight +
-               "\n\tDamage: " + damage + ", Visaible Damage: " +visDamage + "\n\tAge: "+ age + ", Created: " + created;
+               "\n\tDamage: " + damage + ", Visable Damage: " +visDamage + "\n\tAge: "+ age + ", Created: " + created;
     }
 }

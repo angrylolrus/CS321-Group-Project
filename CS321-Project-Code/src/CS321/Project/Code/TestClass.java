@@ -1,10 +1,9 @@
 package CS321.Project.Code;
 
-import javax.xml.namespace.QName;
-
 import CS321.Project.Code.ActionPanel;
+import CS321.Project.Code.Controller;
 import CS321.Project.Code.GameMenu;
-import jdk.dynalink.linker.support.Guards;
+import CS321.Project.Code.MainMenu;
 
 public class TestClass {
    private static int id = 1;
@@ -17,6 +16,8 @@ public class TestClass {
    private static double wetness = 8.0;
    private static String clothingToString = "Clothing 1: Shoes\n\tVolume: 2.0, Weight: 3.0\n\tDamage: 4.0, Visable Damage: 5.0\n\tAge: 6, Created: 7\n\tDefense: 0";
    private static String foodToString = "Food 1: Bread\n\tVolume: 2.0, Weight: 3.0\n\tDamage: 4.0, Visable Damage: 5.0\n\tAge: 6, Created: 7\n\tWetness: 8.0";
+   private static String toolToString = "Tool 1: Axe\n\tVolume: 2.0, Weight: 3.0\n\tDamage: 4.0, Visable Damage: 5.0\n\tAge: 6, Created: 7";
+
 
    public static void main(String[] args) {
       System.out.println("Our first test works!");
@@ -91,6 +92,24 @@ public class TestClass {
       {
          System.out.println(e);
       }
+
+      try{
+      	//World test
+         worldTest();
+      }
+      catch (Exception e)
+      {
+         System.out.println(e);
+      }
+
+      try{
+      	//MainMenu test
+         mainMenuTest();
+      }
+      catch (Exception e)
+      {
+         System.out.println(e);
+      }
    }
 
    public static void clothingTest()
@@ -141,23 +160,34 @@ public class TestClass {
    {
       System.out.println("Tool Test Starting");
    
-   	/*//Testing the constructor and getter methods
-   	Tool f = new Tool("Tool", id, "Axe", volume, weight, damage, visDamage, age, day, wetness);
-   	if(f.getType().equals("Tool") && f.getID() == 1 && f.getName().equals("Axe") && 
-   	   f.getVolume() == 2.0 && f.getWeight() == 3.0 && f.getDamage() == 4.0 && f.getVisDamage() == 5.0 && 
-   	   f.getAge() == 6 && f.getCreated() == 7 && f.getWetness() == 8.0)
+   	//Testing the constructor and getter methods
+   	Tool t = new Tool("Tool", id, "Axe", volume, weight, damage, visDamage, age, day);
+   	if(t.getType().equals("Tool") && t.getID() == 1 && t.getName().equals("Axe") && 
+   	   t.getVolume() == 2.0 && t.getWeight() == 3.0 && t.getDamage() == 4.0 && t.getVisDamage() == 5.0 && 
+   	   t.getAge() == 6 && t.getCreated() == 7)
    	{
    		System.out.println("\tConstructor and Getter Methods Test: Successful");
    	}
    	else
    	{
    		System.out.println("\tConstructor Test: Failed");
-   	}
+      }
+      
+      //Testing toString method
+      String s = t.toString();
+      if(s.equals(toolToString))
+      {
+         System.out.println("\ttoString Method Test: Successful");
+      }
+      else
+      {
+         System.out.println("\ttoString Method Test: Failed");
+      }
    
    	//Testing the setter methods
-   	f.takeDamage(4.0);
-   	f.setVisDamage(10.0);
-   	if(f.getDamage() == 8.0 && f.getVisDamage() == 10.0)
+   	t.takeDamage(4.0);
+   	t.setVisDamage(10.0);
+   	if(t.getDamage() == 8.0 && t.getVisDamage() == 10.0)
    	{
    		System.out.println("\tSetter Methods Test: Successful");
    	}
@@ -165,7 +195,7 @@ public class TestClass {
    	{
    		System.out.println("\tSetter Methods Test: Failed");
    	}
-   	System.out.println("\tTool Test Complete");*/
+   	System.out.println("\tTool Test Complete");
    }
 
    public static void foodTest()
@@ -215,6 +245,8 @@ public class TestClass {
    public static void playerTest()
    {
       System.out.println("Player Test Starting");
+
+      System.out.println("Player Test Complete");
    }
 
    public static void inventoryTest()
@@ -286,6 +318,7 @@ public class TestClass {
          System.out.println("\tAdjusting Max Volume/Weight test for inventory: Failed");
       }
       
+      System.out.println("Inventory Test Complete");
       
       /************************************
       Other methods were tested manually:
@@ -315,7 +348,7 @@ public class TestClass {
          System.out.println("JSON Init function failed!");
          return;
       }
-      System.out.println("\tJSON test successful!");
+      System.out.println("\tJSON Test Complete");
    }
 
    public static void infoTest()
@@ -336,7 +369,7 @@ public class TestClass {
          return;
       }
 
-      System.out.println("\tInfoPanel test successful! ");
+      System.out.println("\tInfoPanel Test Complete");
    }
 
    public static void gameMenuTest()
@@ -372,18 +405,16 @@ public class TestClass {
          return;
       }
 
-      System.out.println("\tGameMenu test successful!");
+      System.out.println("\tGameMenu Test Complete");
    }
 
    public static void actionTest()
    {
-      System.out.println("GameMenu Test Starting");
+      System.out.println("ActionPanel Test Starting");
 
       Controller c = new Controller();
       GameMenu g = new GameMenu(c);
       ActionPanel ap = new ActionPanel(g);
-
-      equip, use, inspectShort, inspectMed, inspectLong, travel, transfer, wait1, wait4, wait8, search
 
       //Constructor test
       if(ap.parent != null && ap.elements != null && ap.equip != null 
@@ -399,8 +430,45 @@ public class TestClass {
             System.out.println("\tConstructor test: Failed");
          }
 
-      System.out.println("\tActionPanel test successful!");
-
+      System.out.println("\tActionPanel Test Complete");
    }
 
+   public static void worldTest()
+   {
+      System.out.println("World Test Starting");
+
+      Controller c = new Controller();
+      GameMenu g = new GameMenu(c);
+      World w = new World(g, 40, 40);
+
+      if(w.parent != null && w.locs != null && w.xSize == 40 && w.ySize == 40 && w.locuses != null)
+      {
+         System.out.println("\tConstructor test: Successful");
+      }
+      else
+      {
+         System.out.println("\tConstructor test: Failed");
+      }
+
+      System.out.println("\tWorld Test Complete");
+   }
+
+   public static void mainMenuTest()
+   {
+      System.out.println("MainMenu Test Starting");
+
+      Controller c = new Controller();
+      MainMenu m = new MainMenu(c);
+
+      if(m.controller != null && m.elements != null && m.elements.size() == 10)
+      {
+         System.out.println("\tConstructor test: Successful");
+      }
+      else
+      {
+         System.out.println("\tConstructor test: Failed");
+      }
+
+      System.out.println("\tMainMenu Test Complete");
+   }
 }
