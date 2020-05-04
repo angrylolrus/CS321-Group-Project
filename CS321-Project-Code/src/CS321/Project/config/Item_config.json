@@ -41,7 +41,7 @@
     "Food":
     [
         {
-            "name": "Bread"
+            "name": "Bread",
 			"volume": 1.0,
             "weight": 0.5,
             "damage": 0.0,

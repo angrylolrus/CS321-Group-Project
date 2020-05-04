@@ -1,6 +1,12 @@
 package CS321.Project.Code;
 import java.util.Arrays;
 
+import javax.xml.namespace.QName;
+
+import CS321.Project.Code.ActionPanel;
+import CS321.Project.Code.GameMenu;
+import jdk.dynalink.linker.support.Guards;
+
 public class TestClass {
 	private static int id = 1;
 	private static double volume = 2.0;
@@ -55,6 +61,33 @@ public class TestClass {
       try{
       	//JSON File Worker test
          jsonTest();
+      }
+      catch (Exception e)
+      {
+         System.out.println(e);
+      }
+
+      try{
+      	//InfoPanel test
+         infoTest();
+      }
+      catch (Exception e)
+      {
+         System.out.println(e);
+      }
+
+      try{
+      	//GameMenu test
+         gameMenuTest();
+      }
+      catch (Exception e)
+      {
+         System.out.println(e);
+      }
+
+      try{
+      	//ActionPanel test
+         actionTest();
       }
       catch (Exception e)
       {
@@ -184,6 +217,7 @@ public class TestClass {
       selectItemAt and drawSelf
       *************************************/
    }
+   
    public static void locationTest() {
 	  
 	   
@@ -287,5 +321,89 @@ public class TestClass {
 		}
 		System.out.println("JSON test successful!");
 	}
+
+   public static void infoTest()
+   {
+      System.out.println("InfoPanel Test Starting");
+
+      Controller c = new Controller();
+      GameMenu g = new GameMenu(c);
+      InfoPanel ip = new InfoPanel(g);
+
+      if(ip.parent != null)
+      {
+         System.out.println("\tConstructor test: Success");
+      }
+      else
+      {
+         System.out.println("\tConstructor test: Failed");
+         return;
+      }
+
+      System.out.println("\tInfoPanel test successful! ");
+   }
+
+   public static void gameMenuTest()
+   {
+      System.out.println("GameMenu Test Starting");
+
+      Controller c = new Controller();
+      GameMenu g = new GameMenu(c);
+
+      //Constructor test
+      if(g.time == 480 && g.controller != null && g.player != null 
+        && g.infoPanel != null && g.actionPanel != null 
+        && g.worldSize == 1200 && g.world != null && g.zoomLevel == 2 
+        && g.mapCenter != null && g.playerLocation != null && g.elements != null)
+      {
+         System.out.println("\tContructor test: Successful");
+      }
+      else
+      {
+         System.out.println("\tConstructor test: Failed");
+         return;
+      }
+
+      //time test
+      g.advanceTime(20);
+      if(g.time == 500 && g.getTime() == 500 && g.timeSince(480) == 20)
+      {
+         System.out.println("\tTime methods test: Successful");
+      }
+      else
+      {
+         System.out.println("\tTime methods test: Failed");
+         return;
+      }
+
+      System.out.println("\tGameMenu test successful!");
+   }
+
+   public static void actionTest()
+   {
+      System.out.println("GameMenu Test Starting");
+
+      Controller c = new Controller();
+      GameMenu g = new GameMenu(c);
+      ActionPanel ap = new ActionPanel(g);
+
+      //Constructor test
+      if(ap.parent != null && ap.elements != null && ap.equip != null 
+         && ap.use != null && ap.inspectShort != null && ap.inspectMed != null
+         && ap.inspectLong != null && ap.travel != null && ap.transfer != null
+         && ap.wait1 != null && ap.wait4 != null && ap.wait8 != null 
+         && ap.search != null)
+         {
+            System.out.println("\tConstructor test: Successful");
+         }
+         else
+         {
+            System.out.println("\tConstructor test: Failed");
+         }
+
+      System.out.println("\tActionPanel test successful!");
+
+   }
+
 
 }
