@@ -20,6 +20,9 @@ public class Player {
         energy = 100;
         lastUpdated = parent.getTime();
     }
+    public long getLastUpdated() {
+    	return lastUpdated;
+    }
     public GameMenu getParent() {
     	return parent;
     }

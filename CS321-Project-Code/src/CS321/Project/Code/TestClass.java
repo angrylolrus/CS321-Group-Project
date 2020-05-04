@@ -1,11 +1,12 @@
 package CS321.Project.Code;
+import java.awt.Font;
 import java.util.Arrays;
 
 import javax.xml.namespace.QName;
 
 import CS321.Project.Code.ActionPanel;
 import CS321.Project.Code.GameMenu;
-import jdk.dynalink.linker.support.Guards;
+//import jdk.dynalink.linker.support.Guards;
 
 public class TestClass {
 	private static int id = 1;
@@ -22,7 +23,7 @@ public class TestClass {
 
    public static void main(String[] args) {
       System.out.println("Our first test works!");
-   
+      JsonFileWorker.init();
       try {
       	//Clothing class test
          clothingTest();
@@ -47,6 +48,18 @@ public class TestClass {
       try {
       	//Location class test
          locationTest();
+      } catch (Exception e) {
+         System.out.println(e);
+      }
+      try {
+        	//Player class test
+           playerTest();
+        } catch (Exception e) {
+           System.out.println(e);
+        }
+      try {
+      	//UI Element class test
+         uiElementTest();
       } catch (Exception e) {
          System.out.println(e);
       }
@@ -217,9 +230,93 @@ public class TestClass {
       selectItemAt and drawSelf
       *************************************/
    }
-   
+   public static void uiElementTest() {
+	   System.out.println("UI Element Test Starting"); 
+	   UIElement l = new UIElement.Label("TestLabel", true, 10, 10);
+	   ((UIElement.Label)l).rewrite("New name");
+	   if(((UIElement.Label)l).contents.equals("New name"))
+		   System.out.println("\trewrite successful!");
+	   else
+		   System.out.println("\trewrite failed!");
+	   ((UIElement.Label)l).rewrite("New name");
+	   ((UIElement.Label)l).setFont("Arial", Font.PLAIN, 16);
+	   if(((UIElement.Label)l).font.getFontName().equals("Arial"))
+		   System.out.println("\tsetFont successful!");
+	   else
+		   System.out.println("\tsetFont failed!");
+	   UIElement m = new UIElement.MouseCoords();
+	   if(m instanceof UIElement.MouseCoords)
+		   System.out.println("\tMouse coords constructor successful!");
+	   else
+		   System.out.println("\tMouse coords constructor failed!");
+	   UIElement b = new UIElement.Button(10,10,10,10, "TestButton");
+	   if(b instanceof UIElement.Button && ((UIElement.Button) b).isClickable())
+		   System.out.println("\tButton constructor and getter successful!");
+	   else
+		   System.out.println("\tButton constructor and getter failed!");
+	   ((UIElement.Button)b).updateLabel("new label");
+	   if( ((UIElement.Button)b).label.contents.equals("new label") 
+			   && !((UIElement.Button)b).isClickable() )
+		   System.out.println("\tButton update successful!");
+	   else
+		   System.out.println("\tButton update failed!");
+	   
+   }
    public static void locationTest() {
-	  
+	   
+	   System.out.println("Location Test Starting");
+	   Location l = new Location(50,50);
+	   l.age(5);
+	   Location l2 = new Location (53,50);
+	   l.addLink(l2);
+	   if(l.adjacentTo(l2) == true)
+		   System.out.println("\tAdjacent to test: Successful");
+	   else
+		   System.out.println("\tAdjacent to test: Failed");
+	   if(l.distanceTo(l2) == 3.0)
+		   System.out.println("\tDistance to test: Successful");
+	   else
+		   System.out.println("\tDistance to test: Failed");
+	   if(l.getInventory() != null)
+		   System.out.println("\tgetInventory test: Successful");
+	   else
+		   System.out.println("\tgetInventory test: Failed");
+	   if(l.toString().equals("[Location: X: 50.0 Y: 50.0]"))
+		   System.out.println("\ttoString test: Successful");
+	   else
+		   System.out.println("\ttoString test: Failed");
+	   
+   }
+   public static void playerTest() {
+	   System.out.println("Player Test Starting");
+	   
+	   Controller c = new Controller();
+	   GameMenu g = new GameMenu(c);
+	   Player p = new Player(g);
+	   if(p.getParent() != null && p.getEnergy() == 100 && p.getSatiety() == 50 && p.getLastUpdated() > 0 
+			   && p.getHealth() == 25 && p.getDefense() == 0 && p.getInventory() != null)
+		   System.out.println("\tGetters Successful");
+	   else
+		   System.out.println("\tGetters Failed");
+	   p.change_Defense(5);
+	   p.takeDamage(10);
+	   p.heal_Player(3);
+	   
+	   if(p.getDefense() == 5 && p.getHealth() == 23)
+		   System.out.println("\tSetters Successful");
+	   else
+		   System.out.println("\tSetters Failed");
+	   boolean u = p.useItem(new Food("Food", 0, "Bread", 1.0, 2.0, 0.0, 0.0, 0, 0, 0.0));
+	   if(u && p.getSatiety() == 80) //use item should have added 30 to satiety
+		   System.out.println("\tuseItem Successful");
+	   else
+		   System.out.println("\tuseItem Failed");
+	   p.age(500);
+	   if(p.getLastUpdated() == 500 && p.getSatiety() == 76 && p.getEnergy() == 104)
+		   System.out.println("\tAge test Successful");
+	   else
+	   	   System.out.println("\tAge test Failed");
+	   
 	   
    }
 	public static void toolTest()
@@ -272,7 +369,6 @@ public class TestClass {
 
 		//Testing toString method
 		String s = f.toString();
-		System.out.println("the food string:" + s);
 		if(s.equals(foodToString))
 		{
 			System.out.println("\ttoString Method Test: Successful");
@@ -306,20 +402,19 @@ public class TestClass {
 		boolean jTest = JsonFileWorker.init();
 		if(jTest)
 		{
+			System.out.println("\tJSON Init function successful!");
 			Clothing c = (Clothing) JsonFileWorker.getItem("Clothing", 0, true);
-			//Shouldn't it be or? Changed from &&
-			if(c == null || !(c instanceof Clothing))
-			{
-				System.out.println("JSON test failed!");
-				return;
-			}
+			Item randItem = JsonFileWorker.getRandomNewItem();
+			if(randItem != null && c != null && c instanceof Clothing)
+				System.out.println("\tJSON Get item methods successful!");
+			else
+				System.out.println("\tJSON Get item methods failed!");
 		}
 		else
 		{
-			System.out.println("JSON Init function failed!");
+			System.out.println("\tJSON Init function failed!");
 			return;
 		}
-		System.out.println("JSON test successful!");
 	}
 
    public static void infoTest()

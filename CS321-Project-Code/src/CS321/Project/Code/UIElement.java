@@ -163,7 +163,6 @@ public abstract class UIElement {
 		// x,y are position, w,h are width and height
 		public Button(int x, int y, int w, int h) {
 			super(x, y, w, h);
-
 			clickable = true;
 		}
 
