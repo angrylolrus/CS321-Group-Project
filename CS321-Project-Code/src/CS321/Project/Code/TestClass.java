@@ -17,7 +17,7 @@ public class TestClass {
    private static String clothingToString = "Clothing 1: Shoes\n\tVolume: 2.0, Weight: 3.0\n\tDamage: 4.0, Visable Damage: 5.0\n\tAge: 6, Created: 7\n\tDefense: 0";
    private static String foodToString = "Food 1: Bread\n\tVolume: 2.0, Weight: 3.0\n\tDamage: 4.0, Visable Damage: 5.0\n\tAge: 6, Created: 7\n\tWetness: 8.0";
    private static String toolToString = "Tool 1: Axe\n\tVolume: 2.0, Weight: 3.0\n\tDamage: 4.0, Visable Damage: 5.0\n\tAge: 6, Created: 7";
-
+   private static String itemToString = "Tool 3: Stick\n\tVolume: 1.0, Weight: 1.0\n\tDamage: 5.0, Visable Damage: 2.0\n\tAge: 6, Created: 7";
 
    public static void main(String[] args) {
       System.out.println("Our first test works!");
@@ -65,7 +65,7 @@ public class TestClass {
       {
          System.out.println(e);
       }
-
+   
       try{
       	//InfoPanel test
          infoTest();
@@ -74,7 +74,7 @@ public class TestClass {
       {
          System.out.println(e);
       }
-
+   
       try{
       	//GameMenu test
          gameMenuTest();
@@ -83,7 +83,7 @@ public class TestClass {
       {
          System.out.println(e);
       }
-
+   
       try{
       	//ActionPanel test
          actionTest();
@@ -92,7 +92,7 @@ public class TestClass {
       {
          System.out.println(e);
       }
-
+   
       try{
       	//World test
          worldTest();
@@ -101,7 +101,7 @@ public class TestClass {
       {
          System.out.println(e);
       }
-
+   
       try{
       	//MainMenu test
          mainMenuTest();
@@ -110,6 +110,15 @@ public class TestClass {
       {
          System.out.println(e);
       }
+      try{
+      	//Item test
+         itemTest();
+      }
+      catch (Exception e)
+      {
+         System.out.println(e);
+      }
+
    }
 
    public static void clothingTest()
@@ -161,16 +170,16 @@ public class TestClass {
       System.out.println("Tool Test Starting");
    
    	//Testing the constructor and getter methods
-   	Tool t = new Tool("Tool", id, "Axe", volume, weight, damage, visDamage, age, day);
-   	if(t.getType().equals("Tool") && t.getID() == 1 && t.getName().equals("Axe") && 
-   	   t.getVolume() == 2.0 && t.getWeight() == 3.0 && t.getDamage() == 4.0 && t.getVisDamage() == 5.0 && 
-   	   t.getAge() == 6 && t.getCreated() == 7)
-   	{
-   		System.out.println("\tConstructor and Getter Methods Test: Successful");
-   	}
-   	else
-   	{
-   		System.out.println("\tConstructor Test: Failed");
+      Tool t = new Tool("Tool", id, "Axe", volume, weight, damage, visDamage, age, day);
+      if(t.getType().equals("Tool") && t.getID() == 1 && t.getName().equals("Axe") && 
+         t.getVolume() == 2.0 && t.getWeight() == 3.0 && t.getDamage() == 4.0 && t.getVisDamage() == 5.0 && 
+         t.getAge() == 6 && t.getCreated() == 7)
+      {
+         System.out.println("\tConstructor and Getter Methods Test: Successful");
+      }
+      else
+      {
+         System.out.println("\tConstructor Test: Failed");
       }
       
       //Testing toString method
@@ -185,17 +194,17 @@ public class TestClass {
       }
    
    	//Testing the setter methods
-   	t.takeDamage(4.0);
-   	t.setVisDamage(10.0);
-   	if(t.getDamage() == 8.0 && t.getVisDamage() == 10.0)
-   	{
-   		System.out.println("\tSetter Methods Test: Successful");
-   	}
-   	else
-   	{
-   		System.out.println("\tSetter Methods Test: Failed");
-   	}
-   	System.out.println("\tTool Test Complete");
+      t.takeDamage(4.0);
+      t.setVisDamage(10.0);
+      if(t.getDamage() == 8.0 && t.getVisDamage() == 10.0)
+      {
+         System.out.println("\tSetter Methods Test: Successful");
+      }
+      else
+      {
+         System.out.println("\tSetter Methods Test: Failed");
+      }
+      System.out.println("\tTool Test Complete");
    }
 
    public static void foodTest()
@@ -245,7 +254,7 @@ public class TestClass {
    public static void playerTest()
    {
       System.out.println("Player Test Starting");
-
+   
       System.out.println("Player Test Complete");
    }
 
@@ -278,7 +287,7 @@ public class TestClass {
       else{
          System.out.println("\tContains method test: Failed");
       }
-
+   
       //Check if volume of bread + axe is reflected in inventory: bread v: 2.0, w: 3.0, axe v: 2.0, w: 5.0
       if(other.getCurrentVolume() == 4.0 && other.getCurrentWeight() == 8.0){
          System.out.println("\tVolume/Weight Getter Methods Test: Successful");
@@ -354,11 +363,11 @@ public class TestClass {
    public static void infoTest()
    {
       System.out.println("InfoPanel Test Starting");
-
+   
       Controller c = new Controller();
       GameMenu g = new GameMenu(c);
       InfoPanel ip = new InfoPanel(g);
-
+   
       if(ip.parent != null)
       {
          System.out.println("\tConstructor test: Success");
@@ -368,17 +377,17 @@ public class TestClass {
          System.out.println("\tConstructor test: Failed");
          return;
       }
-
+   
       System.out.println("\tInfoPanel Test Complete");
    }
 
    public static void gameMenuTest()
    {
       System.out.println("GameMenu Test Starting");
-
+   
       Controller c = new Controller();
       GameMenu g = new GameMenu(c);
-
+   
       //Constructor test
       if(g.time == 480 && g.controller != null && g.player != null 
         && g.infoPanel != null && g.actionPanel != null 
@@ -392,7 +401,7 @@ public class TestClass {
          System.out.println("\tConstructor test: Failed");
          return;
       }
-
+   
       //time test
       g.advanceTime(20);
       if(g.time == 500 && g.getTime() == 500 && g.timeSince(480) == 20)
@@ -404,43 +413,43 @@ public class TestClass {
          System.out.println("\tTime methods test: Failed");
          return;
       }
-
+   
       System.out.println("\tGameMenu Test Complete");
    }
 
    public static void actionTest()
    {
       System.out.println("ActionPanel Test Starting");
-
+   
       Controller c = new Controller();
       GameMenu g = new GameMenu(c);
       ActionPanel ap = new ActionPanel(g);
-
+   
       //Constructor test
       if(ap.parent != null && ap.elements != null && ap.equip != null 
          && ap.use != null && ap.inspectShort != null && ap.inspectMed != null
          && ap.inspectLong != null && ap.travel != null && ap.transfer != null
          && ap.wait1 != null && ap.wait4 != null && ap.wait8 != null 
          && ap.search != null)
-         {
-            System.out.println("\tConstructor test: Successful");
-         }
-         else
-         {
-            System.out.println("\tConstructor test: Failed");
-         }
-
+      {
+         System.out.println("\tConstructor test: Successful");
+      }
+      else
+      {
+         System.out.println("\tConstructor test: Failed");
+      }
+   
       System.out.println("\tActionPanel Test Complete");
    }
 
    public static void worldTest()
    {
       System.out.println("World Test Starting");
-
+   
       Controller c = new Controller();
       GameMenu g = new GameMenu(c);
       World w = new World(g, 40, 40);
-
+   
       if(w.parent != null && w.locs != null && w.xSize == 40 && w.ySize == 40 && w.locuses != null)
       {
          System.out.println("\tConstructor test: Successful");
@@ -449,17 +458,17 @@ public class TestClass {
       {
          System.out.println("\tConstructor test: Failed");
       }
-
+   
       System.out.println("\tWorld Test Complete");
    }
 
    public static void mainMenuTest()
    {
       System.out.println("MainMenu Test Starting");
-
+   
       Controller c = new Controller();
       MainMenu m = new MainMenu(c);
-
+   
       if(m.controller != null && m.elements != null && m.elements.size() == 10)
       {
          System.out.println("\tConstructor test: Successful");
@@ -468,7 +477,78 @@ public class TestClass {
       {
          System.out.println("\tConstructor test: Failed");
       }
-
+   
       System.out.println("\tMainMenu Test Complete");
+   }
+   
+   public static void itemTest()
+   {
+      System.out.println("Item Test Starting");
+      
+      Item thing = new Tool("Tool", 3, "Stick", 1.0, 1.0, 0, 0, age, day); //created at 5:18pm;   
+   
+      //Tests for get volume/weight methods
+      if(thing.getVolume() == 1.0 && thing.getWeight() == 1.0){
+         System.out.println("\tVolume/Weight Getter Methods Test: Successful");
+      }
+      else{
+         System.out.println("\tVolume/Weight Getter Methods Test: Failed");
+      }
+      
+      //Tests for get and set damage/visdamage methods
+      if(thing.getDamage() == 0 && thing.getVisDamage() == 0){
+         System.out.println("\tDamage and Visible Damage Getter Methods Test: Successful");
+      }
+      else{
+         System.out.println("\tDamage and Visible Damage Getter Methods Test: Failed");
+      }
+   
+      
+      thing.setVisDamage(2);
+      thing.setDamage(5);
+      
+     
+      if(thing.getDamage() == 5&& thing.getVisDamage() == 2){
+         System.out.println("\tDamage and Visible Damage Getter Methods Test: Successful");
+      }
+      else{
+         System.out.println("\tDamage and Visible Damage Getter Methods Test: Failed");
+      }
+      
+      //Test for get type method     
+      if(thing.getType().equals("Tool")){
+         System.out.println("\tType Getter Method Test: Successful");
+      }
+      else{
+         System.out.println("\tType Getter Method Test: Failed");
+      } 
+     //Test for get name method
+      if(thing.getName().equals("Stick")){
+         System.out.println("\tName Getter Method Test: Successful");
+      }
+      else{
+         System.out.println("\tName Getter Method Test: Failed");
+      } 
+      
+      //testing Age/created getter method
+      if(thing.getAge() == 6 && thing.getCreated() == 7){
+         System.out.println("\tAge Getter Method Test: Successful");
+      }
+      else{
+         System.out.println("\tAge Getter Method Test: Failed");
+      } 
+      
+      
+      //Testing toString method
+      String s = thing.toString();
+      if(s.equals(itemToString))
+      {
+         System.out.println("\ttoString Method Test: Successful");
+      }
+      else
+      {
+         System.out.println("\ttoString Method Test: Failed");
+      }
+   
    }
 }
