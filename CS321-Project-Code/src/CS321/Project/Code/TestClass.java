@@ -383,8 +383,6 @@ public class TestClass {
       GameMenu g = new GameMenu(c);
       ActionPanel ap = new ActionPanel(g);
 
-      equip, use, inspectShort, inspectMed, inspectLong, travel, transfer, wait1, wait4, wait8, search
-
       //Constructor test
       if(ap.parent != null && ap.elements != null && ap.equip != null 
          && ap.use != null && ap.inspectShort != null && ap.inspectMed != null
