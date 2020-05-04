@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Tool extends Item {
   public String name;
-  public int defense;
+  //public int defense;
 
   public Tool(String type, int id, String name, double volume, double weight, double damage,
       double visDamage, int age, int created) {
@@ -13,12 +13,12 @@ public class Tool extends Item {
 
   @Override
   public void takeDamage(double amt) {
-    setDamage(getDamage() + amt);
+	  setDamage(getDamage() + amt);
   }
 
-  public int getDefense() {
-    return defense;
-  }
+//  public int getDefense() {
+//    return defense;
+//  }
   
   /*
   @Override
