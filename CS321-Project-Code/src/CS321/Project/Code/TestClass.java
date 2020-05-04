@@ -39,8 +39,8 @@ public class TestClass {
       }
    
       try {
-      	//Player class test
-         playerTest();
+      	//Location class test
+         locationTest();
       } catch (Exception e) {
          System.out.println(e);
       }
@@ -106,12 +106,6 @@ public class TestClass {
       System.out.println("\tClothing Test Complete");
    }
 
-
-
-   public static void playerTest()
-   {
-      System.out.println("Player Test Starting");
-   }
 
    public static void inventoryTest()
    {
@@ -190,7 +184,10 @@ public class TestClass {
       selectItemAt and drawSelf
       *************************************/
    }
-
+   public static void locationTest() {
+	  
+	   
+   }
 	public static void toolTest()
 	{
 		System.out.println("Tool Test Starting");

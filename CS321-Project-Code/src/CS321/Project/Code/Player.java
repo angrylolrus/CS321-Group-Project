@@ -20,9 +20,14 @@ public class Player {
         energy = 100;
         lastUpdated = parent.getTime();
     }
-    
+    public GameMenu getParent() {
+    	return parent;
+    }
     public int getEnergy() {
     	return (int)(Math.round(energy));
+    }
+    public int getSatiety() {
+    	return (int)(Math.round(satiety));
     }
     
     public void age(long time) {
@@ -60,9 +65,9 @@ public class Player {
     }
 
     // item needs to be checked somewhere that it is of a clothing type
-    public void equip_Item(Item i, int type) {
-        Item temp = equipped[type];
-        equipped[type] = i;
+    public void equip_Item(Item i, String type) {
+        //Item temp = equipped[type];
+        //equipped[type] = i;
         // change_Defense(i.getDefense() - temp.getDefense());
     }
 
