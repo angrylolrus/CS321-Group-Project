@@ -24,7 +24,7 @@ public class TestClass {
 
 
    public static void main(String[] args) {
-      System.out.println("Our first test works!");
+     
       JsonFileWorker.init();
       try {
       	//Clothing class test
@@ -178,7 +178,7 @@ public class TestClass {
       {
          System.out.println("\tSetter Methods Test: Failed");
       }
-      System.out.println("\tClothing Test Complete");
+      System.out.println("Clothing Test Complete");
    }
 
 
@@ -221,7 +221,7 @@ public class TestClass {
       {
          System.out.println("\tSetter Methods Test: Failed");
       }
-      System.out.println("\tTool Test Complete");
+      System.out.println("Tool Test Complete");
    }
 
   
@@ -336,7 +336,7 @@ public class TestClass {
 		   System.out.println("\tButton update successful!");
 	   else
 		   System.out.println("\tButton update failed!");
-	   
+	   System.out.println("UI Element Test Complete");
    }
    public static void locationTest() {
 	   
@@ -361,7 +361,7 @@ public class TestClass {
 		   System.out.println("\ttoString test: Successful");
 	   else
 		   System.out.println("\ttoString test: Failed");
-	   
+	   System.out.println("Location Test Complete");
    }
    public static void playerTest() {
 	   System.out.println("Player Test Starting");
@@ -392,7 +392,7 @@ public class TestClass {
 		   System.out.println("\tAge test Successful");
 	   else
 	   	   System.out.println("\tAge test Failed");
-	   
+	   System.out.println("Player Test Complete");
 	   
    }
 
@@ -437,7 +437,7 @@ public class TestClass {
 		{
 			System.out.println("\tSetter Methods Test: Failed");
 		}
-		System.out.println("\tFood Test Complete");
+		System.out.println("Food Test Complete");
 	}
 
 
@@ -461,6 +461,7 @@ public class TestClass {
 			System.out.println("\tJSON Init function failed!");
 			return;
 		}
+		System.out.println("JSON Test Complete");
 	}
 
    public static void infoTest()
@@ -481,7 +482,7 @@ public class TestClass {
          return;
       }
    
-      System.out.println("\tInfoPanel Test Complete");
+      System.out.println("InfoPanel Test Complete");
    }
 
    public static void gameMenuTest()
@@ -517,7 +518,7 @@ public class TestClass {
          return;
       }
    
-      System.out.println("\tGameMenu Test Complete");
+      System.out.println("GameMenu Test Complete");
    }
 
    public static void actionTest()
@@ -542,7 +543,7 @@ public class TestClass {
          System.out.println("\tConstructor test: Failed");
       }
    
-      System.out.println("\tActionPanel Test Complete");
+      System.out.println("ActionPanel Test Complete");
    }
 
    public static void worldTest()
@@ -562,7 +563,7 @@ public class TestClass {
          System.out.println("\tConstructor test: Failed");
       }
    
-      System.out.println("\tWorld Test Complete");
+      System.out.println("World Test Complete");
    }
 
    public static void mainMenuTest()
@@ -581,7 +582,7 @@ public class TestClass {
          System.out.println("\tConstructor test: Failed");
       }
    
-      System.out.println("\tMainMenu Test Complete");
+      System.out.println("MainMenu Test Complete");
    }
    
    public static void itemTest()
@@ -652,6 +653,7 @@ public class TestClass {
       {
          System.out.println("\ttoString Method Test: Failed");
       }
-   
+      System.out.println("Item Test Complete");
    }
+   
 }

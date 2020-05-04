@@ -186,8 +186,9 @@ public abstract class UIElement {
 
 		public void mouseAction(MouseEvent e, int type) {
 			if (type == 1 && clickable) {
-				if (this.contains(e.getPoint()))
+				if (this.contains(e.getPoint())) {
 					hasFocus = true;
+				}
 				else
 					hasFocus = false;
 			}
