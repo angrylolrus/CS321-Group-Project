@@ -13,7 +13,7 @@ public class Tool extends Item {
 
   @Override
   public void takeDamage(double amt) {
-	  
+    setDamage(getDamage() + amt);
   }
 
   public int getDefense() {
