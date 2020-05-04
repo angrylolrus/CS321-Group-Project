@@ -152,5 +152,6 @@ public abstract class Item {
     {
         return type + " " + ID + ": " + name + "\n\tVolume: " + volume + ", Weight: " + weight +
                "\n\tDamage: " + damage + ", Visible Damage: " +visDamage + "\n\tAge: "+ age + ", Created: " + created;
+
     }
 }
